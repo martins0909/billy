@@ -1,0 +1,146 @@
+# Node.js
+node_modules/
+.next/
+.env*
+.DS_Store
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# VS Code
+.vscode/
+
+# Build outputs
+build/
+dist/
+coverage/
+
+# Flutter/Dart
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub/
+.idea/
+*.iml
+*.lock
+*.log
+*.tmp
+*.swp
+
+# Android
+android/.gradle/
+android/app/build/
+android/build/
+
+# iOS
+ios/Pods/
+ios/Flutter/App.framework/
+ios/Flutter/Flutter.framework/
+ios/Flutter/Flutter.podspec
+ios/Flutter/Generated.xcconfig
+ios/Flutter/ephemeral/
+ios/Runner.xcworkspace/
+ios/Runner.xcodeproj/
+ios/RunnerTests/
+
+# macOS
+macos/Flutter/
+macos/Pods/
+macos/Runner.xcworkspace/
+macos/Runner.xcodeproj/
+macos/RunnerTests/
+
+# Linux
+linux/flutter/
+linux/build/
+linux/runner/
+
+# Windows
+windows/flutter/
+windows/build/
+windows/runner/
+
+# Web
+web/build/
+web/dist/
+
+# Assets
+assets/animations/
+assets/*.psd
+assets/*.ai
+assets/*.sketch
+assets/*.xcf
+
+# Reports
+build/reports/
+
+# Native assets/hooks
+build/native_assets/
+build/native_hooks/
+
+# Misc
+*.bak
+*.old
+*.orig
+*.rej
+
+# System files
+Thumbs.db
+Desktop.ini
+
+# Others
+*.sublime-workspace
+*.sublime-project
+
+# Ignore test outputs
+test/output/
+
+# Ignore generated files
+build/**/generated/
+
+# Ignore composite stamps
+build/**/_composite.stamp
+
+# Ignore dart build files
+build/**/dart_build*
+
+# Ignore outputs.json
+build/**/outputs.json
+
+# Ignore video player android build
+build/video_player_android/
+
+# Ignore local properties
+android/local.properties
+
+# Ignore pubspec.lock
+pubspec.lock
+
+# Ignore package-lock.json
+yarn.lock
+package-lock.json
+
+# Ignore .env files
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Ignore backup files
+*.bak
+
+# Ignore logs
+*.log
+
+# Ignore temp files
+*.tmp
+
+# Ignore coverage reports
+coverage/
+
+# Ignore generated plugin registrant
+build/**/gen_dart_plugin_registrant.stamp
+
+# Ignore generated localizations
+build/**/gen_localizations.stamp
