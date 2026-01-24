@@ -1218,11 +1218,11 @@ export default function Dashboard() {
                   </div>
                   
                   <Link 
-                    href="/transactions"
-                    className="bg-white text-[#1D6A4A] px-4 py-1.5 rounded-full text-xs font-bold hover:bg-white/90 transition-colors flex items-center gap-1"
-                  >
-                     Transaction History
-                  </Link>
+                      href="/transactions"
+                      className="bg-white text-[#1D6A4A] px-4 py-1.5 rounded-full text-[10px] sm:text-xs font-bold hover:bg-white/90 transition-colors flex items-center gap-1"
+                    >
+                      Transaction History
+                    </Link>
                 </div>
 
                 {/* Balance */}
@@ -1236,14 +1236,14 @@ export default function Dashboard() {
                 <div className="flex items-center gap-4">
                   <button 
                     onClick={() => setShowAddMoneyModal(true)}
-                    className="bg-white text-[#1D6A4A] px-6 py-3 rounded-full font-bold hover:bg-white/90 transition-all flex items-center justify-center transform hover:-translate-y-0.5 shadow-sm"
+                    className="bg-white text-[#1D6A4A] px-6 py-3 rounded-full font-bold hover:bg-white/90 transition-all flex items-center justify-center transform hover:-translate-y-0.5 shadow-sm text-[13px] sm:text-base"
                   >
                     Add fund
                   </button>
                   
                   <button 
                     onClick={() => setShowWithdrawModal(true)}
-                    className="bg-white text-[#1D6A4A] px-6 py-3 rounded-full font-bold hover:bg-white/90 transition-all flex items-center gap-2 transform hover:-translate-y-0.5 shadow-sm"
+                    className="bg-white text-[#1D6A4A] px-6 py-3 rounded-full font-bold hover:bg-white/90 transition-all flex items-center gap-2 transform hover:-translate-y-0.5 shadow-sm text-[13px] sm:text-base"
                   >
                     <ArrowUpRight size={20} strokeWidth={3} />
                     Withdraw
