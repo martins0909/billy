@@ -1191,11 +1191,7 @@ export default function Dashboard() {
         )}
 
         <div className="p-8 max-w-7xl mx-auto space-y-8">
-          {/* Welcome Section */}
-          <div>
-            <h3 className="text-2xl font-bold text-gray-800">Good Morning, John! 👋</h3>
-            <p className="text-gray-500">Here's what's happening with your wallet today.</p>
-          </div>
+          {/* Welcome Section Removed */}
 
           {/* Balance Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

@@ -70,8 +70,8 @@ export default function Header({ title, gender = 'male' }: HeaderProps) {
   ];
 
   return (
-    <header className="bg-white border-b px-8 py-5 flex items-center justify-between sticky top-0 z-10 transition-colors duration-300">
-      <h2 className="text-xl font-bold text-gray-800">{title}</h2>
+    <header className="bg-white border-b px-8 py-5 flex items-center justify-between sticky top-0 z-40 transition-colors duration-300">
+      <h2 className="text-xl font-bold text-gray-800 lg:hidden">{title}</h2>
       <div className="flex items-center gap-6">
         <div className="relative hidden lg:block">
           <Search className="absolute left-3 top-2.5 text-gray-400" size={18} />
@@ -95,7 +95,7 @@ export default function Header({ title, gender = 'male' }: HeaderProps) {
             </button>
 
             {isNotificationsOpen && (
-              <div className="absolute right-0 mt-2 w-80 md:w-96 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden z-50 animate-in fade-in zoom-in-95 duration-200">
+              <div className="absolute right-0 mt-2 w-80 md:w-96 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden z-[60] animate-in fade-in zoom-in-95 duration-200">
                 <div className="px-4 py-3 border-b flex items-center justify-between bg-off-white">
                   <h3 className="font-semibold text-gray-800">Notifications</h3>
 
