@@ -12,6 +12,14 @@ interface HeaderProps {
 export default function Header({ title, gender = 'male' }: HeaderProps) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+  const [greeting, setGreeting] = useState('');
+
+  useEffect(() => {
+    const hour = new Date().getHours();
+    if (hour < 12) setGreeting('Good Morning');
+    else if (hour < 18) setGreeting('Good Afternoon');
+    else setGreeting('Good Evening');
+  }, []);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const notificationsRef = useRef<HTMLDivElement>(null);
 
@@ -71,8 +79,102 @@ export default function Header({ title, gender = 'male' }: HeaderProps) {
 
   return (
     <header className="bg-white border-b px-8 py-5 flex items-center justify-between sticky top-0 z-40 transition-colors duration-300">
-      <h2 className="text-xl font-bold text-gray-800 lg:hidden">{title}</h2>
+      
+      {/* Left Section (Mobile Avatar + Desktop Avatar) */}
+      <div className="flex items-center gap-4">
+        {/* Mobile Avatar (Moved to Left) */}
+        <div className="lg:hidden relative">
+            <button 
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              className="flex items-center justify-center w-8 h-8 rounded-full border-2 border-transparent hover:border-[#1D6A4A] transition-all focus:outline-none"
+            >
+              <img 
+                src={avatarUrl} 
+                alt="User Avatar" 
+                className="w-full h-full rounded-full object-cover bg-gray-100"
+              />
+            </button>
+             {/* Mobile Left Avatar Dropdown */}
+              {isDropdownOpen && (
+              <div className="absolute left-0 mt-2 w-48 bg-white rounded-xl shadow-lg border py-1 animate-in fade-in zoom-in-95 duration-200 z-[60]">
+                 <div className="px-4 py-3 border-b">
+                  <p className="text-sm font-semibold text-gray-800">John Doe</p>
+                  <p className="text-xs text-gray-500 truncate">john.doe@example.com</p>
+                </div>
+                <div className="py-1">
+                  <Link 
+                    href="/account" 
+                    className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-off-white hover:text-[#1D6A4A]"
+                    onClick={() => setIsDropdownOpen(false)}
+                  >
+                    <User size={16} />
+                    Account
+                  </Link>
+                  <Link 
+                    href="/login" 
+                    className="flex items-center gap-3 px-4 py-2 text-sm text-red-600 hover:bg-red-50"
+                    onClick={() => setIsDropdownOpen(false)}
+                  >
+                    <LogOut size={16} />
+                    Sign Out
+                  </Link>
+                </div>
+              </div>
+            )}
+        </div>
+
+        {/* Desktop Avatar (Left Side) */}
+        <div className="hidden lg:block relative" ref={dropdownRef}>
+            <button 
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              className="flex items-center justify-center w-10 h-10 rounded-full border-2 border-transparent hover:border-[#1D6A4A] transition-all focus:outline-none"
+            >
+              <img 
+                src={avatarUrl} 
+                alt="User Avatar" 
+                className="w-full h-full rounded-full object-cover bg-gray-100"
+              />
+            </button>
+
+            {isDropdownOpen && (
+              <div className="absolute left-0 mt-2 w-48 bg-white rounded-xl shadow-lg border py-1 animate-in fade-in zoom-in-95 duration-200 z-[60]">
+                <div className="px-4 py-3 border-b">
+                  <p className="text-sm font-semibold text-gray-800">John Doe</p>
+                  <p className="text-xs text-gray-500 truncate">john.doe@example.com</p>
+                </div>
+                <div className="py-1">
+                  <Link 
+                    href="/account" 
+                    className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-off-white hover:text-[#1D6A4A]"
+                    onClick={() => setIsDropdownOpen(false)}
+                  >
+                    <User size={16} />
+                    Account
+                  </Link>
+                  <Link 
+                    href="/login" 
+                    className="flex items-center gap-3 px-4 py-2 text-sm text-red-600 hover:bg-red-50"
+                    onClick={() => setIsDropdownOpen(false)}
+                  >
+                    <LogOut size={16} />
+                    Sign Out
+                  </Link>
+                </div>
+              </div>
+            )}
+        </div>
+
+        {/* User Greeting (Desktop & Mobile) */}
+        <div className="flex flex-col">
+          <p className="text-sm font-semibold text-gray-800">John Doe</p>
+          <p className="text-xs text-gray-500">{greeting}</p>
+        </div>
+      </div>
+
+      {/* Right Section (Search + Notify + Mobile Avatar) */}
       <div className="flex items-center gap-6">
+        
+        {/* Desktop Search */}
         <div className="relative hidden lg:block">
           <Search className="absolute left-3 top-2.5 text-gray-400" size={18} />
           <input 
@@ -85,7 +187,7 @@ export default function Header({ title, gender = 'male' }: HeaderProps) {
         <div className="flex items-center gap-4">
           
           {/* Notifications */}
-          <div className="relative" ref={notificationsRef}>
+          <div className="relative lg:z-50" ref={notificationsRef}>
             <button 
               onClick={() => setIsNotificationsOpen(!isNotificationsOpen)}
               className={`relative p-2 rounded-full hover:bg-gray-100 transition-colors ${isNotificationsOpen ? 'bg-gray-100' : ''}`}
@@ -143,46 +245,7 @@ export default function Header({ title, gender = 'male' }: HeaderProps) {
             )}
           </div>
 
-          <div className="relative" ref={dropdownRef}>
-            <button 
-              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className="flex items-center justify-center w-10 h-10 rounded-full border-2 border-transparent hover:border-[#1D6A4A] transition-all focus:outline-none"
-            >
-              <img 
-                src={avatarUrl} 
-                alt="User Avatar" 
-                className="w-full h-full rounded-full object-cover bg-gray-100"
-              />
-            </button>
-
-            {isDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border py-1 animate-in fade-in zoom-in-95 duration-200">
-                <div className="px-4 py-3 border-b">
-                  <p className="text-sm font-semibold text-gray-800">John Doe</p>
-                  <p className="text-xs text-gray-500 truncate">john.doe@example.com</p>
-                </div>
-                <div className="py-1">
-                  <Link 
-                    href="/account" 
-                    className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-off-white hover:text-[#1D6A4A]"
-                    onClick={() => setIsDropdownOpen(false)}
-                  >
-                    <User size={16} />
-
-                    Account
-                  </Link>
-                  <Link 
-                    href="/login" 
-                    className="flex items-center gap-3 px-4 py-2 text-sm text-red-600 hover:bg-red-50"
-                    onClick={() => setIsDropdownOpen(false)}
-                  >
-                    <LogOut size={16} />
-                    Sign Out
-                  </Link>
-                </div>
-              </div>
-            )}
-          </div>
+          {/* Mobile Avatar Removed from Right (Moved to Left) */}
         </div>
       </div>
     </header>
