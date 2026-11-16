@@ -81,13 +81,13 @@ export default function BeneficiariesPage() {
   };
 
   return (
-    <div className="flex min-h-screen pb-16 md:pb-0 bg-off-white transition-colors duration-300">
+    <div className="flex min-h-screen app-bg">
       <Sidebar />
 
       <main className="flex-1 flex flex-col h-screen overflow-hidden">
         <Header title="Beneficiaries" />
 
-        <div className="flex-1 overflow-y-auto p-4 md:p-8 space-y-8">
+        <div className="flex-1 overflow-y-auto p-4 md:p-8 pb-28 md:pb-8 space-y-8">
             {/* Header Stats & Action */}
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                <div>
@@ -96,7 +96,7 @@ export default function BeneficiariesPage() {
                </div>
                <button 
                   onClick={() => setShowAddModal(true)}
-                  className="bg-[#1D6A4A] hover:bg-[#155a3d] text-white px-6 py-3 rounded-xl font-bold transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center gap-2"
+                  className="btn-brand hover:brightness-110 text-white px-6 py-3 rounded-xl font-bold transition-all transform hover:-translate-y-0.5 flex items-center gap-2"
                >
                   <Plus size={20} />
                   Add New
@@ -104,14 +104,14 @@ export default function BeneficiariesPage() {
             </div>
 
             {/* Filters and Search */}
-            <div className="flex flex-col md:flex-row gap-4 justify-between items-center bg-white p-2 rounded-2xl border shadow-sm">
+            <div className="flex flex-col md:flex-row gap-4 justify-between items-center glass-card p-2 rounded-2xl border">
                <div className="flex w-full md:w-auto p-1 bg-gray-50 rounded-xl">
                   {['All', 'Bank Transfer', 'Airtime'].map((f) => (
                     <button
                       key={f}
                       onClick={() => setFilter(f)}
                       className={`px-4 py-2 text-sm font-medium rounded-lg transition-all ${
-                        filter === f ? 'bg-white text-[#1D6A4A] shadow-sm' : 'text-gray-500 hover:text-gray-700'
+                        filter === f ? 'bg-primary text-white shadow-sm' : 'text-gray-500 hover:text-gray-700'
                       }`}
                     >
                       {f}
@@ -126,7 +126,7 @@ export default function BeneficiariesPage() {
                      placeholder="Search beneficiaries..." 
                      value={searchQuery}
                      onChange={(e) => setSearchQuery(e.target.value)}
-                     className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 outline-none focus:border-[#1D6A4A] focus:ring-2 focus:ring-[#1D6A4A]/10 transition-all text-sm font-medium"
+                     className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all text-sm font-medium"
                   />
                </div>
             </div>
@@ -134,7 +134,7 @@ export default function BeneficiariesPage() {
             {/* Beneficiaries Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                {filteredBeneficiaries.map((beneficiary) => (
-                  <div key={beneficiary.id} className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all group relative">
+                  <div key={beneficiary.id} className="glass-card p-5 rounded-2xl border hover:shadow-md transition-all group relative">
                       <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
                          <button className="p-2 hover:bg-red-50 text-red-500 rounded-full transition-colors" title="Delete">
                             <Trash2 size={16} />
@@ -155,7 +155,7 @@ export default function BeneficiariesPage() {
                       </div>
 
                       <div className="mt-6 flex gap-2">
-                         <button className="flex-1 bg-gray-50 hover:bg-[#1D6A4A] hover:text-white text-gray-700 py-2.5 rounded-xl text-sm font-bold transition-all">
+                         <button className="flex-1 bg-gray-50 hover:bg-primary hover:text-white text-gray-700 py-2.5 rounded-xl text-sm font-bold transition-all">
                             Send Money
                          </button>
                       </div>
@@ -180,7 +180,7 @@ export default function BeneficiariesPage() {
       {/* Add Beneficiary Modal */}
       {showAddModal && (
          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-            <div className="bg-white rounded-2xl w-full max-w-md shadow-2xl animate-in fade-in zoom-in duration-200">
+            <div className="bg-surface border rounded-2xl w-full max-w-md shadow-2xl animate-in fade-in zoom-in duration-200">
                <div className="flex items-center justify-between p-6 border-b border-gray-100">
                   <h3 className="text-xl font-bold text-gray-900">Add New Beneficiary</h3>
                   <button onClick={closeAddModal} className="p-2 hover:bg-gray-100 rounded-full transition-colors">
@@ -198,7 +198,7 @@ export default function BeneficiariesPage() {
                                  <button 
                                     key={type}
                                     onClick={() => setNewBeneficiary(prev => ({ ...prev, type }))}
-                                    className={`flex-1 py-2 text-sm font-medium rounded-lg transition-all ${newBeneficiary.type === type ? 'bg-white text-[#1D6A4A] shadow-sm' : 'text-gray-500'}`}
+                                    className={`flex-1 py-2 text-sm font-medium rounded-lg transition-all ${newBeneficiary.type === type ? 'bg-primary text-white shadow-sm' : 'text-gray-500'}`}
                                  >
                                     {type}
                                  </button>
@@ -213,7 +213,7 @@ export default function BeneficiariesPage() {
                            <select 
                               value={newBeneficiary.bank}
                               onChange={(e) => setNewBeneficiary(prev => ({ ...prev, bank: e.target.value }))}
-                              className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#1D6A4A] focus:ring-2 focus:ring-[#1D6A4A]/20 outline-none transition-all font-medium bg-white"
+                              className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium bg-surface"
                            >
                               <option value="">Select Option</option>
                               {newBeneficiary.type === 'Bank Transfer' 
@@ -237,11 +237,11 @@ export default function BeneficiariesPage() {
                                  }}
                                  maxLength={10}
                                  placeholder="Enter number"
-                                 className="w-full pl-4 pr-12 py-3 rounded-xl border border-gray-200 focus:border-[#1D6A4A] focus:ring-2 focus:ring-[#1D6A4A]/20 outline-none transition-all font-medium"
+                                 className="w-full pl-4 pr-12 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium"
                               />
                               <div className="absolute right-3 top-1/2 -translate-y-1/2">
                                  {isVerifying ? (
-                                    <Loader2 className="w-5 h-5 text-[#1D6A4A] animate-spin" />
+                                    <Loader2 className="w-5 h-5 text-primary-light animate-spin" />
                                  ) : newBeneficiary.name ? (
                                     <Check className="w-5 h-5 text-green-600" />
                                  ) : null}
@@ -259,7 +259,7 @@ export default function BeneficiariesPage() {
                          <button 
                            onClick={handleAddBeneficiary}
                            disabled={!newBeneficiary.name || !newBeneficiary.bank}
-                           className="w-full bg-[#1D6A4A] hover:bg-[#155a3d] disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 mt-4"
+                           className="w-full btn-brand hover:brightness-110 disabled:[background-image:none] disabled:shadow-none disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all transform hover:-translate-y-0.5 mt-4"
                          >
                            Save Beneficiary
                          </button>
@@ -275,7 +275,7 @@ export default function BeneficiariesPage() {
                         </p>
                         <button 
                            onClick={closeAddModal}
-                           className="w-full bg-[#1D6A4A] hover:bg-[#155a3d] text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                           className="w-full btn-brand hover:brightness-110 text-white font-bold py-4 rounded-xl transition-all transform hover:-translate-y-0.5"
                         >
                            Done
                         </button>

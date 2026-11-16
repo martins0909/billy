@@ -39,7 +39,12 @@ import {
   Plus,
   History,
   Globe,
-  Shield
+  Shield,
+  Phone,
+  MoreHorizontal,
+  ArrowRight,
+  Gift,
+  ShieldCheck
 } from 'lucide-react';
 
 export default function Dashboard() {
@@ -266,7 +271,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="flex min-h-screen pb-16 md:pb-0 bg-off-white transition-colors duration-300">
+    <div className="flex min-h-screen pb-28 md:pb-0 app-bg">
       <Sidebar />
 
 
@@ -277,7 +282,7 @@ export default function Dashboard() {
         {/* Data Modal */}
         {showDataModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-            <div className="bg-white rounded-2xl w-full max-w-md shadow-2xl animate-in fade-in zoom-in duration-200">
+            <div className="bg-surface border rounded-2xl w-full max-w-md shadow-2xl animate-in fade-in zoom-in duration-200">
               <div className="flex items-center justify-between p-6 border-b border-gray-100">
                 <h3 className="text-xl font-bold text-gray-900">{dataStep === 'details' ? 'Buy Data' : 'Enter Transaction PIN'}</h3>
                 <button 
@@ -303,14 +308,14 @@ export default function Dashboard() {
                             }}
                             className={`relative flex flex-col items-center gap-2 p-3 rounded-xl border transition-all ${
                               selectedNetwork === network.id 
-                                ? 'border-[#1D6A4A] bg-[#1D6A4A]/5 ring-1 ring-[#1D6A4A]' 
+                                ? 'border-primary bg-primary/5 ring-1 ring-primary'
                                 : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
                             }`}
                           >
                             <div className={`w-8 h-8 rounded-full ${network.color}`} />
                             <span className="text-[10px] font-bold">{network.id}</span>
                             {selectedNetwork === network.id && (
-                              <div className="absolute top-1 right-1 w-4 h-4 bg-[#1D6A4A] rounded-full flex items-center justify-center text-white">
+                              <div className="absolute top-1 right-1 w-4 h-4 bg-primary rounded-full flex items-center justify-center text-white">
                                 <Check size={10} strokeWidth={4} />
                               </div>
                             )}
@@ -324,7 +329,7 @@ export default function Dashboard() {
                        <div className="relative">
                          <button 
                            onClick={() => setShowPlanSelection(true)}
-                           className="w-full relative pl-4 pr-10 py-3 rounded-xl border border-gray-200 focus:border-[#1D6A4A] focus:ring-2 focus:ring-[#1D6A4A]/20 outline-none transition-all bg-white font-medium text-gray-900 text-left"
+                           className="w-full relative pl-4 pr-10 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all bg-surface font-medium text-gray-900 text-left"
                          >
                            {/* @ts-ignore */}
                            {selectedPlan && dataPlans[selectedNetwork]?.find((p: any) => p.id === selectedPlan)
@@ -344,7 +349,7 @@ export default function Dashboard() {
                           className="absolute inset-0 bg-black/60 backdrop-blur-sm"
                           onClick={() => setShowPlanSelection(false)}
                         />
-                        <div className="relative bg-white rounded-t-3xl p-6 shadow-2xl animate-in slide-in-from-bottom duration-300 max-h-[70vh] flex flex-col">
+                        <div className="relative bg-surface border-t rounded-t-3xl p-6 shadow-2xl animate-in slide-in-from-bottom duration-300 max-h-[70vh] flex flex-col">
                           <div className="flex items-center justify-between mb-6">
                             <h3 className="text-lg font-bold text-gray-900">Select Data Plan</h3>
                             <button 
@@ -366,7 +371,7 @@ export default function Dashboard() {
                                 }}
                                 className={`w-full flex items-center justify-between p-4 rounded-xl border transition-all ${
                                   selectedPlan === plan.id
-                                    ? 'border-[#1D6A4A] bg-[#1D6A4A]/5 ring-1 ring-[#1D6A4A]'
+                                    ? 'border-primary bg-primary/5 ring-1 ring-primary'
                                     : 'border-gray-100 hover:border-gray-300 hover:bg-gray-50'
                                 }`}
                               >
@@ -374,7 +379,7 @@ export default function Dashboard() {
                                   <p className="font-bold text-gray-900">{plan.name}</p>
                                   <p className="text-xs text-gray-500">{plan.validity}</p>
                                 </div>
-                                <p className="font-bold text-[#1D6A4A]">₦{plan.price}</p>
+                                <p className="font-bold text-primary-light">₦{plan.price}</p>
                               </button>
                             ))}
                           </div>
@@ -389,7 +394,7 @@ export default function Dashboard() {
                         <input 
                           type="tel" 
                           placeholder="0801 234 5678"
-                          className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:border-[#1D6A4A] focus:ring-2 focus:ring-[#1D6A4A]/20 outline-none transition-all placeholder:text-gray-300 font-medium"
+                          className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all placeholder:text-gray-300 font-medium"
                         />
                       </div>
                     </div>
@@ -408,7 +413,7 @@ export default function Dashboard() {
                     <button 
                       onClick={() => setDataStep('pin')}
                       disabled={!selectedPlan}
-                      className="w-full bg-[#1D6A4A] hover:bg-[#155a3d] disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
+                      className="w-full btn-brand hover:brightness-110 disabled:[background-image:none] disabled:shadow-none disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
                     >
                       Continue
                     </button>
@@ -416,8 +421,8 @@ export default function Dashboard() {
                 ) : (
                   <div className="py-4 space-y-8">
                     <div className="text-center space-y-2">
-                      <div className="w-16 h-16 bg-[#1D6A4A]/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <Lock className="w-8 h-8 text-[#1D6A4A]" />
+                      <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <Lock className="w-8 h-8 text-primary-light" />
                       </div>
                       <h4 className="font-bold text-gray-900">Enter your 4-digit PIN</h4>
                       <p className="text-sm text-gray-500 px-8">
@@ -436,7 +441,7 @@ export default function Dashboard() {
                           value={digit}
                           onChange={(e) => handlePinChange(index, e.target.value)}
                           onKeyDown={(e) => handleKeyDown(index, e)}
-                          className="w-14 h-14 rounded-xl border-2 border-gray-200 focus:border-[#1D6A4A] text-center text-2xl font-bold outline-none transition-all bg-gray-50 focus:bg-white"
+                          className="w-14 h-14 rounded-xl border-2 border-gray-200 focus:border-primary text-center text-2xl font-bold outline-none transition-all bg-gray-50 focus:bg-surface-high"
                         />
                       ))}
                     </div>
@@ -447,7 +452,7 @@ export default function Dashboard() {
                         closeDataModal();
                       }}
                        disabled={pin.some(d => !d)}
-                      className="w-full bg-[#1D6A4A] hover:bg-[#155a3d] disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-2 mt-8"
+                      className="w-full btn-brand hover:brightness-110 disabled:[background-image:none] disabled:shadow-none disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2 mt-8"
                     >
                       Confirm Payment
                     </button>
@@ -468,7 +473,7 @@ export default function Dashboard() {
         {/* Airtime Modal */}
         {showAirtimeModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-            <div className="bg-white rounded-2xl w-full max-w-md shadow-2xl animate-in fade-in zoom-in duration-200">
+            <div className="bg-surface border rounded-2xl w-full max-w-md shadow-2xl animate-in fade-in zoom-in duration-200">
               <div className="flex items-center justify-between p-6 border-b border-gray-100">
                 <h3 className="text-xl font-bold text-gray-900">{airtimeStep === 'details' ? 'Buy Airtime' : 'Enter Transaction PIN'}</h3>
                 <button 
@@ -491,14 +496,14 @@ export default function Dashboard() {
                             onClick={() => setSelectedNetwork(network.id)}
                             className={`relative flex flex-col items-center gap-2 p-3 rounded-xl border transition-all ${
                               selectedNetwork === network.id 
-                                ? 'border-[#1D6A4A] bg-[#1D6A4A]/5 ring-1 ring-[#1D6A4A]' 
+                                ? 'border-primary bg-primary/5 ring-1 ring-primary'
                                 : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
                             }`}
                           >
                             <div className={`w-8 h-8 rounded-full ${network.color}`} />
                             <span className="text-[10px] font-bold">{network.id}</span>
                             {selectedNetwork === network.id && (
-                              <div className="absolute top-1 right-1 w-4 h-4 bg-[#1D6A4A] rounded-full flex items-center justify-center text-white">
+                              <div className="absolute top-1 right-1 w-4 h-4 bg-primary rounded-full flex items-center justify-center text-white">
                                 <Check size={10} strokeWidth={4} />
                               </div>
                             )}
@@ -514,7 +519,7 @@ export default function Dashboard() {
                         <input 
                           type="tel" 
                           placeholder="0801 234 5678"
-                          className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:border-[#1D6A4A] focus:ring-2 focus:ring-[#1D6A4A]/20 outline-none transition-all placeholder:text-gray-300 font-medium"
+                          className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all placeholder:text-gray-300 font-medium"
                         />
                       </div>
                     </div>
@@ -526,14 +531,14 @@ export default function Dashboard() {
                         <input 
                           type="number" 
                           placeholder="0.00"
-                          className="w-full pl-8 pr-4 py-3 rounded-xl border border-gray-200 focus:border-[#1D6A4A] focus:ring-2 focus:ring-[#1D6A4A]/20 outline-none transition-all font-bold text-lg text-gray-900 placeholder:text-gray-300"
+                          className="w-full pl-8 pr-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-bold text-lg text-gray-900 placeholder:text-gray-300"
                         />
                       </div>
                     </div>
 
                     <button 
                       onClick={() => setAirtimeStep('pin')}
-                      className="w-full bg-[#1D6A4A] hover:bg-[#155a3d] text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
+                      className="w-full btn-brand hover:brightness-110 text-white font-bold py-4 rounded-xl transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
                     >
                       Continue
                     </button>
@@ -541,8 +546,8 @@ export default function Dashboard() {
                 ) : (
                   <div className="py-4 space-y-8">
                     <div className="text-center space-y-2">
-                      <div className="w-16 h-16 bg-[#1D6A4A]/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <Lock className="w-8 h-8 text-[#1D6A4A]" />
+                      <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <Lock className="w-8 h-8 text-primary-light" />
                       </div>
                       <h4 className="font-bold text-gray-900">Enter your 4-digit PIN</h4>
                       <p className="text-sm text-gray-500 px-8">
@@ -561,7 +566,7 @@ export default function Dashboard() {
                           value={digit}
                           onChange={(e) => handlePinChange(index, e.target.value)}
                           onKeyDown={(e) => handleKeyDown(index, e)}
-                          className="w-14 h-14 rounded-xl border-2 border-gray-200 focus:border-[#1D6A4A] text-center text-2xl font-bold outline-none transition-all bg-gray-50 focus:bg-white"
+                          className="w-14 h-14 rounded-xl border-2 border-gray-200 focus:border-primary text-center text-2xl font-bold outline-none transition-all bg-gray-50 focus:bg-surface-high"
                         />
                       ))}
                     </div>
@@ -572,7 +577,7 @@ export default function Dashboard() {
                         closeAirtimeModal();
                       }}
                       disabled={pin.some(d => !d)}
-                      className="w-full bg-[#1D6A4A] hover:bg-[#155a3d] disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-2 mt-8"
+                      className="w-full btn-brand hover:brightness-110 disabled:[background-image:none] disabled:shadow-none disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2 mt-8"
                     >
                       Confirm Payment
                     </button>
@@ -593,7 +598,7 @@ export default function Dashboard() {
         {/* Electricity Modal */}
         {showElectricityModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-            <div className="bg-white rounded-2xl w-full max-w-md shadow-2xl animate-in fade-in zoom-in duration-200">
+            <div className="bg-surface border rounded-2xl w-full max-w-md shadow-2xl animate-in fade-in zoom-in duration-200">
               <div className="flex items-center justify-between p-6 border-b border-gray-100">
                 <h3 className="text-xl font-bold text-gray-900">{electricityStep === 'details' ? 'Electricity Bill' : 'Enter Transaction PIN'}</h3>
                 <button 
@@ -613,7 +618,7 @@ export default function Dashboard() {
                         {/* Mobile View - Bottom Sheet Trigger */}
                         <button 
                            onClick={() => setShowDiscoSelection(true)}
-                           className="md:hidden w-full relative pl-4 pr-10 py-3 rounded-xl border border-gray-200 focus:border-[#1D6A4A] focus:ring-2 focus:ring-[#1D6A4A]/20 outline-none transition-all bg-white font-medium text-gray-900 text-left"
+                           className="md:hidden w-full relative pl-4 pr-10 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all bg-surface font-medium text-gray-900 text-left"
                          >
                            {selectedDisco 
                              // @ts-ignore
@@ -631,7 +636,7 @@ export default function Dashboard() {
                                setSelectedDisco(e.target.value);
                                setVerifiedName(null);
                              }}
-                             className="w-full pl-4 pr-10 py-3 rounded-xl border border-gray-200 focus:border-[#1D6A4A] focus:ring-2 focus:ring-[#1D6A4A]/20 outline-none transition-all appearance-none bg-white font-medium text-gray-900"
+                             className="w-full pl-4 pr-10 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none bg-surface font-medium text-gray-900"
                            >
                              <option value="" disabled>Select Disco</option>
                              {discos.map((disco) => (
@@ -650,7 +655,7 @@ export default function Dashboard() {
                           className="absolute inset-0 bg-black/60 backdrop-blur-sm"
                           onClick={() => setShowDiscoSelection(false)}
                         />
-                        <div className="relative bg-white rounded-t-3xl p-6 shadow-2xl animate-in slide-in-from-bottom duration-300 max-h-[70vh] flex flex-col">
+                        <div className="relative bg-surface border-t rounded-t-3xl p-6 shadow-2xl animate-in slide-in-from-bottom duration-300 max-h-[70vh] flex flex-col">
                           <div className="flex items-center justify-between mb-6">
                             <h3 className="text-lg font-bold text-gray-900">Select Distribution Company</h3>
                             <button 
@@ -672,7 +677,7 @@ export default function Dashboard() {
                                 }}
                                 className={`w-full flex items-center gap-4 p-4 rounded-xl border transition-all ${
                                   selectedDisco === disco.id
-                                    ? 'border-[#1D6A4A] bg-[#1D6A4A]/5 ring-1 ring-[#1D6A4A]'
+                                    ? 'border-primary bg-primary/5 ring-1 ring-primary'
                                     : 'border-gray-100 hover:border-gray-300 hover:bg-gray-50'
                                 }`}
                               >
@@ -683,7 +688,7 @@ export default function Dashboard() {
                                   <p className="font-bold text-gray-900 text-sm">{disco.name}</p>
                                   <p className="text-xs text-gray-500">{disco.short}</p>
                                 </div>
-                                {selectedDisco === disco.id && <Check size={20} className="text-[#1D6A4A]" />}
+                                {selectedDisco === disco.id && <Check size={20} className="text-primary-light" />}
                               </button>
                             ))}
                           </div>
@@ -701,7 +706,7 @@ export default function Dashboard() {
                             onClick={() => setMeterType(type)}
                             className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${
                               meterType === type 
-                                ? 'bg-[#1D6A4A] text-white shadow-sm' 
+                                ? 'bg-primary text-white shadow-sm'
                                 : 'text-gray-500 hover:text-gray-700'
                             }`}
                           >
@@ -726,12 +731,12 @@ export default function Dashboard() {
                             }
                           }}
                           placeholder="Enter Meter Number"
-                          className="w-full pl-4 pr-24 py-3 rounded-xl border border-gray-200 focus:border-[#1D6A4A] focus:ring-2 focus:ring-[#1D6A4A]/20 outline-none transition-all font-medium"
+                          className="w-full pl-4 pr-24 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium"
                         />
                         <button 
                           onClick={() => handleVerifyMeter()}
                           disabled={!selectedDisco || meterNumber.length < 5 || isVerifying}
-                          className="absolute right-2 top-1/2 -translate-y-1/2 px-3 py-1.5 text-xs font-bold text-[#1D6A4A] bg-[#1D6A4A]/10 rounded-lg hover:bg-[#1D6A4A]/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                          className="absolute right-2 top-1/2 -translate-y-1/2 px-3 py-1.5 text-xs font-bold text-primary-light bg-primary/10 rounded-lg hover:bg-primary/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                         >
                           {isVerifying ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Verify'}
                         </button>
@@ -753,7 +758,7 @@ export default function Dashboard() {
                           value={amount}
                           onChange={(e) => setAmount(e.target.value)}
                           placeholder="0.00"
-                          className="w-full pl-8 pr-4 py-3 rounded-xl border border-gray-200 focus:border-[#1D6A4A] focus:ring-2 focus:ring-[#1D6A4A]/20 outline-none transition-all font-bold text-lg"
+                          className="w-full pl-8 pr-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-bold text-lg"
                         />
                       </div>
                     </div>
@@ -761,7 +766,7 @@ export default function Dashboard() {
                     <button 
                       onClick={() => setElectricityStep('pin')}
                       disabled={!selectedDisco || !meterNumber || !amount}
-                      className="w-full bg-[#1D6A4A] hover:bg-[#155a3d] disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-2 mt-4"
+                      className="w-full btn-brand hover:brightness-110 disabled:[background-image:none] disabled:shadow-none disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2 mt-4"
                     >
                       Proceed
                     </button>
@@ -769,8 +774,8 @@ export default function Dashboard() {
                 ) : electricityStep === 'pin' ? (
                   <div className="py-4 space-y-8">
                     <div className="text-center space-y-2">
-                      <div className="w-16 h-16 bg-[#1D6A4A]/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <Lock className="w-8 h-8 text-[#1D6A4A]" />
+                      <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <Lock className="w-8 h-8 text-primary-light" />
                       </div>
                       <h4 className="font-bold text-gray-900">Enter your 4-digit PIN</h4>
                       <p className="text-sm text-gray-500 px-8">
@@ -789,7 +794,7 @@ export default function Dashboard() {
                           value={digit}
                           onChange={(e) => handlePinChange(index, e.target.value)}
                           onKeyDown={(e) => handleKeyDown(index, e)}
-                          className="w-14 h-14 rounded-xl border-2 border-gray-200 focus:border-[#1D6A4A] text-center text-2xl font-bold outline-none transition-all bg-gray-50 focus:bg-white"
+                          className="w-14 h-14 rounded-xl border-2 border-gray-200 focus:border-primary text-center text-2xl font-bold outline-none transition-all bg-gray-50 focus:bg-surface-high"
                         />
                       ))}
                     </div>
@@ -802,7 +807,7 @@ export default function Dashboard() {
                         setElectricityStep('success');
                       }}
                       disabled={pin.some(d => !d)}
-                      className="w-full bg-[#1D6A4A] hover:bg-[#155a3d] disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-2 mt-8"
+                      className="w-full btn-brand hover:brightness-110 disabled:[background-image:none] disabled:shadow-none disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2 mt-8"
                     >
                       Confirm Payment
                     </button>
@@ -829,7 +834,7 @@ export default function Dashboard() {
                     <div className="bg-gray-50 p-6 rounded-2xl border border-dashed border-gray-300 space-y-4">
                       <div className="text-center">
                          <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Token Code</p>
-                         <p className="text-2xl md:text-3xl font-mono font-bold text-[#1D6A4A] tracking-wider select-all">
+                         <p className="text-2xl md:text-3xl font-mono font-bold text-primary-light tracking-wider select-all">
                            {generatedToken}
                          </p>
                       </div>
@@ -838,7 +843,7 @@ export default function Dashboard() {
                           navigator.clipboard.writeText(generatedToken.replace(/\s/g, ''));
                           alert('Token copied!');
                         }}
-                        className="w-full flex items-center justify-center gap-2 py-2 text-sm font-bold text-[#1D6A4A] bg-[#1D6A4A]/10 rounded-lg hover:bg-[#1D6A4A]/20 transition-colors"
+                        className="w-full flex items-center justify-center gap-2 py-2 text-sm font-bold text-primary-light bg-primary/10 rounded-lg hover:bg-primary/20 transition-colors"
                       >
                         <Copy size={16} />
                         Copy Token
@@ -862,7 +867,7 @@ export default function Dashboard() {
 
                     <button 
                       onClick={closeElectricityModal}
-                      className="w-full bg-[#1D6A4A] hover:bg-[#155a3d] text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 mt-4"
+                      className="w-full btn-brand hover:brightness-110 text-white font-bold py-4 rounded-xl transition-all transform hover:-translate-y-0.5 mt-4"
                     >
                       Done
                     </button>
@@ -876,7 +881,7 @@ export default function Dashboard() {
         {/* Cable TV Modal */}
         {showCableModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-            <div className="bg-white rounded-2xl w-full max-w-md shadow-2xl animate-in fade-in zoom-in duration-200">
+            <div className="bg-surface border rounded-2xl w-full max-w-md shadow-2xl animate-in fade-in zoom-in duration-200">
               <div className="flex items-center justify-between p-6 border-b border-gray-100">
                 <h3 className="text-xl font-bold text-gray-900">{cableStep === 'details' ? 'Cable TV Subscription' : 'Enter Transaction PIN'}</h3>
                 <button 
@@ -901,7 +906,7 @@ export default function Dashboard() {
                             setSelectedPackage('');
                             setCableAmount('');
                           }}
-                          className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#1D6A4A] focus:ring-2 focus:ring-[#1D6A4A]/20 outline-none transition-all font-medium bg-white"
+                          className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium bg-surface"
                         >
                           <option value="">Select Cable Provider</option>
                           {cableProviders.map((provider) => (
@@ -924,7 +929,7 @@ export default function Dashboard() {
                              if (pkg) setCableAmount(pkg.price.toString());
                            }}
                            disabled={!selectedProvider}
-                           className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#1D6A4A] focus:ring-2 focus:ring-[#1D6A4A]/20 outline-none transition-all font-medium bg-white disabled:bg-gray-100 disabled:text-gray-400"
+                           className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium bg-surface disabled:bg-gray-100 disabled:text-gray-400"
                          >
                            <option value="">Select Package</option>
                            {/* @ts-ignore */}
@@ -949,11 +954,11 @@ export default function Dashboard() {
                              if(e.target.value.length >= 10) verifySmartCard(e.target.value);
                           }}
                           placeholder="Enter Smart Card Number"
-                          className="w-full pl-4 pr-12 py-3 rounded-xl border border-gray-200 focus:border-[#1D6A4A] focus:ring-2 focus:ring-[#1D6A4A]/20 outline-none transition-all font-medium"
+                          className="w-full pl-4 pr-12 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium"
                         />
                          <div className="absolute right-3 top-1/2 -translate-y-1/2">
                            {isVerifyingCard ? (
-                             <Loader2 className="w-5 h-5 text-[#1D6A4A] animate-spin" />
+                             <Loader2 className="w-5 h-5 text-primary-light animate-spin" />
                            ) : verifiedCardName ? (
                              <Check className="w-5 h-5 text-green-600" />
                            ) : null}
@@ -983,7 +988,7 @@ export default function Dashboard() {
                     <button 
                       onClick={() => setCableStep('pin')}
                       disabled={!selectedProvider || !selectedPackage || !verifiedCardName || !cableAmount}
-                      className="w-full bg-[#1D6A4A] hover:bg-[#155a3d] disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-2 mt-4"
+                      className="w-full btn-brand hover:brightness-110 disabled:[background-image:none] disabled:shadow-none disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2 mt-4"
                     >
                       Proceed
                     </button>
@@ -991,8 +996,8 @@ export default function Dashboard() {
                 ) : cableStep === 'pin' ? (
                   <div className="py-4 space-y-8">
                     <div className="text-center space-y-2">
-                       <div className="w-16 h-16 bg-[#1D6A4A]/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <Lock className="w-8 h-8 text-[#1D6A4A]" />
+                       <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <Lock className="w-8 h-8 text-primary-light" />
                       </div>
                       <h4 className="font-bold text-gray-900">Enter your 4-digit PIN</h4>
                       <p className="text-sm text-gray-500 px-8">
@@ -1011,7 +1016,7 @@ export default function Dashboard() {
                           value={digit}
                           onChange={(e) => handlePinChange(index, e.target.value)}
                           onKeyDown={(e) => handleKeyDown(index, e)}
-                          className="w-14 h-14 rounded-xl border-2 border-gray-200 focus:border-[#1D6A4A] text-center text-2xl font-bold outline-none transition-all bg-gray-50 focus:bg-white"
+                          className="w-14 h-14 rounded-xl border-2 border-gray-200 focus:border-primary text-center text-2xl font-bold outline-none transition-all bg-gray-50 focus:bg-surface-high"
                         />
                       ))}
                     </div>
@@ -1022,7 +1027,7 @@ export default function Dashboard() {
                         setCableStep('success');
                       }}
                       disabled={pin.some(p => !p)}
-                      className="w-full bg-[#1D6A4A] hover:bg-[#155a3d] disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 mt-8"
+                      className="w-full btn-brand hover:brightness-110 disabled:[background-image:none] disabled:shadow-none disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all transform hover:-translate-y-0.5 mt-8"
                     >
                       Confirm Payment
                     </button>
@@ -1060,7 +1065,7 @@ export default function Dashboard() {
 
                     <button 
                       onClick={closeCableModal}
-                      className="w-full bg-[#1D6A4A] hover:bg-[#155a3d] text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 mt-4"
+                      className="w-full btn-brand hover:brightness-110 text-white font-bold py-4 rounded-xl transition-all transform hover:-translate-y-0.5 mt-4"
                     >
                       Done
                     </button>
@@ -1075,7 +1080,7 @@ export default function Dashboard() {
         {/* Add Money Modal */}
         {showAddMoneyModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-            <div className="bg-white rounded-2xl w-full max-w-md shadow-2xl animate-in fade-in zoom-in duration-200">
+            <div className="bg-surface border rounded-2xl w-full max-w-md shadow-2xl animate-in fade-in zoom-in duration-200">
               <div className="flex items-center justify-between p-6 border-b border-gray-100">
                 <h3 className="text-xl font-bold text-gray-900">Add Money</h3>
                 <button 
@@ -1090,7 +1095,7 @@ export default function Dashboard() {
                 <div className="space-y-4">
                   <label className="text-sm font-medium text-gray-700">Select Funding Method</label>
                   
-                  <button className="w-full flex items-center gap-4 p-4 rounded-xl border border-gray-200 hover:border-[#1D6A4A] hover:bg-[#1D6A4A]/5 transition-all group">
+                  <button className="w-full flex items-center gap-4 p-4 rounded-xl border border-gray-200 hover:border-primary hover:bg-primary/5 transition-all group">
                     <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 group-hover:scale-110 transition-transform">
                       <Landmark size={20} />
                     </div>
@@ -1098,10 +1103,10 @@ export default function Dashboard() {
                       <p className="font-bold text-gray-900">Bank Transfer</p>
                       <p className="text-xs text-gray-500">Fund via virtual account transfer</p>
                     </div>
-                    <ChevronRight size={20} className="text-gray-400 group-hover:text-[#1D6A4A]" />
+                    <ChevronRight size={20} className="text-gray-400 group-hover:text-primary-light" />
                   </button>
 
-                  <button className="w-full flex items-center gap-4 p-4 rounded-xl border border-gray-200 hover:border-[#1D6A4A] hover:bg-[#1D6A4A]/5 transition-all group">
+                  <button className="w-full flex items-center gap-4 p-4 rounded-xl border border-gray-200 hover:border-primary hover:bg-primary/5 transition-all group">
                     <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 group-hover:scale-110 transition-transform">
                       <CreditCard size={20} />
                     </div>
@@ -1109,10 +1114,10 @@ export default function Dashboard() {
                       <p className="font-bold text-gray-900">Fund with Card</p>
                       <p className="text-xs text-gray-500">Fund instantly with your debit card</p>
                     </div>
-                    <ChevronRight size={20} className="text-gray-400 group-hover:text-[#1D6A4A]" />
+                    <ChevronRight size={20} className="text-gray-400 group-hover:text-primary-light" />
                   </button>
 
-                  <button className="w-full flex items-center gap-4 p-4 rounded-xl border border-gray-200 hover:border-[#1D6A4A] hover:bg-[#1D6A4A]/5 transition-all group">
+                  <button className="w-full flex items-center gap-4 p-4 rounded-xl border border-gray-200 hover:border-primary hover:bg-primary/5 transition-all group">
                     <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 group-hover:scale-110 transition-transform">
                       <Smartphone size={20} />
                     </div>
@@ -1120,7 +1125,7 @@ export default function Dashboard() {
                       <p className="font-bold text-gray-900">USSD Code</p>
                       <p className="text-xs text-gray-500">Fund using your bank's USSD code</p>
                     </div>
-                    <ChevronRight size={20} className="text-gray-400 group-hover:text-[#1D6A4A]" />
+                    <ChevronRight size={20} className="text-gray-400 group-hover:text-primary-light" />
                   </button>
                 </div>
               </div>
@@ -1131,7 +1136,7 @@ export default function Dashboard() {
         {/* Withdraw Modal */}
         {showWithdrawModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-            <div className="bg-white rounded-2xl w-full max-w-md shadow-2xl animate-in fade-in zoom-in duration-200">
+            <div className="bg-surface border rounded-2xl w-full max-w-md shadow-2xl animate-in fade-in zoom-in duration-200">
               <div className="flex items-center justify-between p-6 border-b border-gray-100">
                 <h3 className="text-xl font-bold text-gray-900">Withdraw Funds</h3>
                 <button 
@@ -1150,16 +1155,16 @@ export default function Dashboard() {
                     <input 
                       type="number" 
                       placeholder="0.00"
-                      className="w-full pl-8 pr-4 py-3 rounded-xl border border-gray-200 focus:border-[#1D6A4A] focus:ring-2 focus:ring-[#1D6A4A]/20 outline-none transition-all font-bold text-lg text-gray-900 placeholder:text-gray-300"
+                      className="w-full pl-8 pr-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-bold text-lg text-gray-900 placeholder:text-gray-300"
                     />
                   </div>
-                  <p className="text-xs text-gray-500">Available Balance: <span className="text-[#1D6A4A] font-bold">₦ 50,000.00</span></p>
+                  <p className="text-xs text-gray-500">Available Balance: <span className="text-primary-light font-bold">₦ 50,000.00</span></p>
                 </div>
 
                 <div className="space-y-4">
                   <label className="text-sm font-medium text-gray-700">Select Destination</label>
                   
-                  <button className="w-full flex items-center gap-4 p-4 rounded-xl border border-gray-200 hover:border-[#1D6A4A] hover:bg-[#1D6A4A]/5 transition-all group">
+                  <button className="w-full flex items-center gap-4 p-4 rounded-xl border border-gray-200 hover:border-primary hover:bg-primary/5 transition-all group">
                     <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 group-hover:scale-110 transition-transform">
                       <Landmark size={20} />
                     </div>
@@ -1167,10 +1172,10 @@ export default function Dashboard() {
                       <p className="font-bold text-gray-900">Bank Account</p>
                       <p className="text-xs text-gray-500">Withdraw to your linked bank account</p>
                     </div>
-                    <ChevronRight size={20} className="text-gray-400 group-hover:text-[#1D6A4A]" />
+                    <ChevronRight size={20} className="text-gray-400 group-hover:text-primary-light" />
                   </button>
 
-                  <button className="w-full flex items-center gap-4 p-4 rounded-xl border border-gray-200 hover:border-[#1D6A4A] hover:bg-[#1D6A4A]/5 transition-all group">
+                  <button className="w-full flex items-center gap-4 p-4 rounded-xl border border-gray-200 hover:border-primary hover:bg-primary/5 transition-all group">
                     <div className="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 group-hover:scale-110 transition-transform">
                       <Smartphone size={20} />
                     </div>
@@ -1178,11 +1183,11 @@ export default function Dashboard() {
                       <p className="font-bold text-gray-900">Mobile Money</p>
                       <p className="text-xs text-gray-500">Withdraw to mobile money wallet</p>
                     </div>
-                    <ChevronRight size={20} className="text-gray-400 group-hover:text-[#1D6A4A]" />
+                    <ChevronRight size={20} className="text-gray-400 group-hover:text-primary-light" />
                   </button>
                 </div>
 
-                <button className="w-full bg-[#1D6A4A] hover:bg-[#155a3d] text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                <button className="w-full btn-brand hover:brightness-110 text-white font-bold py-4 rounded-xl transition-all transform hover:-translate-y-0.5">
                   Next Step
                 </button>
               </div>
@@ -1190,139 +1195,167 @@ export default function Dashboard() {
           </div>
         )}
 
-        <div className="p-8 max-w-7xl mx-auto space-y-8">
-          {/* Welcome Section Removed */}
+        <div className="px-4 sm:px-8 pt-2 pb-8 max-w-6xl mx-auto space-y-8">
+          {/* Wallet Balance Card */}
+          <div className="relative overflow-hidden rounded-3xl p-6 md:p-8 bg-card-gradient border border-primary/50 shadow-glow">
+            <div className="pointer-events-none absolute -top-24 -right-16 w-80 h-80 bg-primary-light/30 rounded-full blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-24 left-1/3 w-72 h-72 bg-primary/30 rounded-full blur-3xl" />
 
-          {/* Balance Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Main Balance */}
-            <div className="md:col-span-2 bg-[#1D6A4A] rounded-2xl p-6 md:p-8 text-white relative overflow-hidden shadow-lg">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -mr-16 -mt-16 blur-2xl"></div>
-              
-              <div className="relative z-10 flex flex-col justify-between h-full space-y-6">
-                
-                {/* Header Row */}
-                <div className="flex justify-between items-start">
-                  <div className="flex items-center gap-3">
-                    <span className="text-white/80 font-medium">Wallet Balance</span>
-                    <button 
-                      onClick={() => setIsBalanceVisible(!isBalanceVisible)}
-                      className="text-white/80 hover:text-white transition-colors"
-                    >
-                      {isBalanceVisible ? <Eye size={20} /> : <EyeOff size={20} />}
-                    </button>
-                  </div>
-                  
-                  <Link 
-                      href="/transactions"
-                      className="bg-white text-[#1D6A4A] px-4 py-1.5 rounded-full text-[10px] sm:text-xs font-bold hover:bg-white/90 transition-colors flex items-center gap-1"
-                    >
-                      Transaction History
-                    </Link>
-                </div>
-
-                {/* Balance */}
-                <div>
-                   <h2 className="text-4xl md:text-5xl font-bold tracking-tight">
-                     {isBalanceVisible ? '₦ 50,000.00' : '****'}
-                   </h2>
-                </div>
-
-                {/* Actions Row */}
-                <div className="flex items-center gap-4">
-                  <button 
-                    onClick={() => setShowAddMoneyModal(true)}
-                    className="bg-white text-[#1D6A4A] px-6 py-3 rounded-full font-bold hover:bg-white/90 transition-all flex items-center justify-center transform hover:-translate-y-0.5 shadow-sm text-[13px] sm:text-base"
-                  >
-                    Add fund
-                  </button>
-                  
-                  <button 
-                    onClick={() => setShowWithdrawModal(true)}
-                    className="bg-white text-[#1D6A4A] px-6 py-3 rounded-full font-bold hover:bg-white/90 transition-all flex items-center gap-2 transform hover:-translate-y-0.5 shadow-sm text-[13px] sm:text-base"
-                  >
-                    <ArrowUpRight size={20} strokeWidth={3} />
-                    Withdraw
-                  </button>
-                </div>
-
+            {/* Wallet illustration */}
+            <div className="hidden sm:block absolute right-8 bottom-6 w-44 h-44 pointer-events-none">
+              <div className="absolute inset-0 rounded-full border-2 border-primary-light/60 rotate-[-18deg] scale-x-[1.15] scale-y-[0.55] top-10" />
+              <div className="absolute right-6 top-2 w-24 h-24 rotate-[14deg] rounded-3xl bg-brand-gradient border border-white/20 shadow-glow flex items-center justify-center">
+                <Wallet size={52} className="text-white" />
               </div>
+              <div className="absolute right-0 top-0 w-10 h-10 rounded-full bg-gradient-to-br from-amber-200 to-amber-500 border-2 border-amber-100 shadow-lg" />
             </div>
 
-            {/* Quick Stats */}
-            <div className="space-y-6 order-3 md:order-2">
-              <StatCard 
-                label="Income" 
-                value="₦ 120,500" 
-                trend="+12%" 
-                isPositive={true}
-                icon={<ArrowDownLeft className="text-green-600" />} 
-              />
-              <StatCard 
-                label="Expenses" 
-                value="₦ 45,200" 
-                trend="-5%" 
-                isPositive={false}
-                icon={<ArrowUpRight className="text-red-500" />} 
-              />
-            </div>
+            <div className="relative z-10 space-y-5">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <Wallet size={28} className="text-white" />
+                  <span className="text-lg font-medium text-white">Wallet Balance</span>
+                  <button
+                    onClick={() => setIsBalanceVisible(!isBalanceVisible)}
+                    className="text-white/80 hover:text-white transition-colors"
+                    aria-label="Toggle balance visibility"
+                  >
+                    {isBalanceVisible ? <Eye size={20} /> : <EyeOff size={20} />}
+                  </button>
+                </div>
 
-            {/* Quick Action Banner */}
-            <div className="bg-white p-6 rounded-xl border shadow-sm order-2 md:order-3 md:col-span-3 transition-colors duration-300">
-              <h3 className="font-bold text-gray-800 mb-4">Quick Action</h3>
-              <div className="grid grid-cols-4 gap-2 md:gap-4">
-                <QuickActionItem icon={<Wifi size={24} />} label="Data" onClick={() => setShowDataModal(true)} />
-                <QuickActionItem icon={<Smartphone size={24} />} label="Airtime" onClick={() => setShowAirtimeModal(true)} />
-                <QuickActionItem icon={<Zap size={24} />} label="Electricity" onClick={() => setShowElectricityModal(true)} />
-                <QuickActionItem icon={<Tv size={24} />} label="Cable Tv" onClick={() => setShowCableModal(true)} />
+                <Link
+                  href="/transactions"
+                  className="inline-flex items-center gap-2 rounded-full border border-primary-light/70 bg-black/20 px-5 py-2 text-sm font-semibold text-white hover:bg-white/10 transition-colors"
+                >
+                  Transaction History <ArrowRight size={16} />
+                </Link>
+              </div>
+
+              <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-white">
+                {isBalanceVisible ? '₦ 50,000.00' : '****'}
+              </h2>
+
+              <div className="h-px w-full max-w-md bg-gradient-to-r from-primary-light/60 to-transparent" />
+
+              <div className="flex flex-wrap items-center gap-4">
+                <button
+                  onClick={() => setShowAddMoneyModal(true)}
+                  className="btn-brand inline-flex items-center gap-2 rounded-full px-7 py-3 font-semibold text-white transition-transform hover:-translate-y-0.5"
+                >
+                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white text-primary">
+                    <Plus size={16} strokeWidth={3} />
+                  </span>
+                  Add Money
+                </button>
+
+                <button
+                  onClick={() => setShowWithdrawModal(true)}
+                  className="inline-flex items-center gap-2 rounded-full border border-primary-light/70 bg-black/25 px-7 py-3 font-semibold text-white transition-transform hover:-translate-y-0.5 hover:bg-white/10"
+                >
+                  <ArrowUpRight size={20} strokeWidth={2.5} />
+                  Withdraw
+                </button>
               </div>
             </div>
           </div>
 
-          {/* Recent Transactions Table */}
-          <div className="bg-white rounded-xl border shadow-sm transition-colors duration-300">
-            <div className="p-6 border-b flex justify-between items-center">
-              <h3 className="font-bold text-gray-800">Recent Transactions</h3>
-              <button className="text-[#1D6A4A] text-sm font-medium hover:underline">View All</button>
+          {/* Quick Actions */}
+          <section>
+            <div className="mb-4 flex items-center justify-between">
+              <h3 className="flex items-center gap-3 text-xl font-bold text-white">
+                <span className="section-bar" />
+                Quick Actions
+              </h3>
+              <Link href="/services" className="flex items-center gap-1 text-sm font-semibold text-primary-light hover:underline">
+                See All <ArrowRight size={16} />
+              </Link>
+            </div>
+            <div className="grid grid-cols-3 gap-3 md:gap-5">
+              <QuickActionItem icon={<Phone size={36} strokeWidth={1.75} />} label="Airtime" onClick={() => setShowAirtimeModal(true)} />
+              <QuickActionItem icon={<Wifi size={36} strokeWidth={1.75} />} label="Data" onClick={() => setShowDataModal(true)} />
+              <QuickActionItem icon={<CreditCard size={36} strokeWidth={1.75} />} label="ATM Card" href="/cards" />
+              <QuickActionItem icon={<Globe size={36} strokeWidth={1.75} />} label="Foreign Number" href="/services" />
+              <QuickActionItem icon={<Gift size={36} strokeWidth={1.75} />} label="Engagement" href="/services" />
+              <QuickActionItem icon={<MoreHorizontal size={36} strokeWidth={1.75} />} label="More" href="/services" />
+            </div>
+          </section>
+
+          {/* Verification banner */}
+          <div className="relative overflow-hidden rounded-3xl border border-primary/50 bg-gradient-to-r from-[#3a0f8f] via-[#5B0FD1] to-[#8A2BFF] p-6 md:p-8 shadow-glow-sm">
+            <div className="pointer-events-none absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_70%_40%,#fff_0,transparent_45%)]" />
+            <div className="relative z-10 max-w-[62%] sm:max-w-[55%] space-y-4">
+              <p className="text-lg md:text-2xl font-semibold leading-snug text-white">
+                Buy all countries phone number for verification with ease in{' '}
+                <span className="text-primary-light brightness-150">less than 5 secs</span>
+              </p>
+              <Link
+                href="/services"
+                className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-2.5 font-bold text-primary-dark hover:bg-white/90 transition-colors"
+              >
+                Verify Now <ArrowRight size={18} />
+              </Link>
+            </div>
+
+            {/* Phone + flags illustration */}
+            <div className="pointer-events-none absolute right-4 sm:right-10 top-1/2 -translate-y-1/2 h-40 w-40 sm:h-52 sm:w-52">
+              <div className="absolute left-1/2 top-1/2 h-36 w-20 sm:h-44 sm:w-24 -translate-x-1/2 -translate-y-1/2 rotate-[14deg] rounded-[22px] border-[3px] border-gray-400/80 bg-gradient-to-b from-[#1b0b52] to-[#0b0430] shadow-glow flex items-center justify-center">
+                <ShieldCheck size={44} className="text-primary-light" />
+              </div>
+              <img src="https://flagcdn.com/w80/us.png" alt="" className="absolute left-0 top-2 h-10 w-10 rounded-full border-2 border-white/80 object-cover" />
+              <img src="https://flagcdn.com/w80/ca.png" alt="" className="absolute left-2 bottom-4 h-10 w-10 rounded-full border-2 border-white/80 object-cover" />
+              <img src="https://flagcdn.com/w80/gb.png" alt="" className="absolute right-0 top-4 h-10 w-10 rounded-full border-2 border-white/80 object-cover" />
+              <img src="https://flagcdn.com/w80/de.png" alt="" className="absolute right-2 bottom-2 h-10 w-10 rounded-full border-2 border-white/80 object-cover" />
+            </div>
+          </div>
+
+          {/* Recent Transactions */}
+          <div className="glass-card rounded-3xl overflow-hidden">
+            <div className="flex items-center justify-between px-6 py-5">
+              <h3 className="flex items-center gap-3 text-lg font-bold text-white">
+                <span className="section-bar !h-5" />
+                Recent Transactions
+              </h3>
+              <Link href="/transactions" className="flex items-center gap-1 text-sm font-semibold text-primary-light hover:underline">
+                View All <ArrowRight size={16} />
+              </Link>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-off-white text-xs text-gray-500 uppercase transition-colors duration-300">
+                <thead className="bg-primary/10 text-xs text-gray-500">
                   <tr>
-                    <th className="px-6 py-4 text-left">Transaction</th>
-
-                    <th className="px-6 py-4 text-left">Status</th>
-                    <th className="px-6 py-4 text-left">Date</th>
-                    <th className="px-6 py-4 text-right">Amount</th>
+                    <th className="px-4 sm:px-6 py-3 text-left font-medium">Date &amp; Time</th>
+                    <th className="px-4 sm:px-6 py-3 text-left font-medium">Description</th>
+                    <th className="px-4 sm:px-6 py-3 text-left font-medium">Amount</th>
+                    <th className="px-4 sm:px-6 py-3 text-right font-medium">Status</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y">
-                  <TransactionRow 
-                    title="Transfer to Sarah" 
-                    subtitle="Bank Transfer" 
-                    date="Today, 10:30 AM" 
-                    amount="- ₦ 5,000" 
-                    status="Success"
-                  />
-                  <TransactionRow 
-                    title="MTN Airtime" 
-                    subtitle="Airtime Purchase" 
-                    date="Yesterday, 2:15 PM" 
-                    amount="- ₦ 1,000" 
-                    status="Success"
-                  />
-                  <TransactionRow 
-                    title="Deposit from GTBank" 
-                    subtitle="Wallet Funding" 
-                    date="Jan 15, 2024" 
-                    amount="+ ₦ 25,000" 
+                <tbody>
+                  <TransactionRow
+                    title="Wallet Funding"
+                    subtitle="Deposit from GTBank"
+                    date="Apr 27, 2026 09:30 AM"
+                    amount="+ ₦ 10,000.00"
                     status="Success"
                     isCredit
+                  />
+                  <TransactionRow
+                    title="MTN Airtime"
+                    subtitle="Airtime Purchase"
+                    date="Apr 26, 2026 02:15 PM"
+                    amount="- ₦ 1,000.00"
+                    status="Success"
+                  />
+                  <TransactionRow
+                    title="Transfer to Sarah"
+                    subtitle="Bank Transfer"
+                    date="Apr 25, 2026 10:30 AM"
+                    amount="- ₦ 5,000.00"
+                    status="Success"
                   />
                 </tbody>
               </table>
             </div>
-            
           </div>
         </div>
       </main>
@@ -1335,48 +1368,16 @@ export default function Dashboard() {
 
 // Helper Components
 
-function QuickActionItem({ icon, label, onClick }: { icon: React.ReactNode, label: String, onClick?: () => void }) {
-  return (
-    <button 
-      onClick={onClick}
-      className="flex flex-col items-center gap-2 p-4 rounded-xl hover:bg-gray-50 transition-colors border border-transparent hover:border-gray-100"
-    >
-      <div className="w-12 h-12 rounded-full bg-[#27835E]/10 flex items-center justify-center text-[#27835E]">
-        {icon}
-      </div>
-      <span className="text-xs md:text-sm font-medium text-gray-700 text-center">{label}</span>
-    </button>
+function QuickActionItem({ icon, label, onClick, href }: { icon: React.ReactNode, label: string, onClick?: () => void, href?: string }) {
+  const className = "glass-card flex flex-col items-center justify-center gap-3 rounded-2xl px-2 py-5 md:py-7 text-white transition-all hover:-translate-y-0.5 hover:border-primary-light/70 hover:shadow-glow-sm";
+  const content = (
+    <>
+      <span className="text-primary-light drop-shadow-[0_0_10px_rgba(177,77,255,0.7)]">{icon}</span>
+      <span className="text-sm md:text-base font-medium text-center">{label}</span>
+    </>
   );
+  if (href) {
+    return <Link href={href} className={className}>{content}</Link>;
+  }
+  return <button onClick={onClick} className={className}>{content}</button>;
 }
-
-function ActionButton({ icon, label, onClick }: { icon: React.ReactNode, label: String, onClick?: () => void }) {
-  return (
-    <button 
-      onClick={onClick}
-      className="flex items-center gap-1.5 md:gap-2 bg-white text-[#1D6A4A] px-3 py-2 md:px-5 md:py-2.5 rounded-full font-medium shadow-sm hover:shadow-md transition whitespace-nowrap"
-    >
-      {icon}
-      <span className="text-xs md:text-base">{label}</span>
-    </button>
-  );
-}
-
-function StatCard({ label, value, trend, isPositive, icon }: any) {
-  return (
-    <div className="bg-white p-5 rounded-xl border flex items-center justify-between shadow-sm transition-colors duration-300">
-      <div>
-        <p className="text-gray-500 text-sm mb-1">{label}</p>
-        <h4 className="text-2xl font-bold text-gray-800">{value}</h4>
-        <p className={`text-xs mt-1 ${isPositive ? 'text-green-600' : 'text-red-500'}`}>
-          {trend} from last month
-        </p>
-      </div>
-      <div className={`p-3 rounded-full ${isPositive ? 'bg-green-50' : 'bg-red-50'}`}>
-        {icon}
-      </div>
-    </div>
-  );
-}
-
-
-

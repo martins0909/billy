@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../theme/billy_colors.dart';
+import '../widgets/billy_widgets.dart';
 import 'package:flutter/services.dart';
 
 class AirtimeScreen extends StatefulWidget {
@@ -33,15 +35,15 @@ class _AirtimeScreenState extends State<AirtimeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
       appBar: AppBar(
-        title: const Text("Buy Airtime", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+        title: const Text("Buy Airtime", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.white),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
+      body: GlowBackground(
+        child: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,7 +51,7 @@ class _AirtimeScreenState extends State<AirtimeScreen> {
             // Network Selection
             const Text(
               "Select Network",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
             ),
             const SizedBox(height: 12),
             Row(
@@ -66,9 +68,9 @@ class _AirtimeScreenState extends State<AirtimeScreen> {
                     width: 70,
                     height: 70,
                     decoration: BoxDecoration(
-                      color: isSelected ? network['color'].withOpacity(0.2) : Colors.white,
+                      color: isSelected ? network['color'].withOpacity(0.2) : BillyColors.surface,
                       border: Border.all(
-                        color: isSelected ? network['color'] : Colors.grey.shade300,
+                        color: isSelected ? network['color'] : BillyColors.borderSoft,
                         width: 2,
                       ),
                       borderRadius: BorderRadius.circular(12),
@@ -76,14 +78,14 @@ class _AirtimeScreenState extends State<AirtimeScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(network['logo'], color: isSelected ? network['color'] : Colors.grey),
+                        Icon(network['logo'], color: isSelected ? network['color'] : BillyColors.textMuted),
                         const SizedBox(height: 4),
                         Text(
                           network['name'],
                           style: TextStyle(
                             fontSize: 10, 
                             fontWeight: FontWeight.bold,
-                            color: isSelected ? network['color'] : Colors.grey
+                            color: isSelected ? network['color'] : BillyColors.textMuted
                           ),
                         ),
                       ],
@@ -98,24 +100,19 @@ class _AirtimeScreenState extends State<AirtimeScreen> {
             // Phone Number Input
             const Text(
               "Phone Number",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
             ),
             const SizedBox(height: 8),
             TextField(
               controller: _phoneController,
               keyboardType: TextInputType.phone,
+              style: const TextStyle(color: Colors.white),
               inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(11)],
               decoration: InputDecoration(
                 hintText: "Enter phone number",
-                prefixIcon: const Icon(Icons.phone_android),
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide.none,
-                ),
+                prefixIcon: const Icon(Icons.phone_android, color: BillyColors.textMuted),
                 suffixIcon: IconButton(
-                  icon: const Icon(Icons.contact_phone, color: Color(0xFF1D6A4A)),
+                  icon: const Icon(Icons.contact_phone, color: BillyColors.primaryLight),
                   onPressed: () {
                     // Logic to pick from contacts
                   },
@@ -128,22 +125,18 @@ class _AirtimeScreenState extends State<AirtimeScreen> {
             // Amount Input
             const Text(
               "Amount",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
             ),
             const SizedBox(height: 8),
             TextField(
               controller: _amountController,
               keyboardType: TextInputType.number,
+              style: const TextStyle(color: Colors.white),
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: "Enter amount",
                 prefixText: "₦ ",
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide.none,
-                ),
+                prefixStyle: TextStyle(color: Colors.white),
               ),
             ),
 
@@ -161,14 +154,14 @@ class _AirtimeScreenState extends State<AirtimeScreen> {
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF1D6A4A).withOpacity(0.1),
+                      color: BillyColors.primary.withOpacity(0.15),
                       borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: const Color(0xFF1D6A4A).withOpacity(0.3)),
+                      border: Border.all(color: BillyColors.border),
                     ),
                     child: Text(
                       "₦$amount",
                       style: const TextStyle(
-                        color: Color(0xFF1D6A4A),
+                        color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -180,11 +173,11 @@ class _AirtimeScreenState extends State<AirtimeScreen> {
             const SizedBox(height: 40),
 
             // Pay Button
-            SizedBox(
-              width: double.infinity,
-              height: 55,
-              child: ElevatedButton(
-                onPressed: () {
+            GradientButton(
+              label: "Pay",
+              expand: true,
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              onPressed: () {
                   // Implement payment logic here
                   if (_phoneController.text.isEmpty || _amountController.text.isEmpty || _selectedNetwork == null) {
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -203,69 +196,49 @@ class _AirtimeScreenState extends State<AirtimeScreen> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const Text("Confirm Transaction", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                          const Text("Confirm Transaction", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white)),
                           const SizedBox(height: 20),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text("Network"),
-                              Text(_selectedNetwork!, style: const TextStyle(fontWeight: FontWeight.bold)),
+                              const Text("Network", style: TextStyle(color: BillyColors.textSecondary)),
+                              Text(_selectedNetwork!, style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
                             ],
                           ),
                           const SizedBox(height: 12),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text("Number"),
-                              Text(_phoneController.text, style: const TextStyle(fontWeight: FontWeight.bold)),
+                              const Text("Number", style: TextStyle(color: BillyColors.textSecondary)),
+                              Text(_phoneController.text, style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
                             ],
                           ),
                           const SizedBox(height: 12),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text("Amount"),
-                              Text("₦${_amountController.text}", style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF1D6A4A))),
+                              const Text("Amount", style: TextStyle(color: BillyColors.textSecondary)),
+                              Text("₦${_amountController.text}", style: const TextStyle(fontWeight: FontWeight.bold, color: BillyColors.primaryLight)),
                             ],
                           ),
                           const SizedBox(height: 30),
-                          SizedBox(
-                            width: double.infinity,
-                            height: 50,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.pop(context); // Close sheet
-                                _showPinDialog();
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF1D6A4A),
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                              ),
-                              child: const Text("Confirm Pay", style: TextStyle(color: Colors.white, fontSize: 16)),
-                            ),
+                          GradientButton(
+                            label: "Confirm Pay",
+                            expand: true,
+                            onPressed: () {
+                              Navigator.pop(context); // Close sheet
+                              _showPinDialog();
+                            },
                           )
                         ],
                       ),
                     )
                   );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF1D6A4A),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                  elevation: 2,
-                ),
-                child: const Text(
-                  "Pay",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
+              },
             ),
           ],
         ),
+      ),
       ),
     );
   }
@@ -280,13 +253,16 @@ class _AirtimeScreenState extends State<AirtimeScreen> {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              backgroundColor: Colors.white,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-              title: const Center(child: Text("Enter PIN", style: TextStyle(fontWeight: FontWeight.bold))),
+              backgroundColor: BillyColors.surface,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+                side: const BorderSide(color: BillyColors.border),
+              ),
+              title: const Center(child: Text("Enter PIN", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white))),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Text("Enter your 4-digit security PIN", style: TextStyle(color: Colors.grey)),
+                  const Text("Enter your 4-digit security PIN", style: TextStyle(color: BillyColors.textSecondary)),
                   const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -297,7 +273,7 @@ class _AirtimeScreenState extends State<AirtimeScreen> {
                         height: 15,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: index < enteredPin.length ? const Color(0xFF1D6A4A) : Colors.grey.shade300,
+                          color: index < enteredPin.length ? BillyColors.primaryLight : BillyColors.surfaceHigh,
                         ),
                       );
                     }),
@@ -358,7 +334,7 @@ class _AirtimeScreenState extends State<AirtimeScreen> {
                             child: const SizedBox(
                               width: 60,
                               height: 60,
-                              child: Icon(Icons.backspace_outlined),
+                              child: Icon(Icons.backspace_outlined, color: Colors.white),
                             ),
                           ),
                         ],
@@ -370,7 +346,7 @@ class _AirtimeScreenState extends State<AirtimeScreen> {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text("Cancel", style: TextStyle(color: Colors.red)),
+                  child: const Text("Cancel", style: TextStyle(color: BillyColors.error)),
                 ),
               ],
             );
@@ -390,9 +366,10 @@ class _AirtimeScreenState extends State<AirtimeScreen> {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: Colors.grey.shade100,
+          color: BillyColors.surfaceHigh,
+          border: Border.all(color: BillyColors.borderSoft),
         ),
-        child: Text(text, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+        child: Text(text, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white)),
       ),
     );
   }
@@ -402,7 +379,7 @@ class _AirtimeScreenState extends State<AirtimeScreen> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => const Center(child: CircularProgressIndicator(color: Color(0xFF1D6A4A))),
+      builder: (context) => const Center(child: CircularProgressIndicator(color: BillyColors.primary)),
     );
 
     Future.delayed(const Duration(seconds: 2), () {
@@ -410,7 +387,7 @@ class _AirtimeScreenState extends State<AirtimeScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Transaction Successful!"), 
-          backgroundColor: Color(0xFF1D6A4A),
+          backgroundColor: BillyColors.primary,
         ),
       );
       Navigator.pop(context); // Go back to Home

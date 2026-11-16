@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../theme/billy_colors.dart';
+import '../widgets/billy_widgets.dart';
 
 class CableTvScreen extends StatefulWidget {
   const CableTvScreen({super.key});
@@ -80,15 +82,16 @@ class _CableTvScreenState extends State<CableTvScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: BillyColors.background,
       appBar: AppBar(
-        title: const Text("Cable TV Subscription", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+        title: const Text("Cable TV Subscription", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.white),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
+      body: GlowBackground(
+        child: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,22 +99,24 @@ class _CableTvScreenState extends State<CableTvScreen> {
             // Provider Selection
             const Text(
               "Select Provider",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
             ),
             const SizedBox(height: 12),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
               decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.grey.shade300),
+                color: BillyColors.surface,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: BillyColors.border),
               ),
               child: DropdownButtonHideUnderline(
                 child: DropdownButton<String>(
                   isExpanded: true,
-                  hint: const Text("Select Cable Provider"),
+                  dropdownColor: BillyColors.surfaceHigh,
+                  style: const TextStyle(color: Colors.white),
+                  hint: const Text("Select Cable Provider", style: TextStyle(color: BillyColors.textMuted)),
                   value: _selectedProvider,
-                  icon: const Icon(Icons.arrow_drop_down, color: Colors.black54),
+                  icon: const Icon(Icons.arrow_drop_down, color: BillyColors.primaryLight),
                   items: _providers.map((provider) {
                     return DropdownMenuItem<String>(
                       value: provider['name'],
@@ -128,7 +133,7 @@ class _CableTvScreenState extends State<CableTvScreen> {
                           const SizedBox(width: 12),
                           Text(
                             provider['name'],
-                            style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black87, fontSize: 14),
+                            style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 14),
                           ),
                         ],
                       ),
@@ -151,22 +156,24 @@ class _CableTvScreenState extends State<CableTvScreen> {
             // Package Selection
             const Text(
               "Select Package",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
             ),
             const SizedBox(height: 12),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
               decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.grey.shade300),
+                color: BillyColors.surface,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: BillyColors.border),
               ),
               child: DropdownButtonHideUnderline(
                 child: DropdownButton<String>(
                   isExpanded: true,
-                  hint: const Text("Select Package"),
+                  dropdownColor: BillyColors.surfaceHigh,
+                  style: const TextStyle(color: Colors.white),
+                  hint: const Text("Select Package", style: TextStyle(color: BillyColors.textMuted)),
                   value: _selectedPackage,
-                  icon: const Icon(Icons.arrow_drop_down, color: Colors.black54),
+                  icon: const Icon(Icons.arrow_drop_down, color: BillyColors.primaryLight),
                   items: _selectedProvider == null 
                     ? [] 
                     : _packages[_selectedProvider]!.map((pkg) {
@@ -175,8 +182,8 @@ class _CableTvScreenState extends State<CableTvScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(pkg['name'], style: const TextStyle(color: Colors.black87)),
-                              Text("₦${pkg['price']}", style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF1D6A4A))),
+                              Text(pkg['name'], style: const TextStyle(color: Colors.white)),
+                              Text("₦${pkg['price']}", style: const TextStyle(fontWeight: FontWeight.bold, color: BillyColors.primaryLight)),
                             ],
                           ),
                         );
@@ -195,32 +202,36 @@ class _CableTvScreenState extends State<CableTvScreen> {
             const SizedBox(height: 24),
 
             // Smart Card Number
-            const Text("Smart Card / IUC Number", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87)),
+            const Text("Smart Card / IUC Number", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white)),
             const SizedBox(height: 8),
             Container(
               decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.grey.shade300),
+                color: BillyColors.surface,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: BillyColors.border),
               ),
               child: Column(
                 children: [
                    TextField(
                     controller: _smartCardController,
                     keyboardType: TextInputType.number,
+                    style: const TextStyle(color: Colors.white),
                     onChanged: (val) {
                        setState(() => _verifiedName = null);
                     },
                     decoration: InputDecoration(
                       hintText: "Enter IUC / Smart Card Number",
-                      prefixIcon: const Icon(Icons.credit_card, color: Colors.grey),
+                      prefixIcon: const Icon(Icons.credit_card, color: BillyColors.textMuted),
                       suffixIcon: TextButton(
                         onPressed: _selectedProvider == null ? null : _verifySmartCard,
                         child: _isVerifying 
                           ? const SizedBox(width: 15, height: 15, child: CircularProgressIndicator(strokeWidth: 2))
                           : const Text("Verify", style: TextStyle(fontWeight: FontWeight.bold)),
                       ),
+                      filled: false,
                       border: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      focusedBorder: InputBorder.none,
                       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                     ),
                   ),
@@ -229,12 +240,12 @@ class _CableTvScreenState extends State<CableTvScreen> {
                       width: double.infinity,
                       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFE8F5E9),
-                        borderRadius: const BorderRadius.vertical(bottom: Radius.circular(12)),
+                        color: BillyColors.success.withOpacity(0.15),
+                        borderRadius: const BorderRadius.vertical(bottom: Radius.circular(16)),
                       ),
                       child: Text(
                         _verifiedName!,
-                        style: const TextStyle(color: Color(0xFF1D6A4A), fontWeight: FontWeight.bold, fontSize: 12),
+                        style: const TextStyle(color: BillyColors.success, fontWeight: FontWeight.bold, fontSize: 12),
                       ),
                     ),
                 ],
@@ -244,23 +255,27 @@ class _CableTvScreenState extends State<CableTvScreen> {
             const SizedBox(height: 24),
 
             // Amount (Read Only)
-            const Text("Amount", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87)),
+            const Text("Amount", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white)),
             const SizedBox(height: 8),
             Container(
               decoration: BoxDecoration(
-                color: Colors.grey.shade100,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.grey.shade300),
+                color: BillyColors.surfaceHigh,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: BillyColors.borderSoft),
               ),
               child: TextField(
                 controller: _amountController,
                 readOnly: true,
-                style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
+                style: const TextStyle(fontWeight: FontWeight.bold, color: BillyColors.textSecondary),
                 decoration: const InputDecoration(
                   hintText: "0.00",
-                  prefixIcon: Icon(Icons.attach_money, color: Colors.grey),
+                  prefixIcon: Icon(Icons.attach_money, color: BillyColors.textMuted),
                   prefixText: "₦ ",
+                  prefixStyle: TextStyle(color: BillyColors.textSecondary, fontWeight: FontWeight.bold),
+                  filled: false,
                   border: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none,
                   contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                 ),
               ),
@@ -268,11 +283,11 @@ class _CableTvScreenState extends State<CableTvScreen> {
 
             const SizedBox(height: 40),
 
-            SizedBox(
-              width: double.infinity,
-              height: 55,
-              child: ElevatedButton(
-                onPressed: () {
+            GradientButton(
+              label: "Proceed",
+              expand: true,
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+              onPressed: () {
                    if (_selectedProvider == null || _selectedPackage == null) {
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Select Provider and Package")));
                       return;
@@ -283,20 +298,11 @@ class _CableTvScreenState extends State<CableTvScreen> {
                    }
 
                    _showConfirmationSheet();
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF1D6A4A),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                  elevation: 2,
-                ),
-                child: const Text(
-                  "Proceed",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
-                ),
-              ),
+              },
             ),
           ],
         ),
+      ),
       ),
     );
   }
@@ -304,8 +310,10 @@ class _CableTvScreenState extends State<CableTvScreen> {
   void _showConfirmationSheet() {
     showModalBottomSheet(
       context: context,
+      backgroundColor: BillyColors.surface,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+        side: BorderSide(color: BillyColors.border),
       ),
       builder: (context) => Container(
         padding: const EdgeInsets.all(24),
@@ -314,7 +322,7 @@ class _CableTvScreenState extends State<CableTvScreen> {
           children: [
             const Text(
               "Confirm Payment",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
             ),
             const SizedBox(height: 20),
             _buildDetailRow("Service", "Cable TV"),
@@ -324,20 +332,13 @@ class _CableTvScreenState extends State<CableTvScreen> {
             _buildDetailRow("Amount", "₦${_amountController.text}"),
             
             const SizedBox(height: 30),
-            SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context); // Close sheet
-                  _showPinDialog(); // Trigger PIN flow
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF1D6A4A),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                ),
-                child: const Text("Confirm & Pay", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
-              ),
+            GradientButton(
+              label: "Confirm & Pay",
+              expand: true,
+              onPressed: () {
+                Navigator.pop(context); // Close sheet
+                _showPinDialog(); // Trigger PIN flow
+              },
             )
           ],
         ),
@@ -355,13 +356,16 @@ class _CableTvScreenState extends State<CableTvScreen> {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              backgroundColor: Colors.white,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-              title: const Center(child: Text("Enter PIN", style: TextStyle(fontWeight: FontWeight.bold))),
+              backgroundColor: BillyColors.surfaceHigh,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(24),
+                side: const BorderSide(color: BillyColors.border),
+              ),
+              title: const Center(child: Text("Enter PIN", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white))),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Text("Enter your 4-digit security PIN", style: TextStyle(color: Colors.grey)),
+                  const Text("Enter your 4-digit security PIN", style: TextStyle(color: BillyColors.textSecondary)),
                   const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -372,7 +376,7 @@ class _CableTvScreenState extends State<CableTvScreen> {
                         height: 15,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: index < enteredPin.length ? const Color(0xFF1D6A4A) : Colors.grey.shade300,
+                          color: index < enteredPin.length ? BillyColors.primaryLight : BillyColors.border,
                         ),
                       );
                     }),
@@ -431,7 +435,7 @@ class _CableTvScreenState extends State<CableTvScreen> {
                             child: const SizedBox(
                               width: 60,
                               height: 60,
-                              child: Icon(Icons.backspace_outlined),
+                              child: Icon(Icons.backspace_outlined, color: Colors.white),
                             ),
                           ),
                         ],
@@ -443,7 +447,7 @@ class _CableTvScreenState extends State<CableTvScreen> {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text("Cancel", style: TextStyle(color: Colors.red)),
+                  child: const Text("Cancel", style: TextStyle(color: BillyColors.error)),
                 ),
               ],
             );
@@ -463,9 +467,10 @@ class _CableTvScreenState extends State<CableTvScreen> {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: Colors.grey.shade100,
+          color: BillyColors.primary.withOpacity(0.15),
+          border: Border.all(color: BillyColors.borderSoft),
         ),
-        child: Text(text, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+        child: Text(text, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white)),
       ),
     );
   }
@@ -474,7 +479,7 @@ class _CableTvScreenState extends State<CableTvScreen> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => const Center(child: CircularProgressIndicator(color: Color(0xFF1D6A4A))),
+      builder: (context) => const Center(child: CircularProgressIndicator(color: BillyColors.primaryLight)),
     );
 
     Future.delayed(const Duration(seconds: 2), () {
@@ -484,29 +489,26 @@ class _CableTvScreenState extends State<CableTvScreen> {
         context: context,
         barrierDismissible: false,
         builder: (context) => AlertDialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+            side: const BorderSide(color: BillyColors.border),
+          ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(Icons.check_circle, color: Color(0xFF1D6A4A), size: 60),
+              const Icon(Icons.check_circle, color: BillyColors.primaryLight, size: 60),
               const SizedBox(height: 20),
-              const Text("Successful!", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+              const Text("Successful!", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white)),
               const SizedBox(height: 10),
-              const Text("Your Cable TV subscription has been renewed.", textAlign: TextAlign.center),
+              const Text("Your Cable TV subscription has been renewed.", textAlign: TextAlign.center, style: TextStyle(color: BillyColors.textSecondary)),
               const SizedBox(height: 20),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context); // Close dialog
-                    Navigator.pop(context); // Go back
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF1D6A4A),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                  ),
-                  child: const Text("Done", style: TextStyle(color: Colors.white)),
-                ),
+              GradientButton(
+                label: "Done",
+                expand: true,
+                onPressed: () {
+                  Navigator.pop(context); // Close dialog
+                  Navigator.pop(context); // Go back
+                },
               )
             ],
           ),
@@ -521,8 +523,8 @@ class _CableTvScreenState extends State<CableTvScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: const TextStyle(color: Colors.grey, fontSize: 16)),
-          Text(value, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+          Text(label, style: const TextStyle(color: BillyColors.textSecondary, fontSize: 16)),
+          Text(value, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white)),
         ],
       ),
     );

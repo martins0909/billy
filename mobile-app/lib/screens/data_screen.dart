@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../theme/billy_colors.dart';
+import '../widgets/billy_widgets.dart';
 import 'package:flutter/services.dart';
 
 class DataScreen extends StatefulWidget {
@@ -63,15 +65,15 @@ class _DataScreenState extends State<DataScreen> {
         _selectedNetwork != null ? (_dataPlans[_selectedNetwork] ?? []) : [];
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
       appBar: AppBar(
-        title: const Text("Buy Data", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+        title: const Text("Buy Data", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.white),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
+      body: GlowBackground(
+        child: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,7 +81,7 @@ class _DataScreenState extends State<DataScreen> {
             // Network Selection
             const Text(
               "Select Network",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
             ),
             const SizedBox(height: 12),
             Row(
@@ -97,9 +99,9 @@ class _DataScreenState extends State<DataScreen> {
                     width: 70,
                     height: 70,
                     decoration: BoxDecoration(
-                      color: isSelected ? network['color'].withOpacity(0.2) : Colors.white,
+                      color: isSelected ? network['color'].withOpacity(0.2) : BillyColors.surface,
                       border: Border.all(
-                        color: isSelected ? network['color'] : Colors.grey.shade300,
+                        color: isSelected ? network['color'] : BillyColors.borderSoft,
                         width: 2,
                       ),
                       borderRadius: BorderRadius.circular(12),
@@ -107,14 +109,14 @@ class _DataScreenState extends State<DataScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(network['logo'], color: isSelected ? network['color'] : Colors.grey),
+                        Icon(network['logo'], color: isSelected ? network['color'] : BillyColors.textMuted),
                         const SizedBox(height: 4),
                         Text(
                           network['name'],
                           style: TextStyle(
                             fontSize: 10, 
                             fontWeight: FontWeight.bold,
-                            color: isSelected ? network['color'] : Colors.grey
+                            color: isSelected ? network['color'] : BillyColors.textMuted
                           ),
                         ),
                       ],
@@ -129,20 +131,27 @@ class _DataScreenState extends State<DataScreen> {
             // Plan Selection
             const Text(
               "Select Data Plan",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
             ),
             const SizedBox(height: 12),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: BillyColors.surface,
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.grey.shade300),
+                border: Border.all(color: BillyColors.border),
               ),
               child: DropdownButtonHideUnderline(
                 child: DropdownButton<Map<String, dynamic>>(
                   isExpanded: true,
-                  hint: Text(_selectedNetwork == null ? "Select a network first" : "Choose a plan"),
+                  dropdownColor: BillyColors.surfaceHigh,
+                  iconEnabledColor: BillyColors.primaryLight,
+                  iconDisabledColor: BillyColors.textMuted,
+                  style: const TextStyle(color: Colors.white),
+                  hint: Text(
+                    _selectedNetwork == null ? "Select a network first" : "Choose a plan",
+                    style: const TextStyle(color: BillyColors.textMuted),
+                  ),
                   value: _selectedPlan,
                   items: currentPlans.map((plan) {
                     return DropdownMenuItem<Map<String, dynamic>>(
@@ -150,8 +159,8 @@ class _DataScreenState extends State<DataScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("${plan['data']} (${plan['validity']})", style: const TextStyle(fontWeight: FontWeight.w500)),
-                          Text("₦${plan['price']}", style: const TextStyle(color: Color(0xFF1D6A4A), fontWeight: FontWeight.bold)),
+                          Text("${plan['data']} (${plan['validity']})", style: const TextStyle(fontWeight: FontWeight.w500, color: Colors.white)),
+                          Text("₦${plan['price']}", style: const TextStyle(color: BillyColors.primaryLight, fontWeight: FontWeight.bold)),
                         ],
                       ),
                     );
@@ -170,42 +179,35 @@ class _DataScreenState extends State<DataScreen> {
             // Phone Number Input
             const Text(
               "Phone Number",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
             ),
             const SizedBox(height: 12),
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.grey.shade300),
-              ),
-              child: TextField(
-                controller: _phoneController,
-                keyboardType: TextInputType.phone,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                decoration: InputDecoration(
-                  hintText: "Enter phone number",
-                  prefixIcon: const Icon(Icons.phone_android, color: Colors.grey),
-                  suffixIcon: IconButton(
-                    icon: const Icon(Icons.contact_phone, color: Color(0xFF1D6A4A)),
-                    onPressed: () {
-                      // Logic to pick contact would go here
-                    },
-                  ),
-                  border: InputBorder.none,
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            TextField(
+              controller: _phoneController,
+              keyboardType: TextInputType.phone,
+              style: const TextStyle(color: Colors.white),
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              decoration: InputDecoration(
+                hintText: "Enter phone number",
+                prefixIcon: const Icon(Icons.phone_android, color: BillyColors.textMuted),
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.contact_phone, color: BillyColors.primaryLight),
+                  onPressed: () {
+                    // Logic to pick contact would go here
+                  },
                 ),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               ),
             ),
 
             const SizedBox(height: 40),
 
             // Buy Button
-            SizedBox(
-              width: double.infinity,
-              height: 55,
-              child: ElevatedButton(
-                onPressed: () {
+            GradientButton(
+              label: "Buy Data",
+              expand: true,
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              onPressed: () {
                   if (_selectedNetwork == null) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text("Please select a network")),
@@ -238,7 +240,7 @@ class _DataScreenState extends State<DataScreen> {
                         children: [
                           const Text(
                             "Confirm Purchase",
-                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
                           ),
                           const SizedBox(height: 20),
                           _buildDetailRow("Network", _selectedNetwork!),
@@ -247,39 +249,23 @@ class _DataScreenState extends State<DataScreen> {
                           _buildDetailRow("Phone", _phoneController.text),
                           _buildDetailRow("Amount", "₦${_selectedPlan!['price']}"),
                           const SizedBox(height: 30),
-                          SizedBox(
-                            width: double.infinity,
-                            height: 50,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.pop(context); // Close confirmation sheet
-                                _showPinDialog(); // Open PIN dialog using main context
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF1D6A4A),
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                              ),
-                              child: const Text("Confirm & Pay", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                            ),
+                          GradientButton(
+                            label: "Confirm & Pay",
+                            expand: true,
+                            onPressed: () {
+                              Navigator.pop(context); // Close confirmation sheet
+                              _showPinDialog(); // Open PIN dialog using main context
+                            },
                           ),
                         ],
                       ),
                     ),
                   );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF1D6A4A),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                  elevation: 2,
-                ),
-                child: const Text(
-                  "Buy Data",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
-                ),
-              ),
+              },
             ),
           ],
         ),
+      ),
       ),
     );
   }
@@ -294,13 +280,16 @@ class _DataScreenState extends State<DataScreen> {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              backgroundColor: Colors.white,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-              title: const Center(child: Text("Enter PIN", style: TextStyle(fontWeight: FontWeight.bold))),
+              backgroundColor: BillyColors.surface,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+                side: const BorderSide(color: BillyColors.border),
+              ),
+              title: const Center(child: Text("Enter PIN", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white))),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Text("Enter your 4-digit security PIN", style: TextStyle(color: Colors.grey)),
+                  const Text("Enter your 4-digit security PIN", style: TextStyle(color: BillyColors.textSecondary)),
                   const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -311,7 +300,7 @@ class _DataScreenState extends State<DataScreen> {
                         height: 15,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: index < enteredPin.length ? const Color(0xFF1D6A4A) : Colors.grey.shade300,
+                          color: index < enteredPin.length ? BillyColors.primaryLight : BillyColors.surfaceHigh,
                         ),
                       );
                     }),
@@ -372,7 +361,7 @@ class _DataScreenState extends State<DataScreen> {
                             child: const SizedBox(
                               width: 60,
                               height: 60,
-                              child: Icon(Icons.backspace_outlined),
+                              child: Icon(Icons.backspace_outlined, color: Colors.white),
                             ),
                           ),
                         ],
@@ -384,7 +373,7 @@ class _DataScreenState extends State<DataScreen> {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text("Cancel", style: TextStyle(color: Colors.red)),
+                  child: const Text("Cancel", style: TextStyle(color: BillyColors.error)),
                 ),
               ],
             );
@@ -404,9 +393,10 @@ class _DataScreenState extends State<DataScreen> {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: Colors.grey.shade100,
+          color: BillyColors.surfaceHigh,
+          border: Border.all(color: BillyColors.borderSoft),
         ),
-        child: Text(text, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+        child: Text(text, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white)),
       ),
     );
   }
@@ -416,7 +406,7 @@ class _DataScreenState extends State<DataScreen> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => const Center(child: CircularProgressIndicator(color: Color(0xFF1D6A4A))),
+      builder: (context) => const Center(child: CircularProgressIndicator(color: BillyColors.primary)),
     );
 
     Future.delayed(const Duration(seconds: 2), () {
@@ -424,7 +414,7 @@ class _DataScreenState extends State<DataScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Transaction Successful!"), 
-          backgroundColor: Color(0xFF1D6A4A),
+          backgroundColor: BillyColors.primary,
         ),
       );
       Navigator.pop(context); // Go back to Home
@@ -437,8 +427,8 @@ class _DataScreenState extends State<DataScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: const TextStyle(color: Colors.grey, fontSize: 16)),
-          Text(value, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+          Text(label, style: const TextStyle(color: BillyColors.textSecondary, fontSize: 16)),
+          Text(value, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white)),
         ],
       ),
     );

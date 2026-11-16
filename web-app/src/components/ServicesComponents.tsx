@@ -278,19 +278,19 @@ export default function ServicesComponents() {
     {
       title: "Digital Services",
       items: [
-        { icon: <Rocket size={24} />, label: 'Social Boost', color: 'bg-indigo-100 text-indigo-600' },
+        { icon: <Rocket size={24} />, label: 'Social Boost', color: 'bg-indigo-400/15 text-indigo-400' },
         { icon: <Cpu size={24} />, label: 'eSIM', color: 'bg-cyan-100 text-cyan-600' },
-        { icon: <Shield size={24} />, label: 'Proxies', color: 'bg-slate-100 text-slate-600' },
+        { icon: <Shield size={24} />, label: 'Proxies', color: 'bg-slate-400/15 text-slate-400' },
         { icon: <Megaphone size={24} />, label: 'Marketing', color: 'bg-pink-100 text-pink-600' },
-        { icon: <CreditCard size={24} />, label: 'Virtual Cards', color: 'bg-teal-100 text-teal-600' },
-        { icon: <Calendar size={24} />, label: 'Bookings', color: 'bg-lime-100 text-lime-600' },
+        { icon: <CreditCard size={24} />, label: 'Virtual Cards', color: 'bg-teal-400/15 text-teal-400' },
+        { icon: <Calendar size={24} />, label: 'Bookings', color: 'bg-lime-400/15 text-lime-400' },
       ]
     }
   ];
 
   return (
     <>
-      <div className="bg-white p-6 rounded-2xl border shadow-sm h-full overflow-y-auto">
+      <div className="glass-card p-6 rounded-2xl border h-full overflow-y-auto">
          <h3 className="font-bold text-gray-800 mb-4">Services</h3>
          <div className="space-y-6">
             {serviceGroups.map((group) => (
@@ -318,7 +318,7 @@ export default function ServicesComponents() {
       {/* Airtime Modal */}
       {showAirtimeModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="bg-white rounded-2xl w-full max-w-md shadow-2xl animate-in fade-in zoom-in duration-200">
+          <div className="bg-surface border rounded-2xl w-full max-w-md shadow-2xl animate-in fade-in zoom-in duration-200">
             <div className="flex items-center justify-between p-6 border-b border-gray-100">
               <h3 className="text-xl font-bold text-gray-900">{airtimeStep === 'details' ? 'Buy Airtime' : 'Enter Transaction PIN'}</h3>
               <button 
@@ -341,14 +341,14 @@ export default function ServicesComponents() {
                           onClick={() => setSelectedNetwork(network.id)}
                           className={`relative flex flex-col items-center gap-2 p-3 rounded-xl border transition-all ${
                             selectedNetwork === network.id 
-                              ? 'border-[#1D6A4A] bg-[#1D6A4A]/5 ring-1 ring-[#1D6A4A]' 
+                              ? 'border-primary bg-primary/5 ring-1 ring-primary'
                               : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
                           }`}
                         >
                           <div className={`w-8 h-8 rounded-full ${network.color}`} />
                           <span className="text-[10px] font-bold">{network.id}</span>
                           {selectedNetwork === network.id && (
-                            <div className="absolute top-1 right-1 w-4 h-4 bg-[#1D6A4A] rounded-full flex items-center justify-center text-white">
+                            <div className="absolute top-1 right-1 w-4 h-4 bg-primary rounded-full flex items-center justify-center text-white">
                               <Check size={10} strokeWidth={4} />
                             </div>
                           )}
@@ -364,7 +364,7 @@ export default function ServicesComponents() {
                       <input 
                         type="tel" 
                         placeholder="0801 234 5678"
-                        className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:border-[#1D6A4A] focus:ring-2 focus:ring-[#1D6A4A]/20 outline-none transition-all placeholder:text-gray-300 font-medium"
+                        className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all placeholder:text-gray-300 font-medium"
                       />
                     </div>
                   </div>
@@ -376,14 +376,14 @@ export default function ServicesComponents() {
                       <input 
                         type="number" 
                         placeholder="0.00"
-                        className="w-full pl-8 pr-4 py-3 rounded-xl border border-gray-200 focus:border-[#1D6A4A] focus:ring-2 focus:ring-[#1D6A4A]/20 outline-none transition-all font-bold text-lg text-gray-900 placeholder:text-gray-300"
+                        className="w-full pl-8 pr-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-bold text-lg text-gray-900 placeholder:text-gray-300"
                       />
                     </div>
                   </div>
 
                   <button 
                     onClick={() => setAirtimeStep('pin')}
-                    className="w-full bg-[#1D6A4A] hover:bg-[#155a3d] text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
+                    className="w-full btn-brand hover:brightness-110 text-white font-bold py-4 rounded-xl transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
                   >
                     Continue
                   </button>
@@ -391,8 +391,8 @@ export default function ServicesComponents() {
               ) : (
                 <div className="py-4 space-y-8">
                   <div className="text-center space-y-2">
-                    <div className="w-16 h-16 bg-[#1D6A4A]/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Lock className="w-8 h-8 text-[#1D6A4A]" />
+                    <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Lock className="w-8 h-8 text-primary-light" />
                     </div>
                     <h4 className="font-bold text-gray-900">Enter your 4-digit PIN</h4>
                     <p className="text-sm text-gray-500 px-8">
@@ -411,7 +411,7 @@ export default function ServicesComponents() {
                         value={digit}
                         onChange={(e) => handlePinChange(index, e.target.value)}
                         onKeyDown={(e) => handleKeyDown(index, e)}
-                        className="w-14 h-14 rounded-xl border-2 border-gray-200 focus:border-[#1D6A4A] text-center text-2xl font-bold outline-none transition-all bg-gray-50 focus:bg-white"
+                        className="w-14 h-14 rounded-xl border-2 border-gray-200 focus:border-primary text-center text-2xl font-bold outline-none transition-all bg-gray-50 focus:bg-surface-high"
                       />
                     ))}
                   </div>
@@ -422,7 +422,7 @@ export default function ServicesComponents() {
                       closeAirtimeModal();
                     }}
                     disabled={pin.some(d => !d)}
-                    className="w-full bg-[#1D6A4A] hover:bg-[#155a3d] disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-2 mt-8"
+                    className="w-full btn-brand hover:brightness-110 disabled:[background-image:none] disabled:shadow-none disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2 mt-8"
                   >
                     Confirm Payment
                   </button>
@@ -443,7 +443,7 @@ export default function ServicesComponents() {
       {/* Data Modal */}
       {showDataModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="bg-white rounded-2xl w-full max-w-md shadow-2xl animate-in fade-in zoom-in duration-200">
+          <div className="bg-surface border rounded-2xl w-full max-w-md shadow-2xl animate-in fade-in zoom-in duration-200">
             <div className="flex items-center justify-between p-6 border-b border-gray-100">
               <h3 className="text-xl font-bold text-gray-900">{dataStep === 'details' ? 'Buy Data' : 'Enter Transaction PIN'}</h3>
               <button 
@@ -469,14 +469,14 @@ export default function ServicesComponents() {
                           }}
                           className={`relative flex flex-col items-center gap-2 p-3 rounded-xl border transition-all ${
                             selectedNetwork === network.id 
-                              ? 'border-[#1D6A4A] bg-[#1D6A4A]/5 ring-1 ring-[#1D6A4A]' 
+                              ? 'border-primary bg-primary/5 ring-1 ring-primary'
                               : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
                           }`}
                         >
                           <div className={`w-8 h-8 rounded-full ${network.color}`} />
                           <span className="text-[10px] font-bold">{network.id}</span>
                           {selectedNetwork === network.id && (
-                            <div className="absolute top-1 right-1 w-4 h-4 bg-[#1D6A4A] rounded-full flex items-center justify-center text-white">
+                            <div className="absolute top-1 right-1 w-4 h-4 bg-primary rounded-full flex items-center justify-center text-white">
                               <Check size={10} strokeWidth={4} />
                             </div>
                           )}
@@ -490,7 +490,7 @@ export default function ServicesComponents() {
                      <div className="relative">
                        <button 
                          onClick={() => setShowPlanSelection(true)}
-                         className="w-full relative pl-4 pr-10 py-3 rounded-xl border border-gray-200 focus:border-[#1D6A4A] focus:ring-2 focus:ring-[#1D6A4A]/20 outline-none transition-all bg-white font-medium text-gray-900 text-left"
+                         className="w-full relative pl-4 pr-10 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all bg-surface font-medium text-gray-900 text-left"
                        >
                          {/* @ts-ignore */}
                          {selectedPlan && dataPlans[selectedNetwork]?.find((p: any) => p.id === selectedPlan)
@@ -510,7 +510,7 @@ export default function ServicesComponents() {
                         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
                         onClick={() => setShowPlanSelection(false)}
                       />
-                      <div className="relative bg-white rounded-t-3xl p-6 shadow-2xl animate-in slide-in-from-bottom duration-300 max-h-[70vh] flex flex-col">
+                      <div className="relative bg-surface border-t rounded-t-3xl p-6 shadow-2xl animate-in slide-in-from-bottom duration-300 max-h-[70vh] flex flex-col">
                         <div className="flex items-center justify-between mb-6">
                           <h3 className="text-lg font-bold text-gray-900">Select Data Plan</h3>
                           <button 
@@ -532,7 +532,7 @@ export default function ServicesComponents() {
                               }}
                               className={`w-full flex items-center justify-between p-4 rounded-xl border transition-all ${
                                 selectedPlan === plan.id
-                                  ? 'border-[#1D6A4A] bg-[#1D6A4A]/5 ring-1 ring-[#1D6A4A]'
+                                  ? 'border-primary bg-primary/5 ring-1 ring-primary'
                                   : 'border-gray-100 hover:border-gray-300 hover:bg-gray-50'
                               }`}
                             >
@@ -540,7 +540,7 @@ export default function ServicesComponents() {
                                 <p className="font-bold text-gray-900">{plan.name}</p>
                                 <p className="text-xs text-gray-500">{plan.validity}</p>
                               </div>
-                              <p className="font-bold text-[#1D6A4A]">₦{plan.price}</p>
+                              <p className="font-bold text-primary-light">₦{plan.price}</p>
                             </button>
                           ))}
                         </div>
@@ -555,7 +555,7 @@ export default function ServicesComponents() {
                       <input 
                         type="tel" 
                         placeholder="0801 234 5678"
-                        className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:border-[#1D6A4A] focus:ring-2 focus:ring-[#1D6A4A]/20 outline-none transition-all placeholder:text-gray-300 font-medium"
+                        className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all placeholder:text-gray-300 font-medium"
                       />
                     </div>
                   </div>
@@ -574,7 +574,7 @@ export default function ServicesComponents() {
                   <button 
                     onClick={() => setDataStep('pin')}
                     disabled={!selectedPlan}
-                    className="w-full bg-[#1D6A4A] hover:bg-[#155a3d] disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
+                    className="w-full btn-brand hover:brightness-110 disabled:[background-image:none] disabled:shadow-none disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
                   >
                     Continue
                   </button>
@@ -582,8 +582,8 @@ export default function ServicesComponents() {
               ) : (
                 <div className="py-4 space-y-8">
                   <div className="text-center space-y-2">
-                    <div className="w-16 h-16 bg-[#1D6A4A]/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Lock className="w-8 h-8 text-[#1D6A4A]" />
+                    <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Lock className="w-8 h-8 text-primary-light" />
                     </div>
                     <h4 className="font-bold text-gray-900">Enter your 4-digit PIN</h4>
                     <p className="text-sm text-gray-500 px-8">
@@ -602,7 +602,7 @@ export default function ServicesComponents() {
                         value={digit}
                         onChange={(e) => handlePinChange(index, e.target.value)}
                         onKeyDown={(e) => handleKeyDown(index, e)}
-                        className="w-14 h-14 rounded-xl border-2 border-gray-200 focus:border-[#1D6A4A] text-center text-2xl font-bold outline-none transition-all bg-gray-50 focus:bg-white"
+                        className="w-14 h-14 rounded-xl border-2 border-gray-200 focus:border-primary text-center text-2xl font-bold outline-none transition-all bg-gray-50 focus:bg-surface-high"
                       />
                     ))}
                   </div>
@@ -613,7 +613,7 @@ export default function ServicesComponents() {
                       closeDataModal();
                     }}
                      disabled={pin.some(d => !d)}
-                    className="w-full bg-[#1D6A4A] hover:bg-[#155a3d] disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-2 mt-8"
+                    className="w-full btn-brand hover:brightness-110 disabled:[background-image:none] disabled:shadow-none disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2 mt-8"
                   >
                     Confirm Payment
                   </button>
@@ -634,7 +634,7 @@ export default function ServicesComponents() {
       {/* Electricity Modal */}
       {showElectricityModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="bg-white rounded-2xl w-full max-w-md shadow-2xl animate-in fade-in zoom-in duration-200">
+          <div className="bg-surface border rounded-2xl w-full max-w-md shadow-2xl animate-in fade-in zoom-in duration-200">
             <div className="flex items-center justify-between p-6 border-b border-gray-100">
               <h3 className="text-xl font-bold text-gray-900">{electricityStep === 'details' ? 'Electricity Bill' : 'Enter Transaction PIN'}</h3>
               <button 
@@ -654,7 +654,7 @@ export default function ServicesComponents() {
                       {/* Mobile View - Bottom Sheet Trigger */}
                       <button 
                          onClick={() => setShowDiscoSelection(true)}
-                         className="md:hidden w-full relative pl-4 pr-10 py-3 rounded-xl border border-gray-200 focus:border-[#1D6A4A] focus:ring-2 focus:ring-[#1D6A4A]/20 outline-none transition-all bg-white font-medium text-gray-900 text-left"
+                         className="md:hidden w-full relative pl-4 pr-10 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all bg-surface font-medium text-gray-900 text-left"
                        >
                          {selectedDisco 
                            // @ts-ignore
@@ -672,7 +672,7 @@ export default function ServicesComponents() {
                              setSelectedDisco(e.target.value);
                              setVerifiedName(null);
                            }}
-                           className="w-full pl-4 pr-10 py-3 rounded-xl border border-gray-200 focus:border-[#1D6A4A] focus:ring-2 focus:ring-[#1D6A4A]/20 outline-none transition-all appearance-none bg-white font-medium text-gray-900"
+                           className="w-full pl-4 pr-10 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all appearance-none bg-surface font-medium text-gray-900"
                          >
                            <option value="" disabled>Select Disco</option>
                            {discos.map((disco) => (
@@ -691,7 +691,7 @@ export default function ServicesComponents() {
                         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
                         onClick={() => setShowDiscoSelection(false)}
                       />
-                      <div className="relative bg-white rounded-t-3xl p-6 shadow-2xl animate-in slide-in-from-bottom duration-300 max-h-[70vh] flex flex-col">
+                      <div className="relative bg-surface border-t rounded-t-3xl p-6 shadow-2xl animate-in slide-in-from-bottom duration-300 max-h-[70vh] flex flex-col">
                         <div className="flex items-center justify-between mb-6">
                           <h3 className="text-lg font-bold text-gray-900">Select Distribution Company</h3>
                           <button 
@@ -713,7 +713,7 @@ export default function ServicesComponents() {
                               }}
                               className={`w-full flex items-center gap-4 p-4 rounded-xl border transition-all ${
                                 selectedDisco === disco.id
-                                  ? 'border-[#1D6A4A] bg-[#1D6A4A]/5 ring-1 ring-[#1D6A4A]'
+                                  ? 'border-primary bg-primary/5 ring-1 ring-primary'
                                   : 'border-gray-100 hover:border-gray-300 hover:bg-gray-50'
                               }`}
                             >
@@ -724,7 +724,7 @@ export default function ServicesComponents() {
                                 <p className="font-bold text-gray-900 text-sm">{disco.name}</p>
                                 <p className="text-xs text-gray-500">{disco.short}</p>
                               </div>
-                              {selectedDisco === disco.id && <Check size={20} className="text-[#1D6A4A]" />}
+                              {selectedDisco === disco.id && <Check size={20} className="text-primary-light" />}
                             </button>
                           ))}
                         </div>
@@ -742,7 +742,7 @@ export default function ServicesComponents() {
                           onClick={() => setMeterType(type)}
                           className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${
                             meterType === type 
-                              ? 'bg-[#1D6A4A] text-white shadow-sm' 
+                              ? 'bg-primary text-white shadow-sm'
                               : 'text-gray-500 hover:text-gray-700'
                           }`}
                         >
@@ -767,12 +767,12 @@ export default function ServicesComponents() {
                           }
                         }}
                         placeholder="Enter Meter Number"
-                        className="w-full pl-4 pr-24 py-3 rounded-xl border border-gray-200 focus:border-[#1D6A4A] focus:ring-2 focus:ring-[#1D6A4A]/20 outline-none transition-all font-medium"
+                        className="w-full pl-4 pr-24 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium"
                       />
                       <button 
                         onClick={() => handleVerifyMeter()}
                         disabled={!selectedDisco || meterNumber.length < 5 || isVerifying}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 px-3 py-1.5 text-xs font-bold text-[#1D6A4A] bg-[#1D6A4A]/10 rounded-lg hover:bg-[#1D6A4A]/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 px-3 py-1.5 text-xs font-bold text-primary-light bg-primary/10 rounded-lg hover:bg-primary/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                       >
                         {isVerifying ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Verify'}
                       </button>
@@ -794,7 +794,7 @@ export default function ServicesComponents() {
                         value={amount}
                         onChange={(e) => setAmount(e.target.value)}
                         placeholder="0.00"
-                        className="w-full pl-8 pr-4 py-3 rounded-xl border border-gray-200 focus:border-[#1D6A4A] focus:ring-2 focus:ring-[#1D6A4A]/20 outline-none transition-all font-bold text-lg"
+                        className="w-full pl-8 pr-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-bold text-lg"
                       />
                     </div>
                   </div>
@@ -802,7 +802,7 @@ export default function ServicesComponents() {
                   <button 
                     onClick={() => setElectricityStep('pin')}
                     disabled={!selectedDisco || !meterNumber || !amount}
-                    className="w-full bg-[#1D6A4A] hover:bg-[#155a3d] disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-2 mt-4"
+                    className="w-full btn-brand hover:brightness-110 disabled:[background-image:none] disabled:shadow-none disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2 mt-4"
                   >
                     Proceed
                   </button>
@@ -810,8 +810,8 @@ export default function ServicesComponents() {
               ) : electricityStep === 'pin' ? (
                 <div className="py-4 space-y-8">
                   <div className="text-center space-y-2">
-                    <div className="w-16 h-16 bg-[#1D6A4A]/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Lock className="w-8 h-8 text-[#1D6A4A]" />
+                    <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Lock className="w-8 h-8 text-primary-light" />
                     </div>
                     <h4 className="font-bold text-gray-900">Enter your 4-digit PIN</h4>
                     <p className="text-sm text-gray-500 px-8">
@@ -830,7 +830,7 @@ export default function ServicesComponents() {
                         value={digit}
                         onChange={(e) => handlePinChange(index, e.target.value)}
                         onKeyDown={(e) => handleKeyDown(index, e)}
-                        className="w-14 h-14 rounded-xl border-2 border-gray-200 focus:border-[#1D6A4A] text-center text-2xl font-bold outline-none transition-all bg-gray-50 focus:bg-white"
+                        className="w-14 h-14 rounded-xl border-2 border-gray-200 focus:border-primary text-center text-2xl font-bold outline-none transition-all bg-gray-50 focus:bg-surface-high"
                       />
                     ))}
                   </div>
@@ -843,7 +843,7 @@ export default function ServicesComponents() {
                       setElectricityStep('success');
                     }}
                     disabled={pin.some(d => !d)}
-                    className="w-full bg-[#1D6A4A] hover:bg-[#155a3d] disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-2 mt-8"
+                    className="w-full btn-brand hover:brightness-110 disabled:[background-image:none] disabled:shadow-none disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2 mt-8"
                   >
                     Confirm Payment
                   </button>
@@ -870,7 +870,7 @@ export default function ServicesComponents() {
                   <div className="bg-gray-50 p-6 rounded-2xl border border-dashed border-gray-300 space-y-4">
                     <div className="text-center">
                        <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Token Code</p>
-                       <p className="text-2xl md:text-3xl font-mono font-bold text-[#1D6A4A] tracking-wider select-all">
+                       <p className="text-2xl md:text-3xl font-mono font-bold text-primary-light tracking-wider select-all">
                          {generatedToken}
                        </p>
                     </div>
@@ -879,7 +879,7 @@ export default function ServicesComponents() {
                         navigator.clipboard.writeText(generatedToken.replace(/\s/g, ''));
                         alert('Token copied!');
                       }}
-                      className="w-full flex items-center justify-center gap-2 py-2 text-sm font-bold text-[#1D6A4A] bg-[#1D6A4A]/10 rounded-lg hover:bg-[#1D6A4A]/20 transition-colors"
+                      className="w-full flex items-center justify-center gap-2 py-2 text-sm font-bold text-primary-light bg-primary/10 rounded-lg hover:bg-primary/20 transition-colors"
                     >
                       <Copy size={16} />
                       Copy Token
@@ -903,7 +903,7 @@ export default function ServicesComponents() {
 
                   <button 
                     onClick={closeElectricityModal}
-                    className="w-full bg-[#1D6A4A] hover:bg-[#155a3d] text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 mt-4"
+                    className="w-full btn-brand hover:brightness-110 text-white font-bold py-4 rounded-xl transition-all transform hover:-translate-y-0.5 mt-4"
                   >
                     Done
                   </button>
@@ -917,7 +917,7 @@ export default function ServicesComponents() {
       {/* Cable TV Modal */}
       {showCableModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="bg-white rounded-2xl w-full max-w-md shadow-2xl animate-in fade-in zoom-in duration-200">
+          <div className="bg-surface border rounded-2xl w-full max-w-md shadow-2xl animate-in fade-in zoom-in duration-200">
             <div className="flex items-center justify-between p-6 border-b border-gray-100">
               <h3 className="text-xl font-bold text-gray-900">{cableStep === 'details' ? 'Cable TV Subscription' : 'Enter Transaction PIN'}</h3>
               <button 
@@ -942,7 +942,7 @@ export default function ServicesComponents() {
                           setSelectedPackage('');
                           setCableAmount('');
                         }}
-                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#1D6A4A] focus:ring-2 focus:ring-[#1D6A4A]/20 outline-none transition-all font-medium bg-white"
+                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium bg-surface"
                       >
                         <option value="">Select Cable Provider</option>
                         {cableProviders.map((provider) => (
@@ -965,7 +965,7 @@ export default function ServicesComponents() {
                            if (pkg) setCableAmount(pkg.price.toString());
                          }}
                          disabled={!selectedProvider}
-                         className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#1D6A4A] focus:ring-2 focus:ring-[#1D6A4A]/20 outline-none transition-all font-medium bg-white disabled:bg-gray-100 disabled:text-gray-400"
+                         className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium bg-surface disabled:bg-gray-100 disabled:text-gray-400"
                        >
                          <option value="">Select Package</option>
                          {/* @ts-ignore */}
@@ -990,11 +990,11 @@ export default function ServicesComponents() {
                            if(e.target.value.length >= 10) verifySmartCard(e.target.value);
                         }}
                         placeholder="Enter Smart Card Number"
-                        className="w-full pl-4 pr-12 py-3 rounded-xl border border-gray-200 focus:border-[#1D6A4A] focus:ring-2 focus:ring-[#1D6A4A]/20 outline-none transition-all font-medium"
+                        className="w-full pl-4 pr-12 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium"
                       />
                        <div className="absolute right-3 top-1/2 -translate-y-1/2">
                          {isVerifyingCard ? (
-                           <Loader2 className="w-5 h-5 text-[#1D6A4A] animate-spin" />
+                           <Loader2 className="w-5 h-5 text-primary-light animate-spin" />
                          ) : verifiedCardName ? (
                            <Check className="w-5 h-5 text-green-600" />
                          ) : null}
@@ -1024,7 +1024,7 @@ export default function ServicesComponents() {
                   <button 
                     onClick={() => setCableStep('pin')}
                     disabled={!selectedProvider || !selectedPackage || !verifiedCardName || !cableAmount}
-                    className="w-full bg-[#1D6A4A] hover:bg-[#155a3d] disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-2 mt-4"
+                    className="w-full btn-brand hover:brightness-110 disabled:[background-image:none] disabled:shadow-none disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2 mt-4"
                   >
                     Proceed
                   </button>
@@ -1032,8 +1032,8 @@ export default function ServicesComponents() {
               ) : cableStep === 'pin' ? (
                 <div className="py-4 space-y-8">
                   <div className="text-center space-y-2">
-                     <div className="w-16 h-16 bg-[#1D6A4A]/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Lock className="w-8 h-8 text-[#1D6A4A]" />
+                     <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Lock className="w-8 h-8 text-primary-light" />
                     </div>
                     <h4 className="font-bold text-gray-900">Enter your 4-digit PIN</h4>
                     <p className="text-sm text-gray-500 px-8">
@@ -1052,7 +1052,7 @@ export default function ServicesComponents() {
                         value={digit}
                         onChange={(e) => handlePinChange(index, e.target.value)}
                         onKeyDown={(e) => handleKeyDown(index, e)}
-                        className="w-14 h-14 rounded-xl border-2 border-gray-200 focus:border-[#1D6A4A] text-center text-2xl font-bold outline-none transition-all bg-gray-50 focus:bg-white"
+                        className="w-14 h-14 rounded-xl border-2 border-gray-200 focus:border-primary text-center text-2xl font-bold outline-none transition-all bg-gray-50 focus:bg-surface-high"
                       />
                     ))}
                   </div>
@@ -1063,7 +1063,7 @@ export default function ServicesComponents() {
                       setCableStep('success');
                     }}
                     disabled={pin.some(p => !p)}
-                    className="w-full bg-[#1D6A4A] hover:bg-[#155a3d] disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 mt-8"
+                    className="w-full btn-brand hover:brightness-110 disabled:[background-image:none] disabled:shadow-none disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all transform hover:-translate-y-0.5 mt-8"
                   >
                     Confirm Payment
                   </button>
@@ -1101,7 +1101,7 @@ export default function ServicesComponents() {
 
                   <button 
                     onClick={closeCableModal}
-                    className="w-full bg-[#1D6A4A] hover:bg-[#155a3d] text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 mt-4"
+                    className="w-full btn-brand hover:brightness-110 text-white font-bold py-4 rounded-xl transition-all transform hover:-translate-y-0.5 mt-4"
                   >
                     Done
                   </button>
@@ -1115,7 +1115,7 @@ export default function ServicesComponents() {
       {/* Education Modal */}
       {showEducationModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="bg-white rounded-2xl w-full max-w-md shadow-2xl animate-in fade-in zoom-in duration-200">
+          <div className="bg-surface border rounded-2xl w-full max-w-md shadow-2xl animate-in fade-in zoom-in duration-200">
             <div className="flex items-center justify-between p-6 border-b border-gray-100">
               <h3 className="text-xl font-bold text-gray-900">
                 {educationStep === 'menu' ? 'Education' : 
@@ -1135,22 +1135,22 @@ export default function ServicesComponents() {
                 <div className="space-y-4">
                   <button 
                     onClick={() => setEducationStep('waec-details')}
-                    className="w-full flex items-center gap-4 p-4 rounded-xl border border-gray-200 hover:border-[#1D6A4A] hover:bg-[#1D6A4A]/5 transition-all group shadow-sm bg-white"
+                    className="w-full flex items-center gap-4 p-4 rounded-xl border border-gray-200 hover:border-primary hover:bg-primary/5 transition-all group shadow-sm bg-surface"
                   >
-                    <div className="w-12 h-12 rounded-xl bg-green-50 flex items-center justify-center text-[#1b5e20] group-hover:scale-110 transition-transform">
+                    <div className="w-12 h-12 rounded-xl bg-green-50 flex items-center justify-center text-green-400 group-hover:scale-110 transition-transform">
                       <GraduationCap size={24} />
                     </div>
                     <div className="flex-1 text-left">
                       <p className="font-bold text-gray-900 text-lg">WAEC</p>
                       <p className="text-xs text-gray-500">Buy WAEC Result Checker PIN</p>
                     </div>
-                    <ChevronRight size={20} className="text-gray-400 group-hover:text-[#1D6A4A]" />
+                    <ChevronRight size={20} className="text-gray-400 group-hover:text-primary-light" />
                   </button>
                   {/* Placeholder for future options */}
                 </div>
               ) : educationStep === 'waec-details' ? (
                 <>
-                   <div className="bg-[#1D6A4A] rounded-xl p-6 text-center text-white space-y-2">
+                   <div className="bg-card-gradient border border-primary-light/30 shadow-glow-sm rounded-xl p-6 text-center text-white space-y-2">
                       <GraduationCap className="w-12 h-12 mx-auto text-white/90" />
                       <h4 className="font-bold text-lg">WAEC Result Checker PIN</h4>
                       <p className="text-white/80">₦ {WAEC_PRICE.toLocaleString()} / pin</p>
@@ -1158,7 +1158,7 @@ export default function ServicesComponents() {
 
                    <div className="flex items-center justify-between p-4 bg-gray-50 rounded-xl border border-gray-100">
                       <span className="font-bold text-gray-900">Quantity</span>
-                      <div className="flex items-center gap-4 bg-white rounded-lg border border-gray-200 p-1">
+                      <div className="flex items-center gap-4 bg-surface rounded-lg border border-gray-200 p-1">
                          <button 
                            onClick={() => waecQuantity > 1 && setWaecQuantity(q => q - 1)}
                            className="w-8 h-8 flex items-center justify-center rounded-md hover:bg-gray-100 text-gray-600 disabled:opacity-50"
@@ -1179,7 +1179,7 @@ export default function ServicesComponents() {
 
                    <div className="flex justify-between items-center p-4 bg-gray-50 rounded-xl border border-gray-100">
                       <span className="font-medium text-gray-700">Total Amount</span>
-                      <span className="text-xl font-bold text-[#1D6A4A]">₦ {(WAEC_PRICE * waecQuantity).toLocaleString()}</span>
+                      <span className="text-xl font-bold text-primary-light">₦ {(WAEC_PRICE * waecQuantity).toLocaleString()}</span>
                    </div>
 
                    <div className="space-y-2">
@@ -1190,7 +1190,7 @@ export default function ServicesComponents() {
                           value={waecPhone}
                           onChange={(e) => setWaecPhone(e.target.value)}
                           placeholder="Enter phone number"
-                          className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 focus:border-[#1D6A4A] focus:ring-2 focus:ring-[#1D6A4A]/20 outline-none transition-all font-medium bg-white text-gray-900"
+                          className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium bg-surface text-gray-900"
                         />
                         <Smartphone className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
                       </div>
@@ -1206,7 +1206,7 @@ export default function ServicesComponents() {
                    <button 
                       onClick={() => setEducationStep('pin')}
                       disabled={!waecPhone || waecPhone.length < 10}
-                      className="w-full bg-[#1D6A4A] hover:bg-[#155a3d] disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                      className="w-full btn-brand hover:brightness-110 disabled:[background-image:none] disabled:shadow-none disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all transform hover:-translate-y-0.5"
                     >
                       Pay Securely
                     </button>
@@ -1214,8 +1214,8 @@ export default function ServicesComponents() {
               ) : educationStep === 'pin' ? (
                  <div className="py-4 space-y-8">
                   <div className="text-center space-y-2">
-                     <div className="w-16 h-16 bg-[#1D6A4A]/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Lock className="w-8 h-8 text-[#1D6A4A]" />
+                     <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Lock className="w-8 h-8 text-primary-light" />
                     </div>
                     <h4 className="font-bold text-gray-900">Enter your 4-digit PIN</h4>
                     <p className="text-sm text-gray-500 px-8">
@@ -1234,7 +1234,7 @@ export default function ServicesComponents() {
                         value={digit}
                         onChange={(e) => handlePinChange(index, e.target.value)}
                         onKeyDown={(e) => handleKeyDown(index, e)} 
-                        className="w-14 h-14 rounded-xl border-2 border-gray-200 focus:border-[#1D6A4A] text-center text-2xl font-bold outline-none transition-all bg-gray-50 focus:bg-white"
+                        className="w-14 h-14 rounded-xl border-2 border-gray-200 focus:border-primary text-center text-2xl font-bold outline-none transition-all bg-gray-50 focus:bg-surface-high"
                       />
                     ))}
                   </div>
@@ -1242,7 +1242,7 @@ export default function ServicesComponents() {
                   <button 
                     onClick={handleWaecPurchase}
                     disabled={pin.some(p => !p)}
-                    className="w-full bg-[#1D6A4A] hover:bg-[#155a3d] disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 mt-8"
+                    className="w-full btn-brand hover:brightness-110 disabled:[background-image:none] disabled:shadow-none disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all transform hover:-translate-y-0.5 mt-8"
                   >
                     Confirm Payment
                   </button>
@@ -1276,7 +1276,7 @@ export default function ServicesComponents() {
                                 navigator.clipboard.writeText(`PIN: ${item.pin} S/N: ${item.serial}`);
                                 alert('Copied to clipboard');
                               }}
-                              className="text-[#1D6A4A] hover:bg-[#1D6A4A]/10 p-1.5 rounded-lg transition-colors"
+                              className="text-primary-light hover:bg-primary/10 p-1.5 rounded-lg transition-colors"
                             >
                               <Copy size={16} />
                             </button>
@@ -1297,7 +1297,7 @@ export default function ServicesComponents() {
 
                   <button 
                     onClick={closeEducationModal}
-                    className="w-full bg-[#1D6A4A] hover:bg-[#155a3d] text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 mt-4"
+                    className="w-full btn-brand hover:brightness-110 text-white font-bold py-4 rounded-xl transition-all transform hover:-translate-y-0.5 mt-4"
                   >
                     Done
                   </button>

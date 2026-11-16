@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../theme/billy_colors.dart';
+import '../widgets/billy_widgets.dart';
 
 class WalletScreen extends StatefulWidget {
   const WalletScreen({super.key});
@@ -13,64 +15,65 @@ class _WalletScreenState extends State<WalletScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.black, // Removed
       appBar: AppBar(
-        backgroundColor: Colors.transparent, // Transparent
+        backgroundColor: Colors.transparent,
         elevation: 0,
         title: const Text(
           "My Wallet",
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold), // Black text
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
-            icon: const Icon(Icons.more_vert, color: Colors.black), // Black icon
+            icon: const Icon(Icons.more_vert, color: Colors.white),
             onPressed: () {},
           ),
         ],
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // 1. Balance Card
-              _buildBalanceCard(),
-              const SizedBox(height: 24),
+      body: GlowBackground(
+        child: SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // 1. Balance Card
+                _buildBalanceCard(),
+                const SizedBox(height: 24),
 
-              // 2. Action Buttons
-              _buildActionButtons(),
-              const SizedBox(height: 32),
+                // 2. Action Buttons
+                _buildActionButtons(),
+                const SizedBox(height: 32),
 
-              // 3. Security & KYC Status
-              _buildSecuritySection(),
-              const SizedBox(height: 32),
+                // 3. Security & KYC Status
+                _buildSecuritySection(),
+                const SizedBox(height: 32),
 
-              // 4. Recent Transactions
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "Recent Transactions",
-                    style: TextStyle(
-                      color: Colors.black, // Black text
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                // 4. Recent Transactions
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "Recent Transactions",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  TextButton(
-                    onPressed: () {},
-                    child: const Text(
-                      "See All",
-                      style: TextStyle(color: Color(0xFF38ef7d)),
+                    TextButton(
+                      onPressed: () {},
+                      child: const Text(
+                        "See All",
+                        style: TextStyle(color: BillyColors.primaryLight),
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 8),
-              _buildTransactionList(),
-            ],
+                  ],
+                ),
+                const SizedBox(height: 8),
+                _buildTransactionList(),
+              ],
+            ),
           ),
         ),
       ),
@@ -82,15 +85,10 @@ class _WalletScreenState extends State<WalletScreen> {
       width: double.infinity,
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: const Color(0xFF1D6A4A), // Dark Green
-        borderRadius: BorderRadius.circular(24),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xFF1D6A4A).withOpacity(0.2),
-            blurRadius: 20,
-            offset: const Offset(0, 10),
-          ),
-        ],
+        gradient: BillyColors.cardGradient,
+        borderRadius: BorderRadius.circular(28),
+        border: Border.all(color: BillyColors.primaryLight.withOpacity(0.5)),
+        boxShadow: BillyColors.glow(0.4),
       ),
       child: Column(
         children: [
@@ -135,27 +133,17 @@ class _WalletScreenState extends State<WalletScreen> {
   }
 
   Widget _buildActionButtons() {
-    return Container(
+    return GlassCard(
+      radius: 20,
       padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white, // White background
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            blurRadius: 10,
-            offset: const Offset(0, 5),
-          ),
-        ],
-      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _buildActionButton(Icons.add, "Fund", const Color(0xFF38ef7d)),
+          _buildActionButton(Icons.add, "Fund"),
           _buildVerticalDivider(),
-          _buildActionButton(Icons.arrow_outward, "Withdraw", Colors.orangeAccent),
+          _buildActionButton(Icons.arrow_outward, "Withdraw"),
           _buildVerticalDivider(),
-          _buildActionButton(Icons.send, "Transfer", Colors.blueAccent),
+          _buildActionButton(Icons.send, "Transfer"),
         ],
       ),
     );
@@ -165,26 +153,27 @@ class _WalletScreenState extends State<WalletScreen> {
     return Container(
       height: 40,
       width: 1,
-      color: Colors.grey[300], // Light grey divider
+      color: BillyColors.borderSoft,
     );
   }
 
-  Widget _buildActionButton(IconData icon, String label, Color color) {
+  Widget _buildActionButton(IconData icon, String label) {
     return Column(
       children: [
         Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
+            color: BillyColors.primary.withOpacity(0.18),
             shape: BoxShape.circle,
+            border: Border.all(color: BillyColors.borderSoft),
           ),
-          child: Icon(icon, color: color, size: 24),
+          child: Icon(icon, color: BillyColors.primaryLight, size: 24),
         ),
         const SizedBox(height: 8),
         Text(
           label,
           style: const TextStyle(
-            color: Colors.black87, // Dark text
+            color: Colors.white,
             fontSize: 12,
             fontWeight: FontWeight.w500,
           ),
@@ -194,28 +183,18 @@ class _WalletScreenState extends State<WalletScreen> {
   }
 
   Widget _buildSecuritySection() {
-    return Container(
+    return GlassCard(
+      radius: 16,
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white, // White background
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            blurRadius: 10,
-            offset: const Offset(0, 5),
-          ),
-        ],
-      ),
       child: Row(
         children: [
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: Colors.blue.withOpacity(0.1),
+              color: BillyColors.primary.withOpacity(0.18),
               shape: BoxShape.circle,
             ),
-            child: const Icon(Icons.shield, color: Colors.blue, size: 24),
+            child: const Icon(Icons.shield, color: BillyColors.primaryLight, size: 24),
           ),
           const SizedBox(width: 16),
           const Expanded(
@@ -225,7 +204,7 @@ class _WalletScreenState extends State<WalletScreen> {
                 Text(
                   "Security & KYC Status",
                   style: TextStyle(
-                    color: Colors.black, // Black text
+                    color: Colors.white,
                     fontWeight: FontWeight.bold,
                     fontSize: 14,
                   ),
@@ -234,14 +213,14 @@ class _WalletScreenState extends State<WalletScreen> {
                 Text(
                   "Tier 2 Verified • Biometrics Active",
                   style: TextStyle(
-                    color: Colors.green,
+                    color: BillyColors.success,
                     fontSize: 12,
                   ),
                 ),
               ],
             ),
           ),
-          const Icon(Icons.chevron_right, color: Colors.grey),
+          const Icon(Icons.chevron_right, color: BillyColors.textMuted),
         ],
       ),
     );
@@ -280,33 +259,23 @@ class _WalletScreenState extends State<WalletScreen> {
       itemBuilder: (context, index) {
         final tx = transactions[index];
         final isCredit = tx['isCredit'] as bool;
-        
-        return Container(
+
+        return GlassCard(
+          radius: 16,
           padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: Colors.white, // White background
-            borderRadius: BorderRadius.circular(16),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.1),
-                blurRadius: 5,
-                offset: const Offset(0, 2),
-              ),
-            ],
-          ),
           child: Row(
             children: [
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: isCredit 
-                      ? Colors.green.withOpacity(0.1) 
-                      : Colors.red.withOpacity(0.1),
+                  color: isCredit
+                      ? BillyColors.success.withOpacity(0.15)
+                      : BillyColors.error.withOpacity(0.15),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
                   tx['icon'] as IconData,
-                  color: isCredit ? Colors.green : Colors.red,
+                  color: isCredit ? BillyColors.success : BillyColors.error,
                   size: 20,
                 ),
               ),
@@ -318,7 +287,7 @@ class _WalletScreenState extends State<WalletScreen> {
                     Text(
                       tx['title'] as String,
                       style: const TextStyle(
-                        color: Colors.black, // Black text
+                        color: Colors.white,
                         fontWeight: FontWeight.bold,
                         fontSize: 14,
                       ),
@@ -326,8 +295,8 @@ class _WalletScreenState extends State<WalletScreen> {
                     const SizedBox(height: 4),
                     Text(
                       tx['date'] as String,
-                      style: TextStyle(
-                        color: Colors.grey[600], // Grey text
+                      style: const TextStyle(
+                        color: BillyColors.textSecondary,
                         fontSize: 12,
                       ),
                     ),
@@ -337,7 +306,7 @@ class _WalletScreenState extends State<WalletScreen> {
               Text(
                 tx['amount'] as String,
                 style: TextStyle(
-                  color: isCredit ? Colors.green : Colors.black, // Black for debit
+                  color: isCredit ? BillyColors.success : Colors.white,
                   fontWeight: FontWeight.bold,
                   fontSize: 14,
                 ),

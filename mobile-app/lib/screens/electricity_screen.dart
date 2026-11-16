@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../theme/billy_colors.dart';
+import '../widgets/billy_widgets.dart';
 import 'package:flutter/services.dart';
 
 class ElectricityScreen extends StatefulWidget {
@@ -60,15 +62,16 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: BillyColors.background,
       appBar: AppBar(
-        title: const Text("Electricity Bill", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+        title: const Text("Electricity Bill", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.white),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
+      body: GlowBackground(
+        child: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,22 +79,24 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
             // Disco Selection
             const Text(
               "Select Distribution Company",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
             ),
             const SizedBox(height: 12),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
               decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.grey.shade300),
+                color: BillyColors.surface,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: BillyColors.border),
               ),
               child: DropdownButtonHideUnderline(
                 child: DropdownButton<String>(
                   isExpanded: true,
-                  hint: const Text("Select Disco"),
+                  dropdownColor: BillyColors.surfaceHigh,
+                  style: const TextStyle(color: Colors.white),
+                  hint: const Text("Select Disco", style: TextStyle(color: BillyColors.textMuted)),
                   value: _selectedDisco,
-                  icon: const Icon(Icons.arrow_drop_down, color: Colors.black54),
+                  icon: const Icon(Icons.arrow_drop_down, color: BillyColors.primaryLight),
                   items: _discos.map((disco) {
                     return DropdownMenuItem<String>(
                       value: disco['name'],
@@ -110,11 +115,11 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
                             child: RichText(
                               text: TextSpan(
                                 text: "${disco['name']} ",
-                                style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black87, fontSize: 14),
+                                style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 14),
                                 children: [
                                   TextSpan(
                                     text: "(${disco['short']})",
-                                    style: const TextStyle(color: Colors.grey, fontWeight: FontWeight.normal, fontSize: 13),
+                                    style: const TextStyle(color: BillyColors.textMuted, fontWeight: FontWeight.normal, fontSize: 13),
                                   )
                                 ]
                               ),
@@ -137,7 +142,7 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
             const SizedBox(height: 24),
 
             // Meter Type
-            const Text("Meter Type", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87)),
+            const Text("Meter Type", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white)),
             const SizedBox(height: 8),
             Row(
               children: _meterTypes.map((type) {
@@ -149,15 +154,15 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
                       margin: EdgeInsets.only(right: type == _meterTypes.first ? 10 : 0),
                       padding: const EdgeInsets.symmetric(vertical: 12),
                       decoration: BoxDecoration(
-                        color: isSelected ? const Color(0xFF1D6A4A) : Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: isSelected ? const Color(0xFF1D6A4A) : Colors.grey.shade300),
+                        color: isSelected ? BillyColors.primary.withOpacity(0.15) : BillyColors.surface,
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: isSelected ? BillyColors.primaryLight : BillyColors.borderSoft, width: isSelected ? 1.5 : 1),
                       ),
                       alignment: Alignment.center,
                       child: Text(
                         type,
                         style: TextStyle(
-                          color: isSelected ? Colors.white : Colors.black,
+                          color: isSelected ? Colors.white : BillyColors.textSecondary,
                           fontWeight: FontWeight.bold
                         ),
                       ),
@@ -170,19 +175,20 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
             const SizedBox(height: 24),
 
             // Meter Number
-            const Text("Meter Number", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87)),
+            const Text("Meter Number", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white)),
             const SizedBox(height: 8),
             Container(
               decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.grey.shade300),
+                color: BillyColors.surface,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: BillyColors.border),
               ),
               child: Column(
                 children: [
                    TextField(
                     controller: _meterNumberController,
                     keyboardType: TextInputType.number,
+                    style: const TextStyle(color: Colors.white),
                     onChanged: (val) {
                       if (val.length >= 10 && _selectedDisco != null) {
                          // Auto verify simulation if we wanted, but let's stick to button or suffix
@@ -191,14 +197,17 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
                     },
                     decoration: InputDecoration(
                       hintText: "Enter Meter Number",
-                      prefixIcon: const Icon(Icons.confirmation_number_outlined, color: Colors.grey),
+                      prefixIcon: const Icon(Icons.confirmation_number_outlined, color: BillyColors.textMuted),
                       suffixIcon: TextButton(
                         onPressed: _selectedDisco == null ? null : _verifyMeter,
                         child: _isVerifying 
                           ? const SizedBox(width: 15, height: 15, child: CircularProgressIndicator(strokeWidth: 2))
                           : const Text("Verify", style: TextStyle(fontWeight: FontWeight.bold)),
                       ),
+                      filled: false,
                       border: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      focusedBorder: InputBorder.none,
                       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                     ),
                   ),
@@ -207,12 +216,12 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
                       width: double.infinity,
                       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFE8F5E9),
-                        borderRadius: const BorderRadius.vertical(bottom: Radius.circular(12)),
+                        color: BillyColors.success.withOpacity(0.15),
+                        borderRadius: const BorderRadius.vertical(bottom: Radius.circular(16)),
                       ),
                       child: Text(
                         _verifiedName!,
-                        style: const TextStyle(color: Color(0xFF1D6A4A), fontWeight: FontWeight.bold, fontSize: 12),
+                        style: const TextStyle(color: BillyColors.success, fontWeight: FontWeight.bold, fontSize: 12),
                       ),
                     ),
                 ],
@@ -222,22 +231,27 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
             const SizedBox(height: 24),
 
             // Amount
-            const Text("Amount", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87)),
+            const Text("Amount", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white)),
             const SizedBox(height: 8),
             Container(
               decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.grey.shade300),
+                color: BillyColors.surface,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: BillyColors.border),
               ),
               child: TextField(
                 controller: _amountController,
                 keyboardType: TextInputType.number,
+                style: const TextStyle(color: Colors.white),
                 decoration: const InputDecoration(
                   hintText: "0.00",
-                  prefixIcon: Icon(Icons.attach_money, color: Colors.grey), // Using generic money icon, can swap for Naira symbol if available
+                  prefixIcon: Icon(Icons.attach_money, color: BillyColors.textMuted), // Using generic money icon, can swap for Naira symbol if available
                   prefixText: "₦ ",
+                  prefixStyle: TextStyle(color: Colors.white),
+                  filled: false,
                   border: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none,
                   contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                 ),
               ),
@@ -246,21 +260,25 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
             const SizedBox(height: 24),
 
              // Phone Number
-            const Text("Phone Number", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87)),
+            const Text("Phone Number", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white)),
             const SizedBox(height: 8),
             Container(
               decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.grey.shade300),
+                color: BillyColors.surface,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: BillyColors.border),
               ),
               child: TextField(
                 controller: _phoneController,
                 keyboardType: TextInputType.phone,
+                style: const TextStyle(color: Colors.white),
                 decoration: const InputDecoration(
                   hintText: "For token delivery",
-                  prefixIcon: Icon(Icons.phone_android, color: Colors.grey),
+                  prefixIcon: Icon(Icons.phone_android, color: BillyColors.textMuted),
+                  filled: false,
                   border: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none,
                   contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                 ),
               ),
@@ -268,11 +286,11 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
 
             const SizedBox(height: 40),
 
-            SizedBox(
-              width: double.infinity,
-              height: 55,
-              child: ElevatedButton(
-                onPressed: () {
+            GradientButton(
+              label: "Proceed",
+              expand: true,
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+              onPressed: () {
                    if (_selectedDisco == null) {
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Select a Distribution Company")));
                       return;
@@ -288,20 +306,11 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
 
                    // If name not verified, maybe verify first? For now proceed.
                    _showConfirmationSheet();
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF1D6A4A),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                  elevation: 2,
-                ),
-                child: const Text(
-                  "Proceed",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
-                ),
-              ),
+              },
             ),
           ],
         ),
+      ),
       ),
     );
   }
@@ -309,8 +318,10 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
   void _showConfirmationSheet() {
     showModalBottomSheet(
       context: context,
+      backgroundColor: BillyColors.surface,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+        side: BorderSide(color: BillyColors.border),
       ),
       builder: (context) => Container(
         padding: const EdgeInsets.all(24),
@@ -319,7 +330,7 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
           children: [
             const Text(
               "Confirm Payment",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
             ),
             const SizedBox(height: 20),
             _buildDetailRow("Service", "Electricity"),
@@ -329,20 +340,13 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
             _buildDetailRow("Amount", "₦${_amountController.text}"),
             
             const SizedBox(height: 30),
-            SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context); // Close sheet
-                  _showPinDialog(); // Trigger PIN flow
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF1D6A4A),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                ),
-                child: const Text("Confirm & Pay", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
-              ),
+            GradientButton(
+              label: "Confirm & Pay",
+              expand: true,
+              onPressed: () {
+                Navigator.pop(context); // Close sheet
+                _showPinDialog(); // Trigger PIN flow
+              },
             )
           ],
         ),
@@ -360,13 +364,16 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              backgroundColor: Colors.white,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-              title: const Center(child: Text("Enter PIN", style: TextStyle(fontWeight: FontWeight.bold))),
+              backgroundColor: BillyColors.surfaceHigh,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(24),
+                side: const BorderSide(color: BillyColors.border),
+              ),
+              title: const Center(child: Text("Enter PIN", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white))),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Text("Enter your 4-digit security PIN", style: TextStyle(color: Colors.grey)),
+                  const Text("Enter your 4-digit security PIN", style: TextStyle(color: BillyColors.textSecondary)),
                   const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -377,7 +384,7 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
                         height: 15,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: index < enteredPin.length ? const Color(0xFF1D6A4A) : Colors.grey.shade300,
+                          color: index < enteredPin.length ? BillyColors.primaryLight : BillyColors.border,
                         ),
                       );
                     }),
@@ -437,7 +444,7 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
                             child: const SizedBox(
                               width: 60,
                               height: 60,
-                              child: Icon(Icons.backspace_outlined),
+                              child: Icon(Icons.backspace_outlined, color: Colors.white),
                             ),
                           ),
                         ],
@@ -449,7 +456,7 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text("Cancel", style: TextStyle(color: Colors.red)),
+                  child: const Text("Cancel", style: TextStyle(color: BillyColors.error)),
                 ),
               ],
             );
@@ -469,9 +476,10 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: Colors.grey.shade100,
+          color: BillyColors.primary.withOpacity(0.15),
+          border: Border.all(color: BillyColors.borderSoft),
         ),
-        child: Text(text, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+        child: Text(text, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white)),
       ),
     );
   }
@@ -480,7 +488,7 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => const Center(child: CircularProgressIndicator(color: Color(0xFF1D6A4A))),
+      builder: (context) => const Center(child: CircularProgressIndicator(color: BillyColors.primaryLight)),
     );
 
     Future.delayed(const Duration(seconds: 2), () {
@@ -491,29 +499,26 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
         context: context,
         barrierDismissible: false,
         builder: (context) => AlertDialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+            side: const BorderSide(color: BillyColors.border),
+          ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(Icons.flash_on, color: Color(0xFF1D6A4A), size: 60),
+              const Icon(Icons.flash_on, color: BillyColors.primaryLight, size: 60),
               const SizedBox(height: 20),
-              const Text("Successful!", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+              const Text("Successful!", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white)),
               const SizedBox(height: 10),
-              const Text("Your payment has been processed. Token will be sent to your phone.", textAlign: TextAlign.center),
+              const Text("Your payment has been processed. Token will be sent to your phone.", textAlign: TextAlign.center, style: TextStyle(color: BillyColors.textSecondary)),
               const SizedBox(height: 20),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context); // Close dialog
-                    Navigator.pop(context); // Go back
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF1D6A4A),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                  ),
-                  child: const Text("Done", style: TextStyle(color: Colors.white)),
-                ),
+              GradientButton(
+                label: "Done",
+                expand: true,
+                onPressed: () {
+                  Navigator.pop(context); // Close dialog
+                  Navigator.pop(context); // Go back
+                },
               )
             ],
           ),
@@ -528,8 +533,8 @@ class _ElectricityScreenState extends State<ElectricityScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: const TextStyle(color: Colors.grey, fontSize: 16)),
-          Text(value, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+          Text(label, style: const TextStyle(color: BillyColors.textSecondary, fontSize: 16)),
+          Text(value, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white)),
         ],
       ),
     );

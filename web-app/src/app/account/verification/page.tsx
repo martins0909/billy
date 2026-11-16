@@ -8,14 +8,14 @@ import { ShieldCheck, CheckCircle2, XCircle, AlertCircle, Upload, ChevronRight, 
 
 export default function VerificationPage() {
   return (
-    <div className="flex min-h-screen pb-16 md:pb-0 bg-off-white">
+    <div className="flex min-h-screen app-bg">
       <Sidebar />
 
 
       <main className="flex-1 flex flex-col h-screen overflow-hidden">
         <Header title="Verification Status" />
 
-        <div className="flex-1 overflow-y-auto p-4 md:p-8">
+        <div className="flex-1 overflow-y-auto p-4 md:p-8 pb-28 md:pb-8">
            <div className="max-w-3xl mx-auto space-y-6">
               
               {/* Current Status Banner */}
@@ -57,7 +57,7 @@ export default function VerificationPage() {
               </div>
 
               {/* Verification Steps */}
-              <div className="bg-white rounded-xl shadow-sm border overflow-hidden">
+              <div className="glass-card rounded-xl border overflow-hidden">
                  <div className="px-6 py-4 border-b bg-off-white">
                     <h3 className="font-semibold text-gray-800">Required Documents</h3>
                  </div>
@@ -97,17 +97,17 @@ function TierCard({ level, status, limits, reqs }: { level: string, status: 'act
    
    return (
       <div className={`p-5 rounded-xl border-2 flex flex-col h-full ${
-         isActive ? 'border-[#1D6A4A] bg-[#1D6A4A]/5' : 
+         isActive ? 'border-primary bg-primary/5' :
          isLocked ? 'border-gray-100 bg-off-white opacity-60' : 
-         'border-orange-200 bg-white shadow-sm'
+         'border-orange-200 bg-surface shadow-sm'
       }`}>
          <div className="flex justify-between items-start mb-4">
 
             <span className={`text-sm font-bold px-2 py-1 rounded ${
-               isActive ? 'bg-[#1D6A4A] text-white' : 
+               isActive ? 'bg-primary text-white' :
                'bg-gray-200 text-gray-700'
             }`}>{level}</span>
-            {isActive && <CheckCircle2 className="text-[#1D6A4A]" size={20} />}
+            {isActive && <CheckCircle2 className="text-primary-light" size={20} />}
             {!isLocked && !isActive && <div className="w-5 h-5 rounded-full border-2 border-orange-500"></div>}
             {isLocked && <div className="w-5 h-5 rounded-full border-2 border-gray-300"></div>}
          </div>

@@ -38,18 +38,18 @@ export default function ChangePinPage() {
   };
 
   return (
-    <div className="flex min-h-screen pb-16 md:pb-0 bg-off-white">
+    <div className="flex min-h-screen app-bg">
       <Sidebar />
 
 
       <main className="flex-1 flex flex-col h-screen overflow-hidden">
         <Header title="Transaction PIN" />
 
-        <div className="flex-1 overflow-y-auto p-4 md:p-8">
+        <div className="flex-1 overflow-y-auto p-4 md:p-8 pb-28 md:pb-8">
            <div className="max-w-md mx-auto space-y-8 pt-6">
               
               <div className="text-center space-y-2">
-                 <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-50 text-[#1D6A4A] mb-2">
+                 <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 text-primary-light mb-2">
                     <ShieldCheck size={32} />
                  </div>
                  <h2 className="text-xl font-bold text-gray-900">Set Transaction PIN</h2>
@@ -58,7 +58,7 @@ export default function ChangePinPage() {
                  </p>
               </div>
 
-              <form className="bg-white p-8 rounded-2xl shadow-lg shadow-gray-200/50 border border-gray-100 space-y-8">
+              <form className="glass-card p-8 rounded-2xl border space-y-8">
                  
                  {/* New PIN */}
                  <div className="space-y-4">
@@ -74,7 +74,7 @@ export default function ChangePinPage() {
                              value={digit}
                              onChange={(e) => handlePinChange(i, e.target.value, false)}
                              onKeyDown={(e) => handleKeyDown(e, i, false)}
-                             className="w-12 h-14 border-2 border-gray-200 rounded-xl text-center text-2xl font-bold focus:border-[#1D6A4A] focus:ring-0 outline-none transition-colors bg-off-white focus:bg-white"
+                             className="w-12 h-14 border-2 border-gray-200 rounded-xl text-center text-2xl font-bold focus:border-primary focus:ring-0 outline-none transition-colors bg-off-white focus:bg-surface-high"
                           />
                        ))}
 
@@ -95,14 +95,14 @@ export default function ChangePinPage() {
                              value={digit}
                              onChange={(e) => handlePinChange(i, e.target.value, true)}
                              onKeyDown={(e) => handleKeyDown(e, i, true)}
-                             className="w-12 h-14 border-2 border-gray-200 rounded-xl text-center text-2xl font-bold focus:border-[#1D6A4A] focus:ring-0 outline-none transition-colors bg-off-white focus:bg-white"
+                             className="w-12 h-14 border-2 border-gray-200 rounded-xl text-center text-2xl font-bold focus:border-primary focus:ring-0 outline-none transition-colors bg-off-white focus:bg-surface-high"
                           />
                        ))}
 
                     </div>
                  </div>
 
-                 <button className="w-full py-3 bg-[#1D6A4A] hover:bg-[#155a3d] text-white font-medium rounded-xl shadow-lg shadow-green-900/10 transition-colors mt-4">
+                 <button className="w-full py-3 btn-brand hover:brightness-110 text-white font-medium rounded-xl shadow-green-900/10 transition-colors mt-4">
                     Set PIN
                  </button>
 

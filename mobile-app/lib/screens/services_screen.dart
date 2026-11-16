@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../theme/billy_colors.dart';
+import '../widgets/billy_widgets.dart';
 import 'education_screen.dart';
 import 'betting_screen.dart';
 import 'airtime_screen.dart';
@@ -19,11 +21,12 @@ class ServicesScreen extends StatelessWidget {
         elevation: 0,
         title: const Text(
           "Services",
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold), // Black text
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         automaticallyImplyLeading: false,
       ),
-      body: SafeArea(
+      body: GlowBackground(
+        child: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -76,32 +79,24 @@ class ServicesScreen extends StatelessWidget {
             ],
           ),
         ),
+        ),
       ),
     );
   }
 
   Widget _buildServiceBanner(String title, List<Map<String, dynamic>> items) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
+      child: GlassCard(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white, // White background
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            blurRadius: 10,
-            offset: const Offset(0, 5),
-          ),
-        ],
-      ),
+      radius: 20,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             title,
             style: const TextStyle(
-              color: Colors.black, // Black text
+              color: Colors.white,
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
@@ -168,6 +163,7 @@ class ServicesScreen extends StatelessWidget {
           ),
         ],
       ),
+      ),
     );
   }
 
@@ -177,20 +173,20 @@ class ServicesScreen extends StatelessWidget {
       child: Container(
         height: 80,
         decoration: BoxDecoration(
-          color: const Color(0xFFE8F5E9), // Light green
+          color: BillyColors.primary.withOpacity(0.12),
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: const Color(0xFF38ef7d).withOpacity(0.1)),
+          border: Border.all(color: BillyColors.borderSoft),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, color: const Color(0xFF1b5e20), size: 24), // Dark green icon
+            Icon(icon, color: BillyColors.primaryLight, size: 24),
             const SizedBox(height: 8),
             Text(
               label,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                color: Colors.black87, // Dark text
+                color: Colors.white,
                 fontSize: 10,
                 fontWeight: FontWeight.w500,
               ),

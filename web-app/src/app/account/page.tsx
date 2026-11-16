@@ -25,17 +25,17 @@ export default function AccountPage() {
   const [emailAlerts, setEmailAlerts] = useState(false);
 
   return (
-    <div className="flex min-h-screen pb-16 md:pb-0 bg-off-white">
+    <div className="flex min-h-screen app-bg">
       <Sidebar />
 
       <main className="flex-1 flex flex-col h-screen overflow-hidden">
         <Header title="Account Settings" />
 
-        <div className="flex-1 overflow-y-auto p-4 md:p-8">
+        <div className="flex-1 overflow-y-auto p-4 md:p-8 pb-28 md:pb-8">
            <div className="max-w-3xl mx-auto space-y-6">
               
               {/* Account Settings Section */}
-              <div className="bg-white rounded-xl shadow-sm border overflow-hidden">
+              <div className="glass-card rounded-xl border overflow-hidden">
                 <div className="px-6 py-4 border-b bg-off-white flex items-center gap-3">
                   <div className="p-2 bg-blue-100 text-blue-600 rounded-lg">
                     <User size={20} />
@@ -69,7 +69,7 @@ export default function AccountPage() {
               </div>
 
               {/* Security & Notification Settings Section */}
-              <div className="bg-white rounded-xl shadow-sm border overflow-hidden">
+              <div className="glass-card rounded-xl border overflow-hidden">
                 <div className="px-6 py-4 border-b bg-off-white flex items-center gap-3">
                   <div className="p-2 bg-green-100 text-green-600 rounded-lg">
                     <ShieldCheck size={20} />
@@ -144,7 +144,7 @@ function SettingsItem({ icon, title, trailing, onClick, isSwitch, checked, onCha
         {isSwitch ? (
           <button 
             onClick={() => onChange?.(!checked)}
-            className={`w-11 h-6 rounded-full transition-colors relative ${checked ? 'bg-[#1D6A4A]' : 'bg-gray-200'}`}
+            className={`w-11 h-6 rounded-full transition-colors relative ${checked ? 'bg-primary' : 'bg-gray-200'}`}
           >
             <span 
               className={`absolute top-1 left-1 bg-white w-4 h-4 rounded-full transition-transform ${checked ? 'translate-x-5' : 'translate-x-0'}`}

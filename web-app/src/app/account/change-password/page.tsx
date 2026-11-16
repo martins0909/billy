@@ -12,14 +12,14 @@ export default function ChangePasswordPage() {
   const [showConfirm, setShowConfirm] = React.useState(false);
 
   return (
-    <div className="flex min-h-screen pb-16 md:pb-0 bg-off-white">
+    <div className="flex min-h-screen app-bg">
       <Sidebar />
 
 
       <main className="flex-1 flex flex-col h-screen overflow-hidden">
         <Header title="Change Password" />
 
-        <div className="flex-1 overflow-y-auto p-4 md:p-8">
+        <div className="flex-1 overflow-y-auto p-4 md:p-8 pb-28 md:pb-8">
            <div className="max-w-xl mx-auto space-y-8">
               
               {/* Security Banner */}
@@ -30,7 +30,7 @@ export default function ChangePasswordPage() {
                  </p>
               </div>
 
-              <form className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100 space-y-6">
+              <form className="glass-card p-6 md:p-8 rounded-2xl border space-y-6">
                  
                  <PasswordInput 
                     label="Current Password" 
@@ -60,14 +60,14 @@ export default function ChangePasswordPage() {
                        Cancel
                     </button>
 
-                    <button type="submit" className="px-6 py-2.5 bg-[#1D6A4A] hover:bg-[#155a3d] text-white font-medium rounded-lg shadow-lg shadow-green-900/10 transition-colors">
+                    <button type="submit" className="px-6 py-2.5 btn-brand hover:brightness-110 text-white font-medium rounded-lg shadow-green-900/10 transition-colors">
                        Update Password
                     </button>
                  </div>
               </form>
 
               <div className="text-center">
-                 <a href="/forgot-password" className="text-sm text-[#1D6A4A] font-medium hover:underline">
+                 <a href="/forgot-password" className="text-sm text-primary-light font-medium hover:underline">
                     Forgot your password?
                  </a>
               </div>
@@ -91,7 +91,7 @@ function PasswordInput({ label, placeholder, isVisible, onToggle }: { label: str
             </div>
             <input 
                type={isVisible ? "text" : "password"} 
-               className="block w-full pl-10 pr-10 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#1D6A4A]/20 focus:border-[#1D6A4A] transition-all text-sm outline-none"
+               className="block w-full pl-10 pr-10 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm outline-none"
                placeholder={placeholder}
             />
             <button 

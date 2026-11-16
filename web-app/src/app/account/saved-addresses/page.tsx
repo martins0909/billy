@@ -8,19 +8,19 @@ import { MapPin, Home, Briefcase, Plus, Trash2, Edit2, MoreVertical } from 'luci
 
 export default function SavedAddressesPage() {
   return (
-    <div className="flex min-h-screen pb-16 md:pb-0 bg-off-white">
+    <div className="flex min-h-screen app-bg">
       <Sidebar />
 
 
       <main className="flex-1 flex flex-col h-screen overflow-hidden">
         <Header title="Saved Addresses" />
 
-        <div className="flex-1 overflow-y-auto p-4 md:p-8">
+        <div className="flex-1 overflow-y-auto p-4 md:p-8 pb-28 md:pb-8">
            <div className="max-w-3xl mx-auto space-y-6">
               
               {/* Add New Button */}
-              <button className="w-full py-4 border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center gap-2 text-gray-500 hover:border-[#1D6A4A] hover:text-[#1D6A4A] transition-colors bg-white hover:bg-green-50/10">
-                 <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center group-hover:bg-[#1D6A4A]/20">
+              <button className="w-full py-4 border-2 border-dashed border-gray-300 rounded-xl flex items-center justify-center gap-2 text-gray-500 hover:border-primary hover:text-primary-light transition-colors bg-surface hover:bg-primary/5">
+                 <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center group-hover:bg-primary/20">
                     <Plus size={20} />
                  </div>
                  <span className="font-medium">Add New Address</span>
@@ -61,9 +61,9 @@ function AddressCard({ type, label, address, isDefault }: { type: 'home' | 'work
    const Icon = type === 'home' ? Home : type === 'work' ? Briefcase : MapPin;
    
    return (
-      <div className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow group relative">
+      <div className="glass-card p-5 rounded-xl border hover:shadow-md transition-shadow group relative">
          <div className="flex items-start gap-4">
-            <div className="w-10 h-10 rounded-full bg-green-50 text-[#1D6A4A] flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 rounded-full bg-primary/10 text-primary-light flex items-center justify-center shrink-0">
                <Icon size={20} />
             </div>
             

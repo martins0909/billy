@@ -1,6 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
-import 'dart:async';
+import '../theme/billy_colors.dart';
 import 'login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -61,7 +63,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black, // Black background as requested
+      backgroundColor: BillyColors.background,
       body: Center(
         child: _initialized
             ? AspectRatio(
@@ -69,7 +71,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 child: VideoPlayer(_controller),
               )
             : const CircularProgressIndicator(
-                color: Colors.purple, // Purple loader while video inits
+                color: BillyColors.primary, // Purple loader while video inits
               ),
       ),
     );

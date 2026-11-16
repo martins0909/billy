@@ -92,13 +92,13 @@ export default function OrdersPage() {
   const orders = DUMMY_ORDERS[activeTab];
 
   return (
-    <div className="flex min-h-screen pb-16 md:pb-0 bg-off-white">
+    <div className="flex min-h-screen app-bg">
       <Sidebar />
 
       <main className="flex-1 flex flex-col h-screen overflow-hidden">
         <Header title="My Orders" />
 
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-auto pb-28 md:pb-8">
           <div className="max-w-3xl mx-auto w-full">
             
             {/* Tabs */}
@@ -110,13 +110,13 @@ export default function OrdersPage() {
                      onClick={() => setActiveTab(tab as OrderStatus)}
                      className={`pb-3 text-sm font-medium transition-colors relative ${
                        activeTab === tab 
-                         ? 'text-[#1D6A4A]' 
+                         ? 'text-primary-light'
                          : 'text-gray-500 hover:text-gray-700'
                      }`}
                    >
                      {tab}
                      {activeTab === tab && (
-                       <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#1D6A4A] rounded-t-full" />
+                       <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-t-full" />
                      )}
                    </button>
                  ))}
@@ -132,7 +132,7 @@ export default function OrdersPage() {
                 </div>
               ) : (
                 orders.map((order) => (
-                  <div key={order.id} className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+                  <div key={order.id} className="glass-card rounded-2xl p-4 border">
                     <div className="flex items-start gap-4">
                       {/* Icon */}
                       <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${order.color} shrink-0`}>
@@ -147,7 +147,7 @@ export default function OrdersPage() {
                                <p className="text-sm text-gray-500 mt-0.5">{order.id}</p>
                             </div>
                             <div className="text-right shrink-0">
-                               <p className="text-[#1D6A4A] font-bold">{order.price}</p>
+                               <p className="text-primary-light font-bold">{order.price}</p>
                                <div className={`inline-block px-2 py-1 rounded-lg text-[10px] font-bold mt-1 uppercase ${order.statusColor}`}>
                                  {order.status}
                                </div>
@@ -160,7 +160,7 @@ export default function OrdersPage() {
 
                     <div className="flex justify-between items-center">
                        <p className="text-xs text-gray-500">{order.date}</p>
-                       <button className="text-[#1D6A4A] text-sm font-medium hover:text-[#155a3d] transition-colors">
+                       <button className="text-primary-light text-sm font-medium hover:text-white transition-colors">
                          View Details
                        </button>
                     </div>

@@ -8,12 +8,12 @@ export default function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <div className="min-h-screen flex bg-white">
+    <div className="min-h-screen flex app-bg">
       {/* Left Side - Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8 md:p-12 lg:p-16">
         <div className="w-full max-w-md space-y-6">
           <div className="text-center lg:text-left">
-            <h1 className="text-3xl font-bold text-[#1D6A4A] tracking-wider mb-2">BILLY</h1>
+            <h1 className="text-3xl font-bold text-primary-light tracking-wider mb-2">BILLY</h1>
             <h2 className="text-2xl font-bold text-gray-900">Create an Account 🚀</h2>
             <p className="text-gray-500 mt-2">Start your journey to better financial freedom.</p>
           </div>
@@ -31,7 +31,7 @@ export default function SignupPage() {
                     name="fullname"
                     type="text"
                     required
-                    className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-[#1D6A4A] focus:border-[#1D6A4A] transition-colors"
+                    className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary transition-colors"
                     placeholder="John Doe"
                   />
                 </div>
@@ -49,7 +49,7 @@ export default function SignupPage() {
                     type="email"
                     autoComplete="email"
                     required
-                    className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-[#1D6A4A] focus:border-[#1D6A4A] transition-colors"
+                    className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary transition-colors"
                     placeholder="name@example.com"
                   />
                 </div>
@@ -66,7 +66,7 @@ export default function SignupPage() {
                     name="phone"
                     type="tel"
                     required
-                    className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-[#1D6A4A] focus:border-[#1D6A4A] transition-colors"
+                    className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary transition-colors"
                     placeholder="+234 800 000 0000"
                   />
                 </div>
@@ -83,7 +83,7 @@ export default function SignupPage() {
                     name="password"
                     type={showPassword ? "text" : "password"}
                     required
-                    className="block w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:ring-[#1D6A4A] focus:border-[#1D6A4A] transition-colors"
+                    className="block w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary transition-colors"
                     placeholder="Create a password"
                   />
                   <button
@@ -104,23 +104,23 @@ export default function SignupPage() {
                 name="terms"
                 type="checkbox"
                 required
-                className="h-4 w-4 text-[#1D6A4A] focus:ring-[#1D6A4A] border-gray-300 rounded"
+                className="h-4 w-4 text-primary-light focus:ring-primary border-gray-300 rounded"
               />
               <label htmlFor="terms" className="ml-2 block text-sm text-gray-900">
-                I agree to the <a href="#" className="text-[#1D6A4A] hover:underline">Terms of Service</a> and <a href="#" className="text-[#1D6A4A] hover:underline">Privacy Policy</a>
+                I agree to the <a href="#" className="text-primary-light hover:underline">Terms of Service</a> and <a href="#" className="text-primary-light hover:underline">Privacy Policy</a>
               </label>
             </div>
 
             <button
               type="submit"
-              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-[#1D6A4A] hover:bg-[#155a3d] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1D6A4A] transition-colors"
+              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl text-sm font-semibold text-white btn-brand hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-primary transition-colors"
             >
               Create Account
             </button>
 
             <div className="flex items-center justify-center gap-2 text-sm text-gray-500">
               Already have an account? 
-              <Link href="/login" className="font-medium text-[#1D6A4A] hover:underline flex items-center gap-0.5">
+              <Link href="/login" className="font-medium text-primary-light hover:underline flex items-center gap-0.5">
                 Sign in <ArrowRight size={14} />
               </Link>
             </div>
@@ -129,8 +129,8 @@ export default function SignupPage() {
       </div>
 
       {/* Right Side - Banner Image */}
-      <div className="hidden lg:block w-1/2 bg-[#1D6A4A] relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-tr from-[#1D6A4A] to-[#0d3323]" />
+      <div className="hidden lg:block w-1/2 bg-card-gradient relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-tr from-primary-light/30 via-transparent to-brand-deep/60" />
         
         {/* Abstract Shapes */}
         <div className="absolute bottom-40 right-10 w-80 h-80 bg-white/10 rounded-full blur-3xl"></div>

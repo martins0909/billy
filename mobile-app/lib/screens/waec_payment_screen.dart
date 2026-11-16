@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../theme/billy_colors.dart';
+import '../widgets/billy_widgets.dart';
 import 'package:flutter/services.dart';
 import '../data/transaction_data.dart';
 import 'dart:math';
@@ -21,12 +23,13 @@ class _WaecPaymentScreenState extends State<WaecPaymentScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("WAEC Result Checker", style: TextStyle(color: Colors.black)),
+        title: const Text("WAEC Result Checker", style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
-      body: SafeArea(
+      body: GlowBackground(
+        child: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -36,8 +39,10 @@ class _WaecPaymentScreenState extends State<WaecPaymentScreen> {
                 width: double.infinity,
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF1D6A4A),
-                  borderRadius: BorderRadius.circular(16),
+                  gradient: BillyColors.cardGradient,
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: BillyColors.border),
+                  boxShadow: BillyColors.glow(),
                 ),
                 child: Column(
                   children: [
@@ -70,19 +75,20 @@ class _WaecPaymentScreenState extends State<WaecPaymentScreen> {
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black87,
+                      color: Colors.white,
                     ),
                   ),
                   const Spacer(),
                   Container(
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey[300]!),
-                      borderRadius: BorderRadius.circular(8),
+                      color: BillyColors.surface,
+                      border: Border.all(color: BillyColors.border),
+                      borderRadius: BorderRadius.circular(12),
                     ),
                     child: Row(
                       children: [
                         IconButton(
-                          icon: const Icon(Icons.remove),
+                          icon: const Icon(Icons.remove, color: BillyColors.primaryLight),
                           onPressed: () {
                             if (_quantity > 1) {
                               setState(() => _quantity--);
@@ -91,10 +97,10 @@ class _WaecPaymentScreenState extends State<WaecPaymentScreen> {
                         ),
                         Text(
                           "$_quantity",
-                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                         ),
                         IconButton(
-                          icon: const Icon(Icons.add),
+                          icon: const Icon(Icons.add, color: BillyColors.primaryLight),
                           onPressed: () {
                             if (_quantity < 10) { // Limit to 10 for safety
                               setState(() => _quantity++);
@@ -107,25 +113,21 @@ class _WaecPaymentScreenState extends State<WaecPaymentScreen> {
                 ],
               ),
               const SizedBox(height: 16),
-               Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.grey[100],
-                  borderRadius: BorderRadius.circular(12),
-                ),
+               GlassCard(
+                radius: 16,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text(
                       "Total Amount:",
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
                     ),
                     Text(
                       "₦ ${_totalPrice.toStringAsFixed(2)}",
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFF1D6A4A),
+                        color: BillyColors.primaryLight,
                       ),
                     ),
                   ],
@@ -137,41 +139,36 @@ class _WaecPaymentScreenState extends State<WaecPaymentScreen> {
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
-                  color: Colors.black54,
+                  color: BillyColors.textSecondary,
                 ),
               ),
               const SizedBox(height: 8),
               TextField(
                 controller: _phoneController,
                 keyboardType: TextInputType.phone,
-                decoration: InputDecoration(
+                style: const TextStyle(color: Colors.white),
+                decoration: const InputDecoration(
                   hintText: "Enter phone number",
-                  filled: true,
-                  fillColor: Colors.grey[100],
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide.none,
-                  ),
-                  prefixIcon: const Icon(Icons.phone_android),
+                  prefixIcon: Icon(Icons.phone_android),
                 ),
               ),
               const SizedBox(height: 16),
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Colors.blue[50],
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.blue.withOpacity(0.3)),
+                  color: BillyColors.primary.withOpacity(0.12),
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: BillyColors.border),
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.info_outline, color: Colors.blue),
+                    const Icon(Icons.info_outline, color: BillyColors.primaryLight),
                     const SizedBox(width: 12),
-                    Expanded(
+                    const Expanded(
                       child: Text(
                         "Your PIN(s) and Serial Number(s) will be displayed immediately after successful payment.",
                         style: TextStyle(
-                          color: Colors.blue[900],
+                          color: BillyColors.textSecondary,
                           fontSize: 12,
                         ),
                       ),
@@ -180,30 +177,15 @@ class _WaecPaymentScreenState extends State<WaecPaymentScreen> {
                 ),
               ),
               const SizedBox(height: 32),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: _confirmPayment,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF1D6A4A),
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  child: const Text(
-                    "Pay Securely",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
+              GradientButton(
+                label: "Pay Securely",
+                expand: true,
+                onPressed: _confirmPayment,
               ),
             ],
           ),
         ),
+      ),
       ),
     );
   }
@@ -220,11 +202,11 @@ class _WaecPaymentScreenState extends State<WaecPaymentScreen> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Service: WAEC Result Checker"),
+              const Text("Service: WAEC Result Checker", style: TextStyle(color: Colors.white)),
               const SizedBox(height: 8),
-              Text("Quantity: $_quantity"),
+              Text("Quantity: $_quantity", style: const TextStyle(color: Colors.white)),
               const SizedBox(height: 8),
-              Text("Total: ₦${_totalPrice.toStringAsFixed(2)}"),
+              Text("Total: ₦${_totalPrice.toStringAsFixed(2)}", style: const TextStyle(color: Colors.white)),
             ],
           ),
           actions: [
@@ -237,7 +219,7 @@ class _WaecPaymentScreenState extends State<WaecPaymentScreen> {
                 Navigator.pop(context); // Close confirm dialog
                 _showPinDialog();
               },
-              style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF1D6A4A)),
+              style: ElevatedButton.styleFrom(backgroundColor: BillyColors.primary),
               child: const Text("Proceed", style: TextStyle(color: Colors.white)),
             ),
           ],
@@ -263,14 +245,9 @@ class _WaecPaymentScreenState extends State<WaecPaymentScreen> {
               keyboardType: TextInputType.number,
               maxLength: 4,
               textAlign: TextAlign.center,
-              decoration: InputDecoration(
+              style: const TextStyle(color: Colors.white),
+              decoration: const InputDecoration(
                 hintText: "****",
-                filled: true,
-                fillColor: Colors.grey[100],
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide.none,
-                ),
                 counterText: "",
               ),
             ),
@@ -292,7 +269,7 @@ class _WaecPaymentScreenState extends State<WaecPaymentScreen> {
                 );
               }
             },
-            style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF1D6A4A)),
+            style: ElevatedButton.styleFrom(backgroundColor: BillyColors.primary),
             child: const Text("Pay", style: TextStyle(color: Colors.white)),
           ),
         ],
@@ -305,7 +282,7 @@ class _WaecPaymentScreenState extends State<WaecPaymentScreen> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => const Center(child: CircularProgressIndicator()),
+      builder: (context) => const Center(child: CircularProgressIndicator(color: BillyColors.primaryLight)),
     );
 
     // Simulate Network Request
@@ -349,7 +326,7 @@ class _WaecPaymentScreenState extends State<WaecPaymentScreen> {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           title: const Row(
             children: [
-              Icon(Icons.check_circle, color: Colors.green),
+              Icon(Icons.check_circle, color: BillyColors.success),
               SizedBox(width: 8),
               Text("Purchase Successful"),
             ],
@@ -359,7 +336,7 @@ class _WaecPaymentScreenState extends State<WaecPaymentScreen> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("You have successfully purchased $_quantity WAEC PIN(s).", style: const TextStyle(fontSize: 14)),
+                Text("You have successfully purchased $_quantity WAEC PIN(s).", style: const TextStyle(fontSize: 14, color: BillyColors.textSecondary)),
                 const SizedBox(height: 16),
                 ...purchasedPins.asMap().entries.map((entry) {
                   final index = entry.key;
@@ -367,13 +344,14 @@ class _WaecPaymentScreenState extends State<WaecPaymentScreen> {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("PIN ${index + 1}:", style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.grey)),
+                      Text("PIN ${index + 1}:", style: const TextStyle(fontWeight: FontWeight.bold, color: BillyColors.textMuted)),
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                         margin: const EdgeInsets.only(bottom: 8),
                         decoration: BoxDecoration(
-                          color: Colors.grey[100],
-                          borderRadius: BorderRadius.circular(8),
+                          color: BillyColors.surface,
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: BillyColors.borderSoft),
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -381,12 +359,12 @@ class _WaecPaymentScreenState extends State<WaecPaymentScreen> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("PIN: ${item['pin']}", style: const TextStyle(fontWeight: FontWeight.bold)),
-                                Text("S/N: ${item['serial']}", style: const TextStyle(fontSize: 12)),
+                                Text("PIN: ${item['pin']}", style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+                                Text("S/N: ${item['serial']}", style: const TextStyle(fontSize: 12, color: BillyColors.textSecondary)),
                               ],
                             ),
                             IconButton(
-                              icon: const Icon(Icons.copy, color: Colors.blue, size: 20),
+                              icon: const Icon(Icons.copy, color: BillyColors.primaryLight, size: 20),
                               onPressed: () {
                                 Clipboard.setData(ClipboardData(text: "PIN: ${item['pin']} S/N: ${item['serial']}"));
                                 ScaffoldMessenger.of(context).showSnackBar(
@@ -397,7 +375,7 @@ class _WaecPaymentScreenState extends State<WaecPaymentScreen> {
                           ],
                         ),
                       ),
-                      const Divider(),
+                      const Divider(color: BillyColors.borderSoft),
                     ],
                   );
                 }),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../theme/billy_colors.dart';
+import '../widgets/billy_widgets.dart';
 import 'package:flutter/services.dart';
 import '../data/transaction_data.dart';
 import 'airtime_screen.dart';
@@ -19,108 +21,188 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   bool _isBalanceVisible = true;
 
+  String get _greeting {
+    final hour = DateTime.now().hour;
+    if (hour < 12) return 'Good Morning';
+    if (hour < 18) return 'Good Afternoon';
+    return 'Good Evening';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.black, // Removed to use theme background
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // 1. Top Header
-              _buildHeader(),
-              const SizedBox(height: 20),
-
-              // 2. Balance Card
-              _buildBalanceCard(),
-              const SizedBox(height: 24),
-
-              // 3. Quick Actions Section
-              _buildQuickActionsSection(),
-              const SizedBox(height: 16),
-              _buildPhoneVerificationBanner(),
-              const SizedBox(height: 24),
-
-              // 5. Promotional Banner
-              _buildPromoBanner(),
-              const SizedBox(height: 24),
-
-              // 6. Recent Transactions
-              const Text(
-                "Recent Transactions",
-                style: TextStyle(
-                  color: Colors.black, // Changed to black
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 16),
-              _buildRecentTransactions(),
-            ],
+      body: GlowBackground(
+        fadeTop: false,
+        child: SafeArea(
+          bottom: false,
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildHeader(),
+                const SizedBox(height: 22),
+                _buildBalanceCard(),
+                const SizedBox(height: 26),
+                _buildQuickActionsSection(),
+                const SizedBox(height: 22),
+                _buildPhoneVerificationBanner(),
+                const SizedBox(height: 16),
+                _buildPromoBanner(),
+                const SizedBox(height: 26),
+                const SectionTitle(title: "Recent Transactions"),
+                const SizedBox(height: 14),
+                _buildRecentTransactions(),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
+  // ---------------------------------------------------------------------------
+  // Header
+  // ---------------------------------------------------------------------------
   Widget _buildHeader() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Row(
-          children: [
-            const CircleAvatar(
-              radius: 20,
-              backgroundColor: Colors.grey,
-              child: Icon(Icons.person, color: Colors.white),
+        Container(
+          width: 76,
+          height: 76,
+          padding: const EdgeInsets.all(3),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            gradient: BillyColors.brandGradient,
+            boxShadow: BillyColors.glow(0.45),
+          ),
+          child: ClipOval(
+            child: Image.network(
+              'https://randomuser.me/api/portraits/women/44.jpg',
+              fit: BoxFit.cover,
+              errorBuilder: (_, __, ___) => Container(
+                color: BillyColors.surfaceHigh,
+                child: const Icon(Icons.person, color: Colors.white, size: 38),
+              ),
             ),
-            const SizedBox(width: 12),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Hi, User",
-                  style: TextStyle(
-                    color: Colors.grey[600], // Changed to grey[600]
-                    fontSize: 14,
-                  ),
+          ),
+        ),
+        const SizedBox(width: 16),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                _greeting,
+                style: const TextStyle(
+                  color: BillyColors.textSecondary,
+                  fontSize: 20,
                 ),
-                const Text(
-                  "Good Morning",
+              ),
+              Row(
+                children: [
+                  const Flexible(
+                    child: Text(
+                      "Blessing",
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        height: 1.15,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Container(
+                    padding: const EdgeInsets.all(2),
+                    decoration: const BoxDecoration(
+                      color: BillyColors.primary,
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(Icons.check, color: Colors.white, size: 14),
+                  ),
+                ],
+              ),
+              const Text(
+                "Have a great day ahead!",
+                style: TextStyle(
+                  color: BillyColors.textSecondary,
+                  fontStyle: FontStyle.italic,
+                  fontSize: 14,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Container(
+                width: 76,
+                height: 2,
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [BillyColors.primaryLight, Colors.transparent],
+                  ),
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(width: 8),
+        Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Container(
+              width: 56,
+              height: 56,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: BillyColors.surface.withOpacity(0.8),
+                border: Border.all(color: BillyColors.border, width: 1.5),
+                boxShadow: BillyColors.glow(0.25),
+              ),
+              child: IconButton(
+                icon: const Icon(Icons.notifications_none, color: Colors.white, size: 28),
+                onPressed: () {},
+              ),
+            ),
+            Positioned(
+              top: -4,
+              right: -4,
+              child: Container(
+                width: 22,
+                height: 22,
+                alignment: Alignment.center,
+                decoration: const BoxDecoration(
+                  color: Color(0xFFFF2D3F),
+                  shape: BoxShape.circle,
+                ),
+                child: const Text(
+                  "2",
                   style: TextStyle(
-                    color: Colors.black, // Changed to black
-                    fontSize: 16,
+                    color: Colors.white,
+                    fontSize: 12,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-              ],
+              ),
             ),
           ],
-        ),
-        IconButton(
-          icon: const Icon(Icons.notifications_outlined, color: Colors.black), // Changed to black
-          onPressed: () {},
         ),
       ],
     );
   }
 
+  // ---------------------------------------------------------------------------
+  // Wallet balance card
+  // ---------------------------------------------------------------------------
   Widget _buildBalanceCard() {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.fromLTRB(20, 18, 20, 20),
       decoration: BoxDecoration(
-        color: const Color(0xFF1D6A4A),
-        borderRadius: BorderRadius.circular(25),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xFF1D6A4A).withOpacity(0.3),
-            blurRadius: 20,
-            offset: const Offset(0, 10),
-          ),
-        ],
+        gradient: BillyColors.cardGradient,
+        borderRadius: BorderRadius.circular(28),
+        border: Border.all(color: BillyColors.primaryLight.withOpacity(0.55), width: 1.5),
+        boxShadow: BillyColors.glow(0.45),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -128,118 +210,107 @@ class _HomeScreenState extends State<HomeScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  const Text(
-                    "Wallet Balance",
-                    style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w500),
-                  ),
-                  const SizedBox(width: 8),
-                  IconButton(
-                    icon: Icon(
-                      _isBalanceVisible ? Icons.visibility : Icons.visibility_off,
-                      color: Colors.white,
-                      size: 20,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _isBalanceVisible = !_isBalanceVisible;
-                      });
-                    },
-                  ),
-                ],
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const TransactionHistoryScreen(),
-                    ),
-                  );
-                },
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: const Text(
-                    "Transaction History",
-                    style: TextStyle(
-                      color: Color(0xFF27835E),
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Text(
-            _isBalanceVisible ? "₦ 50,000.00" : "****",
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 36,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 1,
-            ),
-          ),
-          const SizedBox(height: 24),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              InkWell(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const AddMoneyScreen()));
-                },
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: const Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(Icons.add, color: Color(0xFF27835E), size: 20),
-                      SizedBox(width: 8),
-                      Text(
-                        "Add Money",
-                        style: TextStyle(
-                          color: Color(0xFF27835E),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(width: 12),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: const Row(
-                  mainAxisSize: MainAxisSize.min,
+              Expanded(
+                child: Row(
                   children: [
-                    Icon(Icons.arrow_outward, color: Color(0xFF27835E), size: 20),
-                    SizedBox(width: 8),
-                    Text(
-                      "Withdraw",
-                      style: TextStyle(
-                        color: Color(0xFF27835E),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
+                    const Icon(Icons.account_balance_wallet, color: Colors.white, size: 30),
+                    const SizedBox(width: 10),
+                    const Flexible(
+                      child: Text(
+                        "Wallet Balance",
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    GestureDetector(
+                      onTap: () => setState(() => _isBalanceVisible = !_isBalanceVisible),
+                      child: Icon(
+                        _isBalanceVisible ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+                        color: Colors.white,
+                        size: 22,
                       ),
                     ),
                   ],
                 ),
               ),
+              const SizedBox(width: 8),
+              InkWell(
+                borderRadius: BorderRadius.circular(24),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const TransactionHistoryScreen()),
+                  );
+                },
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.25),
+                    borderRadius: BorderRadius.circular(24),
+                    border: Border.all(color: BillyColors.primaryLight.withOpacity(0.7)),
+                  ),
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.history, color: Colors.white, size: 22),
+                      SizedBox(width: 6),
+                      Text(
+                        "Transaction\nHistory",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          height: 1.15,
+                        ),
+                      ),
+                      SizedBox(width: 2),
+                      Icon(Icons.chevron_right, color: Colors.white70, size: 18),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.centerLeft,
+            child: Text(
+              _isBalanceVisible ? "₦ 50,000.00" : "****",
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 48,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 0.5,
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+          Row(
+            children: [
+              Expanded(
+                child: GradientButton(
+                  label: "Add Money",
+                  icon: Icons.add,
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const AddMoneyScreen()),
+                    );
+                  },
+                ),
+              ),
+              const SizedBox(width: 14),
+              Expanded(
+                child: OutlinePillButton(
+                  label: "Withdraw",
+                  icon: Icons.north_east,
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+                  onPressed: () {},
+                ),
+              ),
             ],
           ),
         ],
@@ -247,99 +318,204 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  // ---------------------------------------------------------------------------
+  // Quick actions
+  // ---------------------------------------------------------------------------
   Widget _buildQuickActionsSection() {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white, // Changed to white
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            blurRadius: 10,
-            offset: const Offset(0, 5),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            "Quick Action",
-            style: TextStyle(
-              color: Colors.black, // Changed to black
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SectionTitle(
+          title: "Quick Actions",
+          actionLabel: "See All",
+          onAction: widget.onSwitchToServices,
+        ),
+        const SizedBox(height: 14),
+        Row(
+          children: [
+            Expanded(
+              child: _buildQuickActionButton(
+                Icons.phone,
+                "Airtime",
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const AirtimeScreen())),
+              ),
             ),
-          ),
-          const SizedBox(height: 16),
-          Column(
-            children: [
-              Row(
-                children: [
-                  Expanded(child: _buildQuickActionButton(
-                    Icons.phone, 
-                    "Airtime",
-                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const AirtimeScreen())),
-                  )),
-                  const SizedBox(width: 12),
-                  Expanded(child: _buildQuickActionButton(
-                    Icons.wifi, 
-                    "Data",
-                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const DataScreen())),
-                  )),
-                  const SizedBox(width: 12),
-                  Expanded(child: _buildQuickActionButton(
-                    Icons.credit_card, 
-                    "ATM Card",
-                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const AtmCardScreen())),
-                  )),
-                ],
+            const SizedBox(width: 12),
+            Expanded(
+              child: _buildQuickActionButton(
+                Icons.wifi,
+                "Data",
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const DataScreen())),
               ),
-              const SizedBox(height: 12),
-              Row(
-                children: [
-                  Expanded(child: _buildQuickActionButton(Icons.public, "Foreign Number")),
-                  const SizedBox(width: 12),
-                  Expanded(child: _buildQuickActionButton(Icons.campaign, "Engagement")),
-                  const SizedBox(width: 12),
-                  Expanded(child: _buildQuickActionButton(
-                    Icons.grid_view, 
-                    "More",
-                    onTap: widget.onSwitchToServices,
-                  )),
-                ],
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: _buildQuickActionButton(
+                Icons.credit_card,
+                "ATM Card",
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const AtmCardScreen())),
               ),
-            ],
-          ),
-        ],
-      ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
+        Row(
+          children: [
+            Expanded(
+              child: _buildQuickActionButton(Icons.public, "Foreign Number", onTap: widget.onSwitchToServices),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: _buildQuickActionButton(Icons.card_giftcard, "Engagement", onTap: widget.onSwitchToServices),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: _buildQuickActionButton(Icons.grid_view, "More", onTap: widget.onSwitchToServices),
+            ),
+          ],
+        ),
+      ],
     );
   }
 
   Widget _buildQuickActionButton(IconData icon, String label, {VoidCallback? onTap}) {
-    return GestureDetector(
+    return GlassCard(
       onTap: onTap,
-      child: Container(
-        height: 80,
-        decoration: BoxDecoration(
-          color: const Color(0xFFE8F5E9), // Light green background
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: const Color(0xFF38ef7d).withOpacity(0.1)),
+      radius: 22,
+      padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 6),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ShaderMask(
+            shaderCallback: (rect) => const LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Color(0xFFC77DFF), BillyColors.primary],
+            ).createShader(rect),
+            child: Icon(icon, color: Colors.white, size: 38),
+          ),
+          const SizedBox(height: 10),
+          Text(
+            label,
+            textAlign: TextAlign.center,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ---------------------------------------------------------------------------
+  // Phone verification banner
+  // ---------------------------------------------------------------------------
+  Widget _buildPhoneVerificationBanner() {
+    return Container(
+      width: double.infinity,
+      height: 190,
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+          colors: [Color(0xFF3A0F8F), Color(0xFF5B0FD1), Color(0xFF8A2BFF)],
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        borderRadius: BorderRadius.circular(26),
+        border: Border.all(color: BillyColors.primaryLight.withOpacity(0.5)),
+        boxShadow: BillyColors.glow(0.3),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(26),
+        child: Stack(
           children: [
-            Icon(icon, color: const Color(0xFF1b5e20), size: 24), // Dark green icon
-            const SizedBox(height: 8),
-            Text(
-              label,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: Colors.black87, // Dark text
-                fontSize: 10,
-                fontWeight: FontWeight.w500,
+            // Phone + flags illustration
+            Positioned(
+              right: 8,
+              top: 0,
+              bottom: 0,
+              width: 150,
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Transform.rotate(
+                    angle: 0.24,
+                    child: Container(
+                      width: 78,
+                      height: 140,
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [Color(0xFF2A0F73), Color(0xFF0B0430)],
+                        ),
+                        borderRadius: BorderRadius.circular(18),
+                        border: Border.all(color: const Color(0xFFB9B3D0), width: 3),
+                        boxShadow: BillyColors.glow(0.6),
+                      ),
+                      child: const Icon(Icons.verified_user, color: BillyColors.primaryLight, size: 46),
+                    ),
+                  ),
+                  Positioned(top: 18, left: 8, child: _flag('🇺🇸')),
+                  Positioned(bottom: 26, left: 0, child: _flag('🇨🇦')),
+                  Positioned(top: 24, right: 0, child: _flag('🇬🇧')),
+                  Positioned(bottom: 16, right: 6, child: _flag('🇩🇪')),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 18, 150, 18),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text.rich(
+                    TextSpan(
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        height: 1.3,
+                      ),
+                      children: const [
+                        TextSpan(text: "Buy all countries phone number for verification with ease in "),
+                        TextSpan(
+                          text: "less than 5 secs",
+                          style: TextStyle(color: Color(0xFFE0B3FF)),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 14),
+                  GestureDetector(
+                    onTap: widget.onSwitchToServices,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF1E8FF),
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: const Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            "Verify Now",
+                            style: TextStyle(
+                              color: BillyColors.deepPurple,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                            ),
+                          ),
+                          SizedBox(width: 6),
+                          Icon(Icons.arrow_forward, color: BillyColors.deepPurple, size: 18),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
@@ -348,160 +524,117 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-
-  Widget _buildPhoneVerificationBanner() {
+  Widget _flag(String emoji) {
     return Container(
-      width: double.infinity,
-      height: 140, // Fixed height for the banner
+      width: 38,
+      height: 38,
+      alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: const Color(0xFF1D6A4A), // Dark Green
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xFF1D6A4A).withOpacity(0.3),
-            blurRadius: 10,
-            offset: const Offset(0, 5),
-          ),
-        ],
+        shape: BoxShape.circle,
+        color: Colors.white,
+        border: Border.all(color: Colors.white70, width: 2),
+        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.3), blurRadius: 6)],
       ),
-      child: Stack(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        "Buy all countries phone number for verification with ease in less than 5 secs",
-                        style: TextStyle(
-                          color: Colors.white, // White text on dark green
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      const Icon(Icons.verified, color: Color(0xFF38ef7d), size: 24),
-                    ],
-                  ),
-                ),
-                // Spacer to push text to the left, leaving room for the image
-                const Expanded(flex: 1, child: SizedBox()),
-              ],
-            ),
-          ),
-          Positioned(
-            right: 0,
-            top: 0,
-            bottom: 0,
-            child: ClipRRect(
-              borderRadius: const BorderRadius.only(
-                topRight: Radius.circular(16),
-                bottomRight: Radius.circular(16),
-              ),
-              child: Image.asset(
-                "assets/phone1.png",
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-        ],
-      ),
+      child: Text(emoji, style: const TextStyle(fontSize: 22)),
     );
   }
 
-
+  // ---------------------------------------------------------------------------
+  // Cashback promo banner
+  // ---------------------------------------------------------------------------
   Widget _buildPromoBanner() {
     return Container(
       width: double.infinity,
-      height: 120,
+      padding: const EdgeInsets.fromLTRB(14, 14, 14, 14),
       decoration: BoxDecoration(
-        color: const Color(0xFFE8F5E9), // Very light green
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFF38ef7d).withOpacity(0.1)),
+        gradient: BillyColors.glassGradient,
+        borderRadius: BorderRadius.circular(26),
+        border: Border.all(color: BillyColors.primaryLight.withOpacity(0.6), width: 1.5),
+        boxShadow: BillyColors.glow(0.25),
       ),
       child: Row(
         children: [
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Get 10% Cashback",
-                    style: TextStyle(
-                      color: const Color(0xFF1b5e20), // Dark green text
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    "On your first airtime recharge",
-                    style: TextStyle(
-                      color: Colors.grey[700], // Dark grey text
-                      fontSize: 12,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
           Container(
-            width: 100,
-            height: 120,
+            width: 74,
+            height: 74,
             decoration: BoxDecoration(
-              color: const Color(0xFF38ef7d).withOpacity(0.1),
-              borderRadius: const BorderRadius.only(
-                topRight: Radius.circular(16),
-                bottomRight: Radius.circular(16),
-              ),
+              gradient: BillyColors.brandGradient,
+              borderRadius: BorderRadius.circular(18),
+              boxShadow: BillyColors.glow(0.5),
             ),
-            child: const Icon(Icons.local_offer, color: Color(0xFF1b5e20), size: 40), // Dark green icon
+            child: const Icon(Icons.card_giftcard, color: Colors.white, size: 44),
+          ),
+          const SizedBox(width: 14),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.baseline,
+                  textBaseline: TextBaseline.alphabetic,
+                  children: [
+                    const Text(
+                      "Get ",
+                      style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    ShaderMask(
+                      shaderCallback: (rect) => const LinearGradient(
+                        colors: [Color(0xFFD08BFF), BillyColors.primary],
+                      ).createShader(rect),
+                      child: const Text(
+                        "10%",
+                        style: TextStyle(color: Colors.white, fontSize: 34, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    const Flexible(
+                      child: Text(
+                        " Cashback",
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
+                ),
+                const Text(
+                  "On every successful transaction",
+                  style: TextStyle(color: BillyColors.textSecondary, fontSize: 12.5),
+                ),
+              ],
+            ),
           ),
         ],
       ),
     );
   }
 
+  // ---------------------------------------------------------------------------
+  // Recent transactions
+  // ---------------------------------------------------------------------------
   Widget _buildRecentTransactions() {
     return ListView.builder(
       shrinkWrap: true,
+      padding: EdgeInsets.zero,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: recentTransactions.length,
       itemBuilder: (context, index) {
         final transaction = recentTransactions[index];
-        return GestureDetector(
-          onTap: () => _showTransactionDetails(transaction),
-          child: Container(
-            margin: const EdgeInsets.only(bottom: 12),
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: Colors.white, // White background
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.1),
-                  blurRadius: 5,
-                  offset: const Offset(0, 2),
-                ),
-              ],
-            ),
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 12),
+          child: GlassCard(
+            radius: 18,
+            padding: const EdgeInsets.all(14),
+            onTap: () => _showTransactionDetails(transaction),
             child: Row(
               children: [
                 Container(
-                  padding: const EdgeInsets.all(8),
+                  width: 42,
+                  height: 42,
                   decoration: BoxDecoration(
-                    color: Colors.red.withOpacity(0.1),
+                    gradient: BillyColors.brandGradient,
                     shape: BoxShape.circle,
+                    boxShadow: BillyColors.glow(0.3),
                   ),
-                  child: const Icon(Icons.arrow_upward, color: Colors.red, size: 20),
+                  child: const Icon(Icons.arrow_upward, color: Colors.white, size: 20),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
@@ -511,14 +644,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       Text(
                         transaction.title,
                         style: const TextStyle(
-                          color: Colors.black, // Black text
-                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 15,
                         ),
                       ),
                       const SizedBox(height: 4),
                       Text(
                         transaction.date,
-                        style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                        style: const TextStyle(color: BillyColors.textMuted, fontSize: 12),
                       ),
                     ],
                   ),
@@ -526,7 +660,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Text(
                   transaction.amount,
                   style: const TextStyle(
-                    color: Colors.black, // Black text
+                    color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -537,7 +671,6 @@ class _HomeScreenState extends State<HomeScreen> {
       },
     );
   }
-
   void _showTransactionDetails(Transaction transaction) {
     if (transaction.type == 'waec' && transaction.details != null) {
       showDialog(

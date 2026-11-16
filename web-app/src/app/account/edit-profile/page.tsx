@@ -9,25 +9,25 @@ import Link from 'next/link';
 
 export default function EditProfilePage() {
   return (
-    <div className="flex min-h-screen pb-16 md:pb-0 bg-off-white">
+    <div className="flex min-h-screen app-bg">
       <Sidebar />
 
 
       <main className="flex-1 flex flex-col h-screen overflow-hidden">
         <Header title="Edit Profile" />
 
-        <div className="flex-1 overflow-y-auto p-4 md:p-8">
-           <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-sm border p-6 md:p-8">
+        <div className="flex-1 overflow-y-auto p-4 md:p-8 pb-28 md:pb-8">
+           <div className="max-w-2xl mx-auto glass-card rounded-xl border p-6 md:p-8">
               <div className="flex flex-col items-center mb-8">
                  <div className="relative">
-                    <div className="w-24 h-24 rounded-full bg-gray-200 border-4 border-white shadow-lg overflow-hidden">
+                    <div className="w-24 h-24 rounded-full bg-gray-200 border-4 border-primary/60 shadow-glow-sm overflow-hidden">
                        <img 
                           src="https://randomuser.me/api/portraits/men/32.jpg" 
                           alt="Profile" 
                           className="w-full h-full object-cover"
                        />
                     </div>
-                    <button className="absolute bottom-0 right-0 p-2 bg-[#1D6A4A] text-white rounded-full hover:bg-[#155a3d] transition-colors shadow-sm">
+                    <button className="absolute bottom-0 right-0 p-2 btn-brand text-white rounded-full hover:brightness-110 transition-all">
                        <Camera size={16} />
                     </button>
                  </div>
@@ -44,7 +44,7 @@ export default function EditProfilePage() {
                           <input 
                              type="text" 
                              defaultValue="John"
-                             className="w-full pl-10 pr-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-[#1D6A4A] focus:border-transparent outline-none"
+                             className="w-full pl-10 pr-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none"
                           />
                        </div>
                     </div>
@@ -55,7 +55,7 @@ export default function EditProfilePage() {
                           <input 
                              type="text" 
                              defaultValue="Doe"
-                             className="w-full pl-10 pr-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-[#1D6A4A] focus:border-transparent outline-none"
+                             className="w-full pl-10 pr-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none"
                           />
                        </div>
                     </div>
@@ -83,7 +83,7 @@ export default function EditProfilePage() {
                        <input 
                           type="tel" 
                           defaultValue="+234 800 000 0000"
-                          className="w-full pl-10 pr-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-[#1D6A4A] focus:border-transparent outline-none"
+                          className="w-full pl-10 pr-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none"
                        />
                     </div>
                  </div>
@@ -92,7 +92,7 @@ export default function EditProfilePage() {
                     <Link href="/account" className="flex-1 py-3 px-4 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 text-center transition-colors">
                        Cancel
                     </Link>
-                    <button type="submit" className="flex-1 py-3 px-4 bg-[#1D6A4A] text-white font-medium rounded-lg hover:bg-[#155a3d] flex items-center justify-center gap-2 shadow-sm transition-colors">
+                    <button type="submit" className="flex-1 py-3 px-4 btn-brand text-white font-semibold rounded-xl hover:brightness-110 flex items-center justify-center gap-2 transition-all">
                        <Save size={18} />
                        Save Changes
                     </button>

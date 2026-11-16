@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../theme/billy_colors.dart';
+import '../widgets/billy_widgets.dart';
 import 'package:flutter/services.dart';
 
 class AtmCardScreen extends StatefulWidget {
@@ -21,15 +23,15 @@ class _AtmCardScreenState extends State<AtmCardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
       appBar: AppBar(
-        title: const Text("Get Virtual Card", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+        title: const Text("Get Virtual Card", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.white),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
+      body: GlowBackground(
+        child: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,15 +43,10 @@ class _AtmCardScreenState extends State<AtmCardScreen> {
                 width: double.infinity,
                 padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF1D6A4A),
+                  gradient: BillyColors.cardGradient,
                   borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: const Color(0xFF1D6A4A).withOpacity(0.3),
-                      blurRadius: 15,
-                      offset: const Offset(0, 8),
-                    ),
-                  ],
+                  border: Border.all(color: BillyColors.border),
+                  boxShadow: BillyColors.glow(),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -108,7 +105,7 @@ class _AtmCardScreenState extends State<AtmCardScreen> {
             const SizedBox(height: 30),
 
             // Features List
-            Text("Card Features", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.grey[800])),
+            const Text("Card Features", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
             const SizedBox(height: 10),
             _buildFeatureItem(Icons.public, "Accepted Globally", "Use for international payments"),
             _buildFeatureItem(Icons.security, "Secure Transactions", "3D Secure enabled for safety"),
@@ -117,29 +114,16 @@ class _AtmCardScreenState extends State<AtmCardScreen> {
             const SizedBox(height: 30),
 
             // Input Form
-            Text("Card Details", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.grey[800])),
+            const Text("Card Details", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
             const SizedBox(height: 10),
             TextField(
               controller: _nameController,
               onChanged: (val) => setState(() {}),
-              decoration: InputDecoration(
+              style: const TextStyle(color: Colors.white),
+              decoration: const InputDecoration(
                 labelText: "Name on Card",
                 hintText: "Enter your full name",
-                prefixIcon: const Icon(Icons.person_outline, color: Color(0xFF1D6A4A)),
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide.none,
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: Colors.grey.shade300),
-                ),
-                focusedBorder: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(12)),
-                  borderSide: BorderSide(color: Color(0xFF1D6A4A)),
-                ),
+                prefixIcon: Icon(Icons.person_outline, color: BillyColors.primaryLight),
               ),
             ),
 
@@ -147,15 +131,15 @@ class _AtmCardScreenState extends State<AtmCardScreen> {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: const Color(0xFF1D6A4A).withOpacity(0.1),
+                color: BillyColors.primary.withOpacity(0.15),
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: const Color(0xFF1D6A4A).withOpacity(0.3)),
+                border: Border.all(color: BillyColors.border),
               ),
               child: Row(
                 children: [
-                   const Icon(Icons.info_outline, color: Color(0xFF1D6A4A), size: 20),
+                   const Icon(Icons.info_outline, color: BillyColors.primaryLight, size: 20),
                    const SizedBox(width: 8),
-                   Text("Creation Fee: ₦$_creationFee", style: const TextStyle(color: Color(0xFF1D6A4A), fontWeight: FontWeight.bold)),
+                   Text("Creation Fee: ₦$_creationFee", style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
                 ],
               ),
             ),
@@ -163,11 +147,11 @@ class _AtmCardScreenState extends State<AtmCardScreen> {
             const SizedBox(height: 40),
 
             // Action Button
-            SizedBox(
-              width: double.infinity,
-              height: 55,
-              child: ElevatedButton(
-                onPressed: () {
+            GradientButton(
+              label: "Create Card",
+              expand: true,
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              onPressed: () {
                    if (_nameController.text.trim().isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text("Please enter the name for the card")),
@@ -175,20 +159,11 @@ class _AtmCardScreenState extends State<AtmCardScreen> {
                       return;
                    }
                   _showConfirmationSheet();
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF1D6A4A),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                  elevation: 2,
-                ),
-                child: const Text(
-                  "Create Card",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
-                ),
-              ),
+              },
             ),
           ],
         ),
+      ),
       ),
     );
   }
@@ -201,17 +176,18 @@ class _AtmCardScreenState extends State<AtmCardScreen> {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: const Color(0xFF1D6A4A).withOpacity(0.1),
+              color: BillyColors.primary.withOpacity(0.15),
               borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: BillyColors.borderSoft),
             ),
-            child: Icon(icon, color: const Color(0xFF1D6A4A), size: 20),
+            child: Icon(icon, color: BillyColors.primaryLight, size: 20),
           ),
           const SizedBox(width: 12),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
-              Text(subtitle, style: TextStyle(color: Colors.grey[600], fontSize: 12)),
+              Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Colors.white)),
+              Text(subtitle, style: const TextStyle(color: BillyColors.textSecondary, fontSize: 12)),
             ],
           )
         ],
@@ -232,7 +208,7 @@ class _AtmCardScreenState extends State<AtmCardScreen> {
           children: [
             const Text(
               "Confirm Card Order",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
             ),
             const SizedBox(height: 20),
             _buildDetailRow("Service", "Virtual Card Creation"),
@@ -240,20 +216,13 @@ class _AtmCardScreenState extends State<AtmCardScreen> {
             _buildDetailRow("Fee", "₦$_creationFee"),
             
             const SizedBox(height: 30),
-            SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context); // Close sheet
-                  _showPinDialog();
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF1D6A4A),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                ),
-                child: const Text("Pay & Create", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
-              ),
+            GradientButton(
+              label: "Pay & Create",
+              expand: true,
+              onPressed: () {
+                Navigator.pop(context); // Close sheet
+                _showPinDialog();
+              },
             )
           ],
         ),
@@ -267,8 +236,8 @@ class _AtmCardScreenState extends State<AtmCardScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: const TextStyle(color: Colors.grey, fontSize: 16)),
-          Text(value, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+          Text(label, style: const TextStyle(color: BillyColors.textSecondary, fontSize: 16)),
+          Text(value, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white)),
         ],
       ),
     );
@@ -284,13 +253,16 @@ class _AtmCardScreenState extends State<AtmCardScreen> {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              backgroundColor: Colors.white,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-              title: const Center(child: Text("Enter PIN", style: TextStyle(fontWeight: FontWeight.bold))),
+              backgroundColor: BillyColors.surface,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+                side: const BorderSide(color: BillyColors.border),
+              ),
+              title: const Center(child: Text("Enter PIN", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white))),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Text("Enter your 4-digit security PIN", style: TextStyle(color: Colors.grey)),
+                  const Text("Enter your 4-digit security PIN", style: TextStyle(color: BillyColors.textSecondary)),
                   const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -301,7 +273,7 @@ class _AtmCardScreenState extends State<AtmCardScreen> {
                         height: 15,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: index < enteredPin.length ? const Color(0xFF1D6A4A) : Colors.grey.shade300,
+                          color: index < enteredPin.length ? BillyColors.primaryLight : BillyColors.surfaceHigh,
                         ),
                       );
                     }),
@@ -361,7 +333,7 @@ class _AtmCardScreenState extends State<AtmCardScreen> {
                             child: const SizedBox(
                               width: 60,
                               height: 60,
-                              child: Icon(Icons.backspace_outlined),
+                              child: Icon(Icons.backspace_outlined, color: Colors.white),
                             ),
                           ),
                         ],
@@ -373,7 +345,7 @@ class _AtmCardScreenState extends State<AtmCardScreen> {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text("Cancel", style: TextStyle(color: Colors.red)),
+                  child: const Text("Cancel", style: TextStyle(color: BillyColors.error)),
                 ),
               ],
             );
@@ -393,9 +365,10 @@ class _AtmCardScreenState extends State<AtmCardScreen> {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: Colors.grey.shade100,
+          color: BillyColors.surfaceHigh,
+          border: Border.all(color: BillyColors.borderSoft),
         ),
-        child: Text(text, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+        child: Text(text, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white)),
       ),
     );
   }
@@ -404,7 +377,7 @@ class _AtmCardScreenState extends State<AtmCardScreen> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => const Center(child: CircularProgressIndicator(color: Color(0xFF1D6A4A))),
+      builder: (context) => const Center(child: CircularProgressIndicator(color: BillyColors.primary)),
     );
 
     Future.delayed(const Duration(seconds: 2), () {
@@ -415,29 +388,28 @@ class _AtmCardScreenState extends State<AtmCardScreen> {
         context: context,
         barrierDismissible: false,
         builder: (context) => AlertDialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          backgroundColor: BillyColors.surface,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+            side: const BorderSide(color: BillyColors.border),
+          ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(Icons.check_circle, color: Color(0xFF1D6A4A), size: 60),
+              const Icon(Icons.check_circle, color: BillyColors.primaryLight, size: 60),
               const SizedBox(height: 20),
-              const Text("Success!", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+              const Text("Success!", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white)),
               const SizedBox(height: 10),
-              const Text("Your virtual card has been created successfully.", textAlign: TextAlign.center),
+              const Text("Your virtual card has been created successfully.", textAlign: TextAlign.center, style: TextStyle(color: BillyColors.textSecondary)),
               const SizedBox(height: 20),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context); // Close dialog
-                    Navigator.pop(context); // Go back to Home
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF1D6A4A),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                  ),
-                  child: const Text("Done", style: TextStyle(color: Colors.white)),
-                ),
+              GradientButton(
+                label: "Done",
+                expand: true,
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                onPressed: () {
+                  Navigator.pop(context); // Close dialog
+                  Navigator.pop(context); // Go back to Home
+                },
               )
             ],
           ),

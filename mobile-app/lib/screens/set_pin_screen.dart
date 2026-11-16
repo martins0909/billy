@@ -1,4 +1,6 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
+import '../theme/billy_colors.dart';
+import '../widgets/billy_widgets.dart';
 import 'package:flutter/services.dart';
 
 class SetPinScreen extends StatefulWidget {
@@ -70,7 +72,7 @@ class _SetPinScreenState extends State<SetPinScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Transaction PIN set successfully!"),
-          backgroundColor: Color(0xFF1D6A4A),
+          backgroundColor: BillyColors.primary,
         ),
       );
       if (widget.onCompleted != null) {
@@ -92,7 +94,7 @@ class _SetPinScreenState extends State<SetPinScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF1D6A4A), // Dark Green background
+      backgroundColor: BillyColors.background,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -101,7 +103,8 @@ class _SetPinScreenState extends State<SetPinScreen> {
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: SafeArea(
+      body: GlowBackground(
+        child: SafeArea(
         child: Column(
           children: [
             const SizedBox(height: 20),
@@ -120,7 +123,7 @@ class _SetPinScreenState extends State<SetPinScreen> {
               _isConfirming 
                   ? "Re-enter your 4-digit PIN" 
                   : "Create a 4-digit PIN for transactions",
-              style: const TextStyle(color: Colors.white70, fontSize: 16),
+              style: const TextStyle(color: BillyColors.textSecondary, fontSize: 16),
             ),
             
             const SizedBox(height: 40),
@@ -137,8 +140,9 @@ class _SetPinScreenState extends State<SetPinScreen> {
                   height: 20,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: isFilled ? Colors.white : Colors.white.withOpacity(0.3),
-                    border: Border.all(color: Colors.white, width: 2),
+                    color: isFilled ? BillyColors.primaryLight : Colors.transparent,
+                    border: Border.all(color: BillyColors.primaryLight, width: 2),
+                    boxShadow: isFilled ? BillyColors.glow(0.5) : null,
                   ),
                 );
               }),
@@ -149,7 +153,7 @@ class _SetPinScreenState extends State<SetPinScreen> {
                 padding: const EdgeInsets.only(top: 20),
                 child: Text(
                   _errorMessage,
-                  style: const TextStyle(color: Color(0xFFFF5252), fontWeight: FontWeight.bold),
+                  style: const TextStyle(color: BillyColors.error, fontWeight: FontWeight.bold),
                 ),
               ),
 
@@ -172,7 +176,8 @@ class _SetPinScreenState extends State<SetPinScreen> {
             // Custom Number Pad (Visual Only, taps redirect to text field)
             Container(
               decoration: const BoxDecoration(
-                color: Colors.white,
+                gradient: BillyColors.glassGradient,
+                border: Border(top: BorderSide(color: BillyColors.border)),
                 borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
               ),
               child: Column(
@@ -187,6 +192,7 @@ class _SetPinScreenState extends State<SetPinScreen> {
               ),
             ),
           ],
+        ),
         ),
       ),
     );
@@ -212,7 +218,7 @@ class _SetPinScreenState extends State<SetPinScreen> {
               child: const SizedBox(
                 width: 80, 
                 height: 80,
-                child: Icon(Icons.backspace_outlined, size: 28),
+                child: Icon(Icons.backspace_outlined, size: 28, color: Colors.white),
               ),
             );
           }
@@ -231,11 +237,12 @@ class _SetPinScreenState extends State<SetPinScreen> {
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.grey.shade100,
+                color: BillyColors.surfaceHigh,
+                border: Border.all(color: BillyColors.borderSoft),
               ),
               child: Text(
                 number,
-                style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white),
               ),
             ),
           );
@@ -244,3 +251,4 @@ class _SetPinScreenState extends State<SetPinScreen> {
     );
   }
 }
+

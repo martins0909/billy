@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../theme/billy_colors.dart';
+import '../widgets/billy_widgets.dart';
 
 class MyOrdersScreen extends StatefulWidget {
   const MyOrdersScreen({super.key});
@@ -25,20 +27,21 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> with SingleTickerProvid
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: BillyColors.background,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: const Text(
           "My Orders",
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         automaticallyImplyLeading: false,
         bottom: TabBar(
           controller: _tabController,
-          labelColor: const Color(0xFF1D6A4A),
-          unselectedLabelColor: Colors.grey,
-          indicatorColor: const Color(0xFF1D6A4A),
+          labelColor: BillyColors.primaryLight,
+          unselectedLabelColor: BillyColors.textMuted,
+          indicatorColor: BillyColors.primaryLight,
+          dividerColor: BillyColors.borderSoft,
           indicatorWeight: 3,
           tabs: const [
             Tab(text: "Active"),
@@ -47,13 +50,15 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> with SingleTickerProvid
           ],
         ),
       ),
-      body: TabBarView(
-        controller: _tabController,
-        children: const [
-          _OrdersList(status: "Active"),
-          _OrdersList(status: "Completed"),
-          _OrdersList(status: "Cancelled"),
-        ],
+      body: GlowBackground(
+        child: TabBarView(
+          controller: _tabController,
+          children: const [
+            _OrdersList(status: "Active"),
+            _OrdersList(status: "Completed"),
+            _OrdersList(status: "Cancelled"),
+          ],
+        ),
       ),
     );
   }
@@ -74,11 +79,11 @@ class _OrdersList extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.shopping_bag_outlined, size: 64, color: Colors.grey[400]),
+            Icon(Icons.shopping_bag_outlined, size: 64, color: BillyColors.textMuted),
             const SizedBox(height: 16),
             Text(
               "No $status orders found",
-              style: TextStyle(color: Colors.grey[600], fontSize: 16),
+              style: const TextStyle(color: BillyColors.textSecondary, fontSize: 16),
             ),
           ],
         ),
@@ -170,21 +175,10 @@ class _OrderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: GlassCard(
+        radius: 16,
         child: Column(
           children: [
             Row(
@@ -193,12 +187,14 @@ class _OrderCard extends StatelessWidget {
                   width: 50,
                   height: 50,
                   decoration: BoxDecoration(
-                    color: order['color'],
+                    color: (order['color'] as Color?)?.withOpacity(0.25) ??
+                        BillyColors.primary.withOpacity(0.2),
                     borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: BillyColors.borderSoft),
                   ),
                   child: Icon(
                     order['image'],
-                    color: Colors.black87,
+                    color: Colors.white,
                   ),
                 ),
                 const SizedBox(width: 16),
@@ -211,15 +207,15 @@ class _OrderCard extends StatelessWidget {
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                          color: Colors.white,
                         ),
                       ),
                       const SizedBox(height: 4),
                       Text(
                         order['id'],
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 14,
-                          color: Colors.grey[600],
+                          color: BillyColors.textSecondary,
                         ),
                       ),
                     ],
@@ -233,14 +229,14 @@ class _OrderCard extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFF1D6A4A),
+                        color: BillyColors.primaryLight,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
-                        color: _getStatusColor(order['status']).withOpacity(0.1),
+                        color: _getStatusColor(order['status']).withOpacity(0.15),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Text(
@@ -257,14 +253,14 @@ class _OrderCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 16),
-            Divider(color: Colors.grey[200]),
+            const Divider(color: BillyColors.borderSoft),
             const SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   order['date'],
-                  style: TextStyle(color: Colors.grey[600], fontSize: 13),
+                  style: const TextStyle(color: BillyColors.textSecondary, fontSize: 13),
                 ),
                 TextButton(
                   onPressed: () {
@@ -274,7 +270,7 @@ class _OrderCard extends StatelessWidget {
                     padding: EdgeInsets.zero,
                     minimumSize: const Size(50, 30),
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    foregroundColor: const Color(0xFF1D6A4A),
+                    foregroundColor: BillyColors.primaryLight,
                   ),
                   child: const Text("View Details"),
                 ),
@@ -289,15 +285,15 @@ class _OrderCard extends StatelessWidget {
   Color _getStatusColor(String status) {
     switch (status) {
       case "In Progress":
-        return Colors.blue;
+        return BillyColors.primaryLight;
       case "Scheduled":
-        return Colors.orange;
+        return BillyColors.warning;
       case "Completed":
-        return Colors.green;
+        return BillyColors.success;
       case "Cancelled":
-        return Colors.red;
+        return BillyColors.error;
       default:
-        return Colors.grey;
+        return BillyColors.textMuted;
     }
   }
 }

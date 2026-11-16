@@ -42,7 +42,7 @@ export default function CardsPage() {
   };
 
   return (
-    <div className="flex min-h-screen pb-16 md:pb-0 bg-off-white transition-colors duration-300">
+    <div className="flex min-h-screen pb-28 md:pb-0 app-bg">
       <Sidebar />
 
       {/* Main Content */}
@@ -50,7 +50,7 @@ export default function CardsPage() {
         <Header title="Cards" />
 
         <div className="p-8 max-w-4xl mx-auto space-y-8">
-            <div className="bg-white rounded-2xl shadow-sm border p-8">
+            <div className="glass-card rounded-2xl border p-8">
                 <div className="flex items-center justify-between mb-8 border-b border-gray-100 pb-4">
                     <h3 className="text-xl font-bold text-gray-900">
                         {cardStep === 'details' ? 'Get Virtual Card' :
@@ -61,7 +61,7 @@ export default function CardsPage() {
                 <div className="grid md:grid-cols-2 gap-12">
                     {/* Card Preview Side */}
                     <div className="order-2 md:order-1">
-                        <div className="relative w-full aspect-[1.586] bg-gradient-to-br from-[#1D6A4A] to-[#155a3d] rounded-2xl p-6 text-white shadow-xl overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                        <div className="relative w-full aspect-[1.586] bg-card-gradient border border-primary-light/30 rounded-2xl p-6 text-white shadow-glow overflow-hidden transform hover:scale-105 transition-transform duration-300">
                             <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-8 -mt-8 blur-2xl"></div>
                             <div className="relative z-10 flex flex-col justify-between h-full">
                                 <div className="flex justify-between items-start">
@@ -89,14 +89,14 @@ export default function CardsPage() {
                          <div className="mt-8 space-y-4">
                            <h4 className="font-bold text-gray-800">Card Features</h4>
                            <div className="flex gap-3 items-center p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
-                              <div className="p-2 bg-[#1D6A4A]/10 rounded-lg text-[#1D6A4A]"><Globe size={20} /></div>
+                              <div className="p-2 bg-primary/10 rounded-lg text-primary-light"><Globe size={20} /></div>
                               <div>
                                  <p className="text-sm font-bold text-gray-900">Accepted Globally</p>
                                  <p className="text-xs text-gray-500">Use for international payments</p>
                               </div>
                            </div>
                            <div className="flex gap-3 items-center p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
-                              <div className="p-2 bg-[#1D6A4A]/10 rounded-lg text-[#1D6A4A]"><Shield size={20} /></div>
+                              <div className="p-2 bg-primary/10 rounded-lg text-primary-light"><Shield size={20} /></div>
                               <div>
                                  <p className="text-sm font-bold text-gray-900">Secure Transactions</p>
                                  <p className="text-xs text-gray-500">3D Secure enabled for safety</p>
@@ -124,21 +124,21 @@ export default function CardsPage() {
                                                 value={cardName}
                                                 onChange={(e) => setCardName(e.target.value)}
                                                 placeholder="Enter your full name"
-                                                className="w-full pl-12 pr-4 py-4 rounded-xl border border-gray-200 focus:border-[#1D6A4A] focus:ring-2 focus:ring-[#1D6A4A]/20 outline-none transition-all font-medium"
+                                                className="w-full pl-12 pr-4 py-4 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium"
                                             />
                                         </div>
                                     </div>
 
-                                    <div className="p-4 bg-[#1D6A4A]/5 border border-[#1D6A4A]/20 rounded-xl flex items-center justify-between">
-                                        <span className="text-sm font-medium text-[#1D6A4A]">One-time Creation Fee</span>
-                                        <span className="text-base font-bold text-[#1D6A4A]">₦ {CARD_CREATION_FEE.toLocaleString()}</span>
+                                    <div className="p-4 bg-primary/5 border border-primary/20 rounded-xl flex items-center justify-between">
+                                        <span className="text-sm font-medium text-primary-light">One-time Creation Fee</span>
+                                        <span className="text-base font-bold text-primary-light">₦ {CARD_CREATION_FEE.toLocaleString()}</span>
                                     </div>
                                 </div>
 
                                 <button 
                                     onClick={() => setCardStep('confirm')}
                                     disabled={!cardName}
-                                    className="w-full bg-[#1D6A4A] hover:bg-[#155a3d] disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 mt-8 flex items-center justify-center gap-2"
+                                    className="w-full btn-brand hover:brightness-110 disabled:[background-image:none] disabled:shadow-none disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all transform hover:-translate-y-0.5 mt-8 flex items-center justify-center gap-2"
                                 >
                                     <Plus size={20} />
                                     Create Card
@@ -169,7 +169,7 @@ export default function CardsPage() {
                                 <div className="space-y-3">
                                     <button 
                                         onClick={() => setCardStep('pin')}
-                                        className="w-full bg-[#1D6A4A] hover:bg-[#155a3d] text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                                        className="w-full btn-brand hover:brightness-110 text-white font-bold py-4 rounded-xl transition-all transform hover:-translate-y-0.5"
                                         >
                                         Pay & Create
                                     </button>
@@ -185,8 +185,8 @@ export default function CardsPage() {
                          ) : (
                             <div className="py-4 space-y-8 animate-in fade-in slide-in-from-right-8 duration-300">
                                 <div className="text-center space-y-2">
-                                    <div className="w-16 h-16 bg-[#1D6A4A]/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                                        <Lock className="w-8 h-8 text-[#1D6A4A]" />
+                                    <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <Lock className="w-8 h-8 text-primary-light" />
                                     </div>
                                     <h4 className="font-bold text-gray-900">Enter your 4-digit PIN</h4>
                                     <p className="text-sm text-gray-500">
@@ -205,7 +205,7 @@ export default function CardsPage() {
                                             value={digit}
                                             onChange={(e) => handlePinChange(index, e.target.value)}
                                             onKeyDown={(e) => handleKeyDown(index, e)}
-                                            className="w-16 h-16 rounded-2xl border-2 border-gray-200 focus:border-[#1D6A4A] text-center text-2xl font-bold outline-none transition-all bg-gray-50 focus:bg-white"
+                                            className="w-16 h-16 rounded-2xl border-2 border-gray-200 focus:border-primary text-center text-2xl font-bold outline-none transition-all bg-gray-50 focus:bg-surface-high"
                                         />
                                     ))}
                                 </div>
@@ -218,7 +218,7 @@ export default function CardsPage() {
                                         setPin(['', '', '', '']);
                                     }}
                                     disabled={pin.some(p => !p)}
-                                    className="w-full bg-[#1D6A4A] hover:bg-[#155a3d] disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 mt-4"
+                                    className="w-full btn-brand hover:brightness-110 disabled:[background-image:none] disabled:shadow-none disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl transition-all transform hover:-translate-y-0.5 mt-4"
                                 >
                                     Confirm Payment
                                 </button>

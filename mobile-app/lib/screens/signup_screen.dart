@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../theme/billy_colors.dart';
+import '../widgets/billy_widgets.dart';
 import 'login_screen.dart';
 
 class SignupFormScreen extends StatefulWidget {
@@ -16,223 +18,180 @@ class _SignupFormScreenState extends State<SignupFormScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.black, // Removed
+      backgroundColor: BillyColors.background,
       appBar: AppBar(
-        backgroundColor: Colors.transparent, // Transparent
+        backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black), // Black icon
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  "Create Account",
-                  style: TextStyle(
-                    color: Colors.black, // Black text
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
+      body: GlowBackground(
+        child: SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(24.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Create Account",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  "Join Billy today!",
-                  style: TextStyle(
-                    color: Colors.grey[600], // Darker grey
-                    fontSize: 16,
+                  const SizedBox(height: 8),
+                  const Text(
+                    "Join Billy today!",
+                    style: TextStyle(
+                      color: BillyColors.textSecondary,
+                      fontSize: 16,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 32),
+                  const SizedBox(height: 24),
 
-                // Full Name Input
-                TextFormField(
-                  style: const TextStyle(color: Colors.black), // Black text
-                  decoration: InputDecoration(
-                    labelText: "Full Name",
-                    labelStyle: TextStyle(color: Colors.grey[600]),
-                    prefixIcon: const Icon(Icons.person_outline, color: Color(0xFF1D6A4A)), // Dark Green
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Colors.grey[300]!), // Light grey border
-                    ),
-                    focusedBorder: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(12)),
-                      borderSide: BorderSide(color: Color(0xFF1D6A4A)), // Dark Green
-                    ),
-                    filled: true,
-                    fillColor: Colors.white, // White fill
-                  ),
-                ),
-                const SizedBox(height: 20),
+                  GlassCard(
+                    radius: 24,
+                    padding: const EdgeInsets.all(22),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Full Name Input
+                        TextFormField(
+                          style: const TextStyle(color: Colors.white),
+                          decoration: const InputDecoration(
+                            labelText: "Full Name",
+                            labelStyle: TextStyle(color: BillyColors.textMuted),
+                            prefixIcon: Icon(Icons.person_outline,
+                                color: BillyColors.primaryLight),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
 
-                // Email Input
-                TextFormField(
-                  style: const TextStyle(color: Colors.black), // Black text
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                    labelText: "Email Address",
-                    labelStyle: TextStyle(color: Colors.grey[600]),
-                    prefixIcon: const Icon(Icons.email_outlined, color: Color(0xFF1D6A4A)), // Dark Green
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Colors.grey[300]!),
-                    ),
-                    focusedBorder: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(12)),
-                      borderSide: BorderSide(color: Color(0xFF1D6A4A)), // Dark Green
-                    ),
-                    filled: true,
-                    fillColor: Colors.white, // White fill
-                  ),
-                ),
-                const SizedBox(height: 20),
+                        // Email Input
+                        TextFormField(
+                          style: const TextStyle(color: Colors.white),
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: const InputDecoration(
+                            labelText: "Email Address",
+                            labelStyle: TextStyle(color: BillyColors.textMuted),
+                            prefixIcon: Icon(Icons.email_outlined,
+                                color: BillyColors.primaryLight),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
 
-                // Phone Number Input
-                TextFormField(
-                  style: const TextStyle(color: Colors.black), // Black text
-                  keyboardType: TextInputType.phone,
-                  decoration: InputDecoration(
-                    labelText: "Phone Number",
-                    labelStyle: TextStyle(color: Colors.grey[600]),
-                    prefixIcon: const Icon(Icons.phone_android, color: Color(0xFF1D6A4A)), // Dark Green
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Colors.grey[300]!),
-                    ),
-                    focusedBorder: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(12)),
-                      borderSide: BorderSide(color: Color(0xFF1D6A4A)), // Dark Green
-                    ),
-                    filled: true,
-                    fillColor: Colors.white, // White fill
-                  ),
-                ),
-                const SizedBox(height: 20),
+                        // Phone Number Input
+                        TextFormField(
+                          style: const TextStyle(color: Colors.white),
+                          keyboardType: TextInputType.phone,
+                          decoration: const InputDecoration(
+                            labelText: "Phone Number",
+                            labelStyle: TextStyle(color: BillyColors.textMuted),
+                            prefixIcon: Icon(Icons.phone_android,
+                                color: BillyColors.primaryLight),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
 
-                // Password Input
-                TextFormField(
-                  obscureText: !_isPasswordVisible,
-                  style: const TextStyle(color: Colors.black), // Black text
-                  decoration: InputDecoration(
-                    labelText: "Password",
-                    labelStyle: TextStyle(color: Colors.grey[600]),
-                    prefixIcon: const Icon(Icons.lock_outline, color: Color(0xFF1D6A4A)), // Dark Green
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
-                        color: Colors.grey,
+                        // Password Input
+                        TextFormField(
+                          obscureText: !_isPasswordVisible,
+                          style: const TextStyle(color: Colors.white),
+                          decoration: InputDecoration(
+                            labelText: "Password",
+                            labelStyle:
+                                const TextStyle(color: BillyColors.textMuted),
+                            prefixIcon: const Icon(Icons.lock_outline,
+                                color: BillyColors.primaryLight),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _isPasswordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: BillyColors.textMuted,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _isPasswordVisible = !_isPasswordVisible;
+                                });
+                              },
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+
+                        // Confirm Password Input
+                        TextFormField(
+                          obscureText: !_isConfirmPasswordVisible,
+                          style: const TextStyle(color: Colors.white),
+                          decoration: InputDecoration(
+                            labelText: "Confirm Password",
+                            labelStyle:
+                                const TextStyle(color: BillyColors.textMuted),
+                            prefixIcon: const Icon(Icons.lock_outline,
+                                color: BillyColors.primaryLight),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _isConfirmPasswordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: BillyColors.textMuted,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _isConfirmPasswordVisible =
+                                      !_isConfirmPasswordVisible;
+                                });
+                              },
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 32),
+
+                        // Sign Up Button
+                        GradientButton(
+                          label: "Create Account",
+                          expand: true,
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          onPressed: () {
+                            // TODO: Implement Registration Logic
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+
+                  // Login Link
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        "Already have an account? ",
+                        style: TextStyle(color: BillyColors.textSecondary),
                       ),
-                      onPressed: () {
-                        setState(() {
-                          _isPasswordVisible = !_isPasswordVisible;
-                        });
-                      },
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Colors.grey[300]!),
-                    ),
-                    focusedBorder: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(12)),
-                      borderSide: BorderSide(color: Color(0xFF1D6A4A)), // Dark Green
-                    ),
-                    filled: true,
-                    fillColor: Colors.white, // White fill
-                  ),
-                ),
-                const SizedBox(height: 20),
-
-                // Confirm Password Input
-                TextFormField(
-                  obscureText: !_isConfirmPasswordVisible,
-                  style: const TextStyle(color: Colors.black), // Black text
-                  decoration: InputDecoration(
-                    labelText: "Confirm Password",
-                    labelStyle: TextStyle(color: Colors.grey[600]),
-                    prefixIcon: const Icon(Icons.lock_outline, color: Color(0xFF1D6A4A)), // Dark Green
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _isConfirmPasswordVisible ? Icons.visibility : Icons.visibility_off,
-                        color: Colors.grey,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _isConfirmPasswordVisible = !_isConfirmPasswordVisible;
-                        });
-                      },
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Colors.grey[300]!),
-                    ),
-                    focusedBorder: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(12)),
-                      borderSide: BorderSide(color: Color(0xFF1D6A4A)), // Dark Green
-                    ),
-                    filled: true,
-                    fillColor: Colors.white, // White fill
-                  ),
-                ),
-                const SizedBox(height: 40),
-
-                // Sign Up Button
-                SizedBox(
-                  width: double.infinity,
-                  height: 56,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // TODO: Implement Registration Logic
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF1D6A4A), // Dark Green
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      elevation: 2,
-                    ),
-                    child: const Text(
-                      "Create Account",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 24),
-
-                // Login Link
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Already have an account? ",
-                      style: TextStyle(color: Colors.grey[600]), // Darker grey
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text(
-                        "Login",
-                        style: TextStyle(
-                          color: Color(0xFF1D6A4A), // Dark Green
-                          fontWeight: FontWeight.bold,
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text(
+                          "Login",
+                          style: TextStyle(
+                            color: BillyColors.primaryLight,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-              ],
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                ],
+              ),
             ),
           ),
         ),
@@ -248,20 +207,8 @@ class SignupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: RadialGradient(
-            center: Alignment.topCenter,
-            radius: 1.1,
-            colors: [
-              Color(0xFF6A00FF),
-              Color(0xFF1A0638),
-              Color(0xFF090011),
-            ],
-          ),
-        ),
+      backgroundColor: BillyColors.background,
+      body: GlowBackground(
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -286,14 +233,14 @@ class SignupScreen extends StatelessWidget {
                             text: 'Join Billy',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: Colors.white70,
+                              color: Colors.white,
                               fontSize: 16,
                             ),
                           ),
                           TextSpan(
                             text: ' and start paying',
                             style: TextStyle(
-                              color: Colors.white70,
+                              color: BillyColors.textSecondary,
                               fontSize: 16,
                             ),
                           ),
@@ -305,7 +252,7 @@ class SignupScreen extends StatelessWidget {
                       'your bills easier',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Colors.white70,
+                        color: BillyColors.textSecondary,
                         fontSize: 16,
                       ),
                     ),
@@ -320,6 +267,7 @@ class SignupScreen extends StatelessWidget {
                   icon: Icons.apple,
                   bgColor: Colors.black,
                   textColor: Colors.white,
+                  borderColor: BillyColors.border,
                   onPressed: () {},
                 ),
 
@@ -361,15 +309,15 @@ class SignupScreen extends StatelessWidget {
                 // OR DIVIDER
                 Row(
                   children: const [
-                    Expanded(child: Divider(color: Colors.white24)),
+                    Expanded(child: Divider(color: BillyColors.borderSoft)),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 8),
                       child: Text(
                         'or',
-                        style: TextStyle(color: Colors.white54),
+                        style: TextStyle(color: BillyColors.textMuted),
                       ),
                     ),
-                    Expanded(child: Divider(color: Colors.white24)),
+                    Expanded(child: Divider(color: BillyColors.borderSoft)),
                   ],
                 ),
 
@@ -390,12 +338,12 @@ class SignupScreen extends StatelessWidget {
                   child: const Text.rich(
                     TextSpan(
                       text: 'Already have an account? ',
-                      style: TextStyle(color: Colors.white70),
+                      style: TextStyle(color: BillyColors.textSecondary),
                       children: [
                         TextSpan(
                           text: 'Log In',
                           style: TextStyle(
-                            color: Colors.purpleAccent,
+                            color: BillyColors.primaryLight,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -418,6 +366,7 @@ Widget authButton({
   required IconData icon,
   required Color bgColor,
   required Color textColor,
+  Color? borderColor,
   required VoidCallback onPressed,
 }) {
   return Container(
@@ -436,6 +385,9 @@ Widget authButton({
         minimumSize: const Size(double.infinity, 55),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
+          side: borderColor != null
+              ? BorderSide(color: borderColor)
+              : BorderSide.none,
         ),
       ),
     ),
@@ -462,7 +414,9 @@ Widget outlineButton({
         ),
       ),
       style: OutlinedButton.styleFrom(
-        side: const BorderSide(color: Colors.white24),
+        backgroundColor: Colors.black.withOpacity(0.25),
+        side: BorderSide(
+            color: BillyColors.primaryLight.withOpacity(0.8), width: 1.2),
         minimumSize: const Size(double.infinity, 55),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),

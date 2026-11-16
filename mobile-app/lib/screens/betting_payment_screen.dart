@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../theme/billy_colors.dart';
+import '../widgets/billy_widgets.dart';
 
 class BettingPaymentScreen extends StatefulWidget {
   final String providerName;
@@ -30,12 +32,13 @@ class _BettingPaymentScreenState extends State<BettingPaymentScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Fund ${widget.providerName}", style: const TextStyle(color: Colors.black)),
+        title: Text("Fund ${widget.providerName}", style: const TextStyle(color: Colors.white)),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
-      body: SafeArea(
+      body: GlowBackground(
+        child: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
           child: Form(
@@ -51,16 +54,18 @@ class _BettingPaymentScreenState extends State<BettingPaymentScreen> {
                         width: 80,
                         height: 80,
                         decoration: BoxDecoration(
-                          color: Colors.grey[200],
+                          color: BillyColors.primary.withOpacity(0.15),
                           shape: BoxShape.circle,
+                          border: Border.all(color: BillyColors.border),
+                          boxShadow: BillyColors.glow(0.25),
                         ),
-                        child: Icon(Icons.sports_soccer, size: 40, color: Colors.indigo[900]),
+                        child: const Icon(Icons.sports_soccer, size: 40, color: BillyColors.primaryLight),
                         // In a real app, use Image.asset(widget.providerIconAsset),
                       ),
                       const SizedBox(height: 12),
                       Text(
                         widget.providerName,
-                        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
                       ),
                     ],
                   ),
@@ -70,21 +75,16 @@ class _BettingPaymentScreenState extends State<BettingPaymentScreen> {
                 // Customer ID Input
                 const Text(
                   "User ID / Customer ID",
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.black54),
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: BillyColors.textSecondary),
                 ),
                 const SizedBox(height: 8),
                 TextFormField(
                   controller: _customerIdController,
                   keyboardType: TextInputType.number,
+                  style: const TextStyle(color: Colors.white),
                   decoration: InputDecoration(
                     hintText: "Enter your ${widget.providerName} User ID",
-                    filled: true,
-                    fillColor: Colors.grey[100],
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide.none,
-                    ),
-                    prefixIcon: const Icon(Icons.person_outline),
+                    prefixIcon: const Icon(Icons.person_outline, color: BillyColors.textMuted),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -98,22 +98,18 @@ class _BettingPaymentScreenState extends State<BettingPaymentScreen> {
                 // Amount Input
                 const Text(
                   "Amount",
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.black54),
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: BillyColors.textSecondary),
                 ),
                 const SizedBox(height: 8),
                 TextFormField(
                   controller: _amountController,
                   keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
+                  style: const TextStyle(color: Colors.white),
+                  decoration: const InputDecoration(
                     hintText: "Enter amount (e.g 1000)",
-                    filled: true,
-                    fillColor: Colors.grey[100],
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide.none,
-                    ),
-                    prefixIcon: const Icon(Icons.attach_money), // Currency symbol usually
+                    prefixIcon: Icon(Icons.attach_money, color: BillyColors.textMuted), // Currency symbol usually
                     prefixText: "₦ ",
+                    prefixStyle: TextStyle(color: Colors.white),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -129,30 +125,16 @@ class _BettingPaymentScreenState extends State<BettingPaymentScreen> {
                 const SizedBox(height: 40),
 
                 // Pay Button
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: _processPayment,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF1D6A4A),
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    child: const Text(
-                      "Continue",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
+                GradientButton(
+                  label: "Continue",
+                  expand: true,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  onPressed: _processPayment,
                 ),
               ],
             ),
           ),
+        ),
         ),
       ),
     );
@@ -164,30 +146,35 @@ class _BettingPaymentScreenState extends State<BettingPaymentScreen> {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text("Confirm Transaction"),
+          backgroundColor: BillyColors.surface,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+            side: const BorderSide(color: BillyColors.border),
+          ),
+          title: const Text("Confirm Transaction", style: TextStyle(color: Colors.white)),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Provider: ${widget.providerName}"),
+              Text("Provider: ${widget.providerName}", style: const TextStyle(color: BillyColors.textSecondary)),
               const SizedBox(height: 8),
-              Text("User ID: ${_customerIdController.text}"),
+              Text("User ID: ${_customerIdController.text}", style: const TextStyle(color: BillyColors.textSecondary)),
               const SizedBox(height: 8),
-              Text("Amount: ₦${_amountController.text}"),
+              Text("Amount: ₦${_amountController.text}", style: const TextStyle(color: BillyColors.textSecondary)),
             ],
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text("Cancel"),
+              child: const Text("Cancel", style: TextStyle(color: BillyColors.textSecondary)),
             ),
-            ElevatedButton(
+            GradientButton(
+              label: "Proceed",
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               onPressed: () {
                 Navigator.pop(context); // Close confirm dialog
                 _showPinDialog();
               },
-              style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF1D6A4A)),
-              child: const Text("Proceed", style: TextStyle(color: Colors.white)),
             ),
           ],
         ),
@@ -201,11 +188,16 @@ class _BettingPaymentScreenState extends State<BettingPaymentScreen> {
       context: context,
       barrierDismissible: false,
       builder: (context) => AlertDialog(
-        title: const Text("Enter PIN"),
+        backgroundColor: BillyColors.surface,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+          side: const BorderSide(color: BillyColors.border),
+        ),
+        title: const Text("Enter PIN", style: TextStyle(color: Colors.white)),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text("Please enter your 4-digit PIN to confirm payment."),
+            const Text("Please enter your 4-digit PIN to confirm payment.", style: TextStyle(color: BillyColors.textSecondary)),
             const SizedBox(height: 16),
             TextField(
               controller: pinController,
@@ -213,14 +205,9 @@ class _BettingPaymentScreenState extends State<BettingPaymentScreen> {
               keyboardType: TextInputType.number,
               maxLength: 4,
               textAlign: TextAlign.center,
-              decoration: InputDecoration(
+              style: const TextStyle(color: Colors.white),
+              decoration: const InputDecoration(
                 hintText: "****",
-                filled: true,
-                fillColor: Colors.grey[100],
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide.none,
-                ),
                 counterText: "",
               ),
             ),
@@ -229,9 +216,11 @@ class _BettingPaymentScreenState extends State<BettingPaymentScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text("Cancel"),
+            child: const Text("Cancel", style: TextStyle(color: BillyColors.textSecondary)),
           ),
-          ElevatedButton(
+          GradientButton(
+            label: "Pay Details",
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             onPressed: () {
               if (pinController.text.length == 4) {
                 Navigator.pop(context); // Close PIN dialog
@@ -242,8 +231,6 @@ class _BettingPaymentScreenState extends State<BettingPaymentScreen> {
                 );
               }
             },
-            style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF1D6A4A)),
-            child: const Text("Pay Details", style: TextStyle(color: Colors.white)),
           ),
         ],
       ),
