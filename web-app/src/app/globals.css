@@ -3,6 +3,9 @@
 @tailwind utilities;
 
 :root {
+  color-scheme: light;
+}
+.dark {
   color-scheme: dark;
 }
 
@@ -11,61 +14,65 @@ body {
 }
 
 @layer base {
-  /* Dark form fields by default (utility classes like bg-gray-50 / bg-surface still override). */
   input:not([type='checkbox']):not([type='radio']):not([type='range']),
   select,
   textarea {
-    background-color: #120826;
-    color: #f8f6ff;
+    background-color: rgb(var(--input));
+    color: rgb(var(--gray-900));
   }
   input::placeholder,
   textarea::placeholder {
-    color: #8f84b8;
+    color: rgb(var(--gray-400));
   }
   input:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 1000px #120826 inset;
-    -webkit-text-fill-color: #f8f6ff;
+    -webkit-box-shadow: 0 0 0 1000px rgb(var(--input)) inset;
+    -webkit-text-fill-color: rgb(var(--gray-900));
   }
   input[type='checkbox'],
   input[type='radio'] {
-    accent-color: #8a2bff;
+    accent-color: #8b34d8;
   }
 }
 
 @layer components {
-  /* Deep purple page background with soft glow, used on the page wrapper. */
+  /* Page background: pure black (dark) / soft white (light) with a faint purple glow. */
   .app-bg {
-    background-color: #07030f;
+    background-color: rgb(var(--bg));
     background-image:
-      radial-gradient(900px 500px at 100% -5%, rgba(138, 43, 255, 0.38), transparent 60%),
-      radial-gradient(700px 500px at -10% 30%, rgba(91, 15, 209, 0.28), transparent 60%),
-      radial-gradient(800px 500px at 60% 110%, rgba(138, 43, 255, 0.18), transparent 60%);
+      radial-gradient(900px 420px at 100% -5%, var(--glow-a), transparent 60%),
+      radial-gradient(700px 420px at -10% 40%, var(--glow-b), transparent 60%);
     background-attachment: fixed;
   }
 
-  /* Glassy dark card with purple edge. */
+  /* Standard content card. */
   .glass-card {
-    background-image: linear-gradient(145deg, rgba(40, 20, 90, 0.75), rgba(14, 7, 32, 0.85));
-    border: 1px solid rgba(168, 85, 247, 0.28);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
+    background-color: rgb(var(--surface));
+    border: 1px solid rgb(var(--edge));
+    box-shadow: var(--card-shadow);
+  }
+
+  /* Purple icon tile (quick actions etc). */
+  .tile {
+    background-color: rgb(var(--tile));
+    border: 1px solid rgb(var(--tile-edge));
   }
 
   .btn-brand {
-    background-image: linear-gradient(135deg, #b14dff 0%, #8a2bff 45%, #6a00ff 100%);
-    box-shadow: 0 6px 20px rgba(138, 43, 255, 0.45);
+    background-image: linear-gradient(135deg, #9b4fe6 0%, #8b34d8 45%, #6a22b5 100%);
+    box-shadow: 0 6px 18px rgba(110, 40, 180, 0.35);
   }
 
   .section-bar {
     @apply block w-1.5 h-6 rounded-full;
-    background-image: linear-gradient(180deg, #c77dff, #8a2bff);
+    background-image: linear-gradient(180deg, #b77cf0, #8b34d8);
   }
-}
 
-input,
-select,
-textarea {
-  color-scheme: dark;
+  /* Themed logo: the PNG is white; use it as a mask so it follows the theme. */
+  .logo-mask {
+    background-color: var(--logo);
+    -webkit-mask: url('/billylogo.png') center / contain no-repeat;
+    mask: url('/billylogo.png') center / contain no-repeat;
+  }
 }
 
 @media (max-width: 380px) {

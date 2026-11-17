@@ -1,52 +1,61 @@
 'use client';
 
 import React from 'react';
-import { Home, LayoutGrid, Wallet, ClipboardList, User } from 'lucide-react';
+import { Home, LayoutGrid, ClipboardList, Menu, Plus } from 'lucide-react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { isActivePath } from './navItems';
 
-// `onFundClick` is kept for backwards compatibility with existing callers; the
-// redesigned bar no longer has a dedicated Fund button (funding lives on Wallet).
-export default function MobileNav(_props: { onFundClick?: () => void }) {
+export const FUND_FLAG = 'billy-open-fund';
+
+/**
+ * Bottom bar for small screens: Home, Services, raised "+" (fund wallet),
+ * My Orders and More (account).
+ */
+export default function MobileNav({ onFundClick }: { onFundClick?: () => void }) {
   const pathname = usePathname();
+  const router = useRouter();
 
-  const isActive = (path: string) => {
-    if (path === '/') return pathname === '/';
-    return pathname.startsWith(path);
+  const handleFund = () => {
+    if (onFundClick) return onFundClick();
+    try {
+      sessionStorage.setItem(FUND_FLAG, '1');
+    } catch {}
+    router.push('/');
   };
 
-  const items = [
-    { href: '/', label: 'Home', icon: Home },
-    { href: '/services', label: 'Services', icon: LayoutGrid },
-    { href: '/transactions', label: 'Wallet', icon: Wallet },
-    { href: '/orders', label: 'My Orders', icon: ClipboardList },
-    { href: '/account', label: 'Account', icon: User },
-  ];
-
   return (
-    <div className="md:hidden fixed bottom-3 left-3 right-3 z-50">
-      <nav className="glass-card bg-surface/90 rounded-[28px] border-primary/50 px-1 py-2 flex items-stretch shadow-glow-sm">
-        {items.map(({ href, label, icon: Icon }, i) => {
-          const active = isActive(href);
-          return (
-            <React.Fragment key={href}>
-              {i > 0 && <span className="w-px my-2 bg-primary/25" />}
-              <Link
-                href={href}
-                className={`relative flex-1 flex flex-col items-center gap-1 py-1.5 ${
-                  active ? 'text-primary-light' : 'text-gray-900'
-                }`}
-              >
-                <Icon size={22} className={active ? 'fill-primary/40' : ''} />
-                <span className="text-[10px] font-medium">{label}</span>
-                {active && (
-                  <span className="absolute -bottom-2 h-[3px] w-10 rounded-full bg-brand-gradient shadow-glow-sm" />
-                )}
-              </Link>
-            </React.Fragment>
-          );
-        })}
-      </nav>
-    </div>
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-surface/95 backdrop-blur border-t border-edge px-3 pt-2 pb-3 flex items-end justify-between">
+      <Item href="/" label="Home" icon={<Home size={24} />} active={isActivePath(pathname, '/')} />
+      <Item href="/services" label="Services" icon={<LayoutGrid size={24} />} active={isActivePath(pathname, '/services')} />
+
+      <button
+        onClick={handleFund}
+        aria-label="Fund wallet"
+        className="-mt-8 flex h-16 w-16 items-center justify-center rounded-full bg-primary text-white shadow-glow ring-4 ring-off-white"
+      >
+        <Plus size={32} strokeWidth={2.5} />
+      </button>
+
+      <Item href="/orders" label="Orders" icon={<ClipboardList size={24} />} active={isActivePath(pathname, '/orders')} />
+      <Item
+        href="/account"
+        label="More"
+        icon={<Menu size={24} />}
+        active={isActivePath(pathname, '/account') || isActivePath(pathname, '/cards') || isActivePath(pathname, '/beneficiaries')}
+      />
+    </nav>
+  );
+}
+
+function Item({ href, label, icon, active }: { href: string; label: string; icon: React.ReactNode; active: boolean }) {
+  return (
+    <Link
+      href={href}
+      className={`flex w-16 flex-col items-center gap-1 py-1 ${active ? 'text-primary-light' : 'text-gray-500'}`}
+    >
+      {icon}
+      <span className="text-[12px] font-medium">{label}</span>
+    </Link>
   );
 }

@@ -4,7 +4,8 @@ import React from 'react';
 import Link from 'next/link';
 import Sidebar from '@/components/Sidebar';
 import Header from '@/components/Header';
-import MobileNav from '@/components/MobileNav';
+import MobileNav, { FUND_FLAG } from '@/components/MobileNav';
+import HomeSlider from '@/components/HomeSlider';
 import TransactionRow from '@/components/TransactionRow';
 
 import { 
@@ -52,6 +53,16 @@ export default function Dashboard() {
   const [isBalanceVisible, setIsBalanceVisible] = React.useState(true);
 
   const [showAddMoneyModal, setShowAddMoneyModal] = React.useState(false);
+
+  // The mobile bottom-bar + button on other pages sends users here to fund the wallet.
+  React.useEffect(() => {
+    try {
+      if (sessionStorage.getItem(FUND_FLAG)) {
+        sessionStorage.removeItem(FUND_FLAG);
+        setShowAddMoneyModal(true);
+      }
+    } catch {}
+  }, []);
   const [showAirtimeModal, setShowAirtimeModal] = React.useState(false);
   const [showDataModal, setShowDataModal] = React.useState(false);
   const [showElectricityModal, setShowElectricityModal] = React.useState(false);
@@ -276,7 +287,7 @@ export default function Dashboard() {
 
 
       {/* Main Content */}
-      <main className="flex-1 overflow-y-auto relative">
+      <main className="flex-1 min-w-0 overflow-y-auto relative">
         <Header title="Dashboard" />
 
         {/* Data Modal */}
@@ -1195,67 +1206,68 @@ export default function Dashboard() {
           </div>
         )}
 
-        <div className="px-4 sm:px-8 pt-2 pb-8 max-w-6xl mx-auto space-y-8">
+        <div className="px-3 sm:px-6 pt-3 pb-8 max-w-6xl mx-auto space-y-7">
+          {/* Announcement strip + slider */}
+          <HomeSlider />
+
           {/* Wallet Balance Card */}
-          <div className="relative overflow-hidden rounded-3xl p-6 md:p-8 bg-card-gradient border border-primary/50 shadow-glow">
-            <div className="pointer-events-none absolute -top-24 -right-16 w-80 h-80 bg-primary-light/30 rounded-full blur-3xl" />
-            <div className="pointer-events-none absolute -bottom-24 left-1/3 w-72 h-72 bg-primary/30 rounded-full blur-3xl" />
+          <div className="relative overflow-hidden rounded-3xl p-5 sm:p-7 bg-card-gradient border border-primary/30 text-white shadow-glow">
+            <div className="pointer-events-none absolute -top-24 -right-10 w-80 h-80 bg-white/10 rounded-full blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-28 -left-10 w-72 h-72 bg-black/20 rounded-full blur-3xl" />
 
-            {/* Wallet illustration */}
-            <div className="hidden sm:block absolute right-8 bottom-6 w-44 h-44 pointer-events-none">
-              <div className="absolute inset-0 rounded-full border-2 border-primary-light/60 rotate-[-18deg] scale-x-[1.15] scale-y-[0.55] top-10" />
-              <div className="absolute right-6 top-2 w-24 h-24 rotate-[14deg] rounded-3xl bg-brand-gradient border border-white/20 shadow-glow flex items-center justify-center">
-                <Wallet size={52} className="text-white" />
-              </div>
-              <div className="absolute right-0 top-0 w-10 h-10 rounded-full bg-gradient-to-br from-amber-200 to-amber-500 border-2 border-amber-100 shadow-lg" />
-            </div>
-
-            <div className="relative z-10 space-y-5">
-              <div className="flex flex-wrap items-center justify-between gap-3">
-                <div className="flex items-center gap-3">
-                  <Wallet size={28} className="text-white" />
-                  <span className="text-lg font-medium text-white">Wallet Balance</span>
-                  <button
-                    onClick={() => setIsBalanceVisible(!isBalanceVisible)}
-                    className="text-white/80 hover:text-white transition-colors"
-                    aria-label="Toggle balance visibility"
-                  >
-                    {isBalanceVisible ? <Eye size={20} /> : <EyeOff size={20} />}
-                  </button>
+            <div className="relative z-10">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3 text-white/80">
+                  <Wallet size={22} />
+                  <span className="text-sm font-bold uppercase tracking-[0.18em]">Wallet Balance</span>
                 </div>
-
-                <Link
-                  href="/transactions"
-                  className="inline-flex items-center gap-2 rounded-full border border-primary-light/70 bg-black/20 px-5 py-2 text-sm font-semibold text-white hover:bg-white/10 transition-colors"
+                <button
+                  onClick={() => setIsBalanceVisible(!isBalanceVisible)}
+                  className="flex h-12 w-12 items-center justify-center rounded-full bg-white/15 text-white hover:bg-white/25 transition-colors"
+                  aria-label="Toggle balance visibility"
                 >
-                  Transaction History <ArrowRight size={16} />
-                </Link>
+                  {isBalanceVisible ? <Eye size={22} /> : <EyeOff size={22} />}
+                </button>
               </div>
 
-              <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-white">
-                {isBalanceVisible ? '₦ 50,000.00' : '****'}
+              <h2 className="mt-6 text-5xl sm:text-6xl font-extrabold tracking-tight">
+                {isBalanceVisible ? '₦50,000.00' : '₦****'}
               </h2>
+              <span className="mt-3 inline-block rounded-full bg-white/15 px-4 py-1.5 text-base font-medium text-white/90">
+                {isBalanceVisible ? 'USD $34.48' : 'USD $**'}
+              </span>
 
-              <div className="h-px w-full max-w-md bg-gradient-to-r from-primary-light/60 to-transparent" />
+              <p className="mt-5 text-right text-sm sm:text-base font-bold uppercase tracking-[0.2em] text-white/70">Blessing</p>
+              <div className="mt-2 h-px w-full bg-gradient-to-r from-transparent via-white/30 to-transparent" />
 
-              <div className="flex flex-wrap items-center gap-4">
+              <div className="mt-5 grid grid-cols-3 gap-3">
                 <button
                   onClick={() => setShowAddMoneyModal(true)}
-                  className="btn-brand inline-flex items-center gap-2 rounded-full px-7 py-3 font-semibold text-white transition-transform hover:-translate-y-0.5"
+                  className="flex flex-col items-center gap-3 rounded-2xl bg-white/15 px-2 py-4 hover:bg-white/25 transition-colors"
                 >
-                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white text-primary">
-                    <Plus size={16} strokeWidth={3} />
+                  <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white text-primary-dark">
+                    <Plus size={26} strokeWidth={2.5} />
                   </span>
-                  Add Money
+                  <span className="text-sm font-semibold text-center">Add money</span>
                 </button>
-
                 <button
                   onClick={() => setShowWithdrawModal(true)}
-                  className="inline-flex items-center gap-2 rounded-full border border-primary-light/70 bg-black/25 px-7 py-3 font-semibold text-white transition-transform hover:-translate-y-0.5 hover:bg-white/10"
+                  className="flex flex-col items-center gap-3 rounded-2xl bg-white/15 px-2 py-4 hover:bg-white/25 transition-colors"
                 >
-                  <ArrowUpRight size={20} strokeWidth={2.5} />
-                  Withdraw
+                  <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white/20 text-white">
+                    <ArrowUpRight size={26} />
+                  </span>
+                  <span className="text-sm font-semibold text-center">Withdraw</span>
                 </button>
+                <Link
+                  href="/transactions"
+                  className="flex flex-col items-center gap-3 rounded-2xl bg-white/15 px-2 py-4 hover:bg-white/25 transition-colors"
+                >
+                  <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white/20 text-white">
+                    <History size={26} />
+                  </span>
+                  <span className="text-sm font-semibold text-center">History</span>
+                </Link>
               </div>
             </div>
           </div>
@@ -1263,56 +1275,25 @@ export default function Dashboard() {
           {/* Quick Actions */}
           <section>
             <div className="mb-4 flex items-center justify-between">
-              <h3 className="flex items-center gap-3 text-xl font-bold text-white">
-                <span className="section-bar" />
-                Quick Actions
-              </h3>
+              <h3 className="text-xl font-bold text-gray-900">Quick actions</h3>
               <Link href="/services" className="flex items-center gap-1 text-sm font-semibold text-primary-light hover:underline">
                 See All <ArrowRight size={16} />
               </Link>
             </div>
-            <div className="grid grid-cols-3 gap-3 md:gap-5">
-              <QuickActionItem icon={<Phone size={36} strokeWidth={1.75} />} label="Airtime" onClick={() => setShowAirtimeModal(true)} />
-              <QuickActionItem icon={<Wifi size={36} strokeWidth={1.75} />} label="Data" onClick={() => setShowDataModal(true)} />
-              <QuickActionItem icon={<CreditCard size={36} strokeWidth={1.75} />} label="ATM Card" href="/cards" />
-              <QuickActionItem icon={<Globe size={36} strokeWidth={1.75} />} label="Foreign Number" href="/services" />
-              <QuickActionItem icon={<Gift size={36} strokeWidth={1.75} />} label="Engagement" href="/services" />
-              <QuickActionItem icon={<MoreHorizontal size={36} strokeWidth={1.75} />} label="More" href="/services" />
+            <div className="grid grid-cols-3 md:grid-cols-6 gap-y-5 gap-x-3">
+              <QuickActionItem icon={<Phone size={30} />} label="Airtime" onClick={() => setShowAirtimeModal(true)} />
+              <QuickActionItem icon={<Wifi size={30} />} label="Data" onClick={() => setShowDataModal(true)} />
+              <QuickActionItem icon={<CreditCard size={30} />} label="ATM Card" href="/cards" />
+              <QuickActionItem icon={<Globe size={30} />} label="Foreign Number" href="/services" />
+              <QuickActionItem icon={<Gift size={30} />} label="Engagement" href="/services" />
+              <QuickActionItem icon={<MoreHorizontal size={30} />} label="More" href="/services" />
             </div>
           </section>
 
-          {/* Verification banner */}
-          <div className="relative overflow-hidden rounded-3xl border border-primary/50 bg-gradient-to-r from-[#3a0f8f] via-[#5B0FD1] to-[#8A2BFF] p-6 md:p-8 shadow-glow-sm">
-            <div className="pointer-events-none absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_70%_40%,#fff_0,transparent_45%)]" />
-            <div className="relative z-10 max-w-[62%] sm:max-w-[55%] space-y-4">
-              <p className="text-lg md:text-2xl font-semibold leading-snug text-white">
-                Buy all countries phone number for verification with ease in{' '}
-                <span className="text-primary-light brightness-150">less than 5 secs</span>
-              </p>
-              <Link
-                href="/services"
-                className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-2.5 font-bold text-primary-dark hover:bg-white/90 transition-colors"
-              >
-                Verify Now <ArrowRight size={18} />
-              </Link>
-            </div>
-
-            {/* Phone + flags illustration */}
-            <div className="pointer-events-none absolute right-4 sm:right-10 top-1/2 -translate-y-1/2 h-40 w-40 sm:h-52 sm:w-52">
-              <div className="absolute left-1/2 top-1/2 h-36 w-20 sm:h-44 sm:w-24 -translate-x-1/2 -translate-y-1/2 rotate-[14deg] rounded-[22px] border-[3px] border-gray-400/80 bg-gradient-to-b from-[#1b0b52] to-[#0b0430] shadow-glow flex items-center justify-center">
-                <ShieldCheck size={44} className="text-primary-light" />
-              </div>
-              <img src="https://flagcdn.com/w80/us.png" alt="" className="absolute left-0 top-2 h-10 w-10 rounded-full border-2 border-white/80 object-cover" />
-              <img src="https://flagcdn.com/w80/ca.png" alt="" className="absolute left-2 bottom-4 h-10 w-10 rounded-full border-2 border-white/80 object-cover" />
-              <img src="https://flagcdn.com/w80/gb.png" alt="" className="absolute right-0 top-4 h-10 w-10 rounded-full border-2 border-white/80 object-cover" />
-              <img src="https://flagcdn.com/w80/de.png" alt="" className="absolute right-2 bottom-2 h-10 w-10 rounded-full border-2 border-white/80 object-cover" />
-            </div>
-          </div>
-
           {/* Recent Transactions */}
           <div className="glass-card rounded-3xl overflow-hidden">
-            <div className="flex items-center justify-between px-6 py-5">
-              <h3 className="flex items-center gap-3 text-lg font-bold text-white">
+            <div className="flex items-center justify-between px-5 sm:px-6 py-5">
+              <h3 className="flex items-center gap-3 text-lg font-bold text-gray-900">
                 <span className="section-bar !h-5" />
                 Recent Transactions
               </h3>
@@ -1322,7 +1303,7 @@ export default function Dashboard() {
             </div>
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-primary/10 text-xs text-gray-500">
+                <thead className="bg-gray-50 text-xs text-gray-500">
                   <tr>
                     <th className="px-4 sm:px-6 py-3 text-left font-medium">Date &amp; Time</th>
                     <th className="px-4 sm:px-6 py-3 text-left font-medium">Description</th>
@@ -1331,28 +1312,9 @@ export default function Dashboard() {
                   </tr>
                 </thead>
                 <tbody>
-                  <TransactionRow
-                    title="Wallet Funding"
-                    subtitle="Deposit from GTBank"
-                    date="Apr 27, 2026 09:30 AM"
-                    amount="+ ₦ 10,000.00"
-                    status="Success"
-                    isCredit
-                  />
-                  <TransactionRow
-                    title="MTN Airtime"
-                    subtitle="Airtime Purchase"
-                    date="Apr 26, 2026 02:15 PM"
-                    amount="- ₦ 1,000.00"
-                    status="Success"
-                  />
-                  <TransactionRow
-                    title="Transfer to Sarah"
-                    subtitle="Bank Transfer"
-                    date="Apr 25, 2026 10:30 AM"
-                    amount="- ₦ 5,000.00"
-                    status="Success"
-                  />
+                  <TransactionRow title="Wallet Funding" subtitle="Deposit from GTBank" date="Apr 27, 2026 09:30 AM" amount="+ ₦ 10,000.00" status="Success" isCredit />
+                  <TransactionRow title="MTN Airtime" subtitle="Airtime Purchase" date="Apr 26, 2026 02:15 PM" amount="- ₦ 1,000.00" status="Success" />
+                  <TransactionRow title="Transfer to Sarah" subtitle="Bank Transfer" date="Apr 25, 2026 10:30 AM" amount="- ₦ 5,000.00" status="Success" />
                 </tbody>
               </table>
             </div>
@@ -1369,11 +1331,13 @@ export default function Dashboard() {
 // Helper Components
 
 function QuickActionItem({ icon, label, onClick, href }: { icon: React.ReactNode, label: string, onClick?: () => void, href?: string }) {
-  const className = "glass-card flex flex-col items-center justify-center gap-3 rounded-2xl px-2 py-5 md:py-7 text-white transition-all hover:-translate-y-0.5 hover:border-primary-light/70 hover:shadow-glow-sm";
+  const className = "group flex flex-col items-center gap-2.5 text-gray-800";
   const content = (
     <>
-      <span className="text-primary-light drop-shadow-[0_0_10px_rgba(177,77,255,0.7)]">{icon}</span>
-      <span className="text-sm md:text-base font-medium text-center">{label}</span>
+      <span className="tile flex h-[76px] w-[76px] items-center justify-center rounded-2xl text-primary-light transition-transform group-hover:-translate-y-0.5">
+        {icon}
+      </span>
+      <span className="text-sm font-medium text-center leading-tight">{label}</span>
     </>
   );
   if (href) {

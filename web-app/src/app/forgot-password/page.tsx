@@ -3,10 +3,12 @@
 import React from 'react';
 import Link from 'next/link';
 import { Mail, ArrowLeft } from 'lucide-react';
+import ThemeToggle from '@/components/ThemeToggle';
 
 export default function ForgotPasswordPage() {
   return (
     <div className="min-h-screen flex app-bg">
+      <ThemeToggle className="fixed top-4 right-4 z-50" />
       {/* Left Side - Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8 md:p-12 lg:p-24">
         <div className="w-full max-w-md space-y-8">
