@@ -87,22 +87,23 @@ export default function HomeSlider() {
               const Icon = s.icon;
               const Bg = s.bg;
               return (
-                <div key={s.title} className={`relative w-full shrink-0 overflow-hidden bg-gradient-to-br ${s.gradient} p-6 sm:p-8 text-white`}>
-                  <Bg size={190} strokeWidth={1} className="pointer-events-none absolute -right-6 top-1/2 -translate-y-1/2 text-white/10" />
+                <div key={s.title} className={`relative w-full shrink-0 overflow-hidden bg-gradient-to-br ${s.gradient} p-4 sm:p-8 text-white`}>
+                  <Bg size={140} className="pointer-events-none absolute -right-6 top-1/2 -translate-y-1/2 text-white/10 sm:hidden" />
+                  <Bg size={190} className="pointer-events-none absolute -right-6 top-1/2 -translate-y-1/2 text-white/10 hidden sm:block" />
                   <div className="relative">
-                    <div className="flex items-center gap-3 mb-4">
-                      <span className={`flex h-11 w-11 items-center justify-center rounded-xl ${s.iconBg}`}>
-                        <Icon size={22} />
+                    <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-4">
+                      <span className={`flex h-9 w-9 sm:h-11 sm:w-11 items-center justify-center rounded-xl ${s.iconBg}`}>
+                        <Icon size={18} className="sm:h-[22px] sm:w-[22px]" />
                       </span>
-                      <span className="text-sm font-bold uppercase tracking-widest text-white/80">{s.tag}</span>
+                      <span className="text-xs sm:text-sm font-bold uppercase tracking-widest text-white/80">{s.tag}</span>
                     </div>
-                    <h3 className="text-3xl font-extrabold">{s.title}</h3>
-                    <p className="mt-1.5 max-w-md text-white/75">{s.text}</p>
+                    <h3 className="text-2xl sm:text-3xl font-extrabold">{s.title}</h3>
+                    <p className="mt-1 max-w-md text-sm sm:mt-1.5 sm:text-base text-white/75">{s.text}</p>
                     <Link
                       href={s.href}
-                      className="mt-5 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 font-bold text-primary-dark hover:bg-white/90 transition-colors"
+                      className="mt-3 sm:mt-5 inline-flex items-center gap-2 rounded-full bg-white px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base font-bold text-primary-dark hover:bg-white/90 transition-colors"
                     >
-                      {s.cta} <ChevronRight size={18} />
+                      {s.cta} <ChevronRight size={16} className="sm:h-[18px] sm:w-[18px]" />
                     </Link>
                   </div>
                 </div>

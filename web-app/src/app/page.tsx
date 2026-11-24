@@ -1211,62 +1211,62 @@ export default function Dashboard() {
           <HomeSlider />
 
           {/* Wallet Balance Card */}
-          <div className="relative overflow-hidden rounded-3xl p-5 sm:p-7 bg-card-gradient border border-primary/30 text-white shadow-glow">
+          <div className="relative overflow-hidden rounded-3xl p-4 sm:p-7 bg-card-gradient border border-primary/30 text-white shadow-glow">
             <div className="pointer-events-none absolute -top-24 -right-10 w-80 h-80 bg-white/10 rounded-full blur-3xl" />
             <div className="pointer-events-none absolute -bottom-28 -left-10 w-72 h-72 bg-black/20 rounded-full blur-3xl" />
 
             <div className="relative z-10">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3 text-white/80">
-                  <Wallet size={22} />
+                  <Wallet size={20} className="sm:h-[22px] sm:w-[22px]" />
                   <span className="text-sm font-bold uppercase tracking-[0.18em]">Wallet Balance</span>
                 </div>
                 <button
                   onClick={() => setIsBalanceVisible(!isBalanceVisible)}
-                  className="flex h-12 w-12 items-center justify-center rounded-full bg-white/15 text-white hover:bg-white/25 transition-colors"
+                  className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-white/15 text-white hover:bg-white/25 transition-colors"
                   aria-label="Toggle balance visibility"
                 >
-                  {isBalanceVisible ? <Eye size={22} /> : <EyeOff size={22} />}
+                  {isBalanceVisible ? <Eye size={20} className="sm:h-[22px] sm:w-[22px]" /> : <EyeOff size={20} className="sm:h-[22px] sm:w-[22px]" />}
                 </button>
               </div>
 
-              <h2 className="mt-6 text-5xl sm:text-6xl font-extrabold tracking-tight">
+              <h2 className="mt-4 sm:mt-6 text-3xl sm:text-6xl font-extrabold tracking-tight">
                 {isBalanceVisible ? '₦50,000.00' : '₦****'}
               </h2>
-              <span className="mt-3 inline-block rounded-full bg-white/15 px-4 py-1.5 text-base font-medium text-white/90">
+              <span className="mt-2 sm:mt-3 inline-block rounded-full bg-white/15 px-3 sm:px-4 py-1 sm:py-1.5 text-sm sm:text-base font-medium text-white/90">
                 {isBalanceVisible ? 'USD $34.48' : 'USD $**'}
               </span>
 
-              <p className="mt-5 text-right text-sm sm:text-base font-bold uppercase tracking-[0.2em] text-white/70">Blessing</p>
+              <p className="mt-4 sm:mt-5 text-right text-sm sm:text-base font-bold uppercase tracking-[0.2em] text-white/70">Blessing</p>
               <div className="mt-2 h-px w-full bg-gradient-to-r from-transparent via-white/30 to-transparent" />
 
-              <div className="mt-5 grid grid-cols-3 gap-3">
+              <div className="mt-4 sm:mt-5 grid grid-cols-3 gap-2 sm:gap-3">
                 <button
                   onClick={() => setShowAddMoneyModal(true)}
-                  className="flex flex-col items-center gap-3 rounded-2xl bg-white/15 px-2 py-4 hover:bg-white/25 transition-colors"
+                  className="flex flex-col items-center gap-2 sm:gap-3 rounded-2xl bg-white/15 px-2 py-3 sm:py-4 hover:bg-white/25 transition-colors"
                 >
-                  <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white text-primary-dark">
-                    <Plus size={26} strokeWidth={2.5} />
+                  <span className="flex h-11 w-11 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-white text-primary-dark">
+                    <Plus size={22} className="sm:h-[26px] sm:w-[26px]" strokeWidth={2.5} />
                   </span>
-                  <span className="text-sm font-semibold text-center">Add money</span>
+                  <span className="text-xs sm:text-sm font-semibold text-center">Add money</span>
                 </button>
                 <button
                   onClick={() => setShowWithdrawModal(true)}
-                  className="flex flex-col items-center gap-3 rounded-2xl bg-white/15 px-2 py-4 hover:bg-white/25 transition-colors"
+                  className="flex flex-col items-center gap-2 sm:gap-3 rounded-2xl bg-white/15 px-2 py-3 sm:py-4 hover:bg-white/25 transition-colors"
                 >
-                  <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white/20 text-white">
-                    <ArrowUpRight size={26} />
+                  <span className="flex h-11 w-11 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-white/20 text-white">
+                    <ArrowUpRight size={22} className="sm:h-[26px] sm:w-[26px]" />
                   </span>
-                  <span className="text-sm font-semibold text-center">Withdraw</span>
+                  <span className="text-xs sm:text-sm font-semibold text-center">Withdraw</span>
                 </button>
                 <Link
                   href="/transactions"
-                  className="flex flex-col items-center gap-3 rounded-2xl bg-white/15 px-2 py-4 hover:bg-white/25 transition-colors"
+                  className="flex flex-col items-center gap-2 sm:gap-3 rounded-2xl bg-white/15 px-2 py-3 sm:py-4 hover:bg-white/25 transition-colors"
                 >
-                  <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white/20 text-white">
-                    <History size={26} />
+                  <span className="flex h-11 w-11 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-white/20 text-white">
+                    <History size={22} className="sm:h-[26px] sm:w-[26px]" />
                   </span>
-                  <span className="text-sm font-semibold text-center">History</span>
+                  <span className="text-xs sm:text-sm font-semibold text-center">History</span>
                 </Link>
               </div>
             </div>
@@ -1331,13 +1331,13 @@ export default function Dashboard() {
 // Helper Components
 
 function QuickActionItem({ icon, label, onClick, href }: { icon: React.ReactNode, label: string, onClick?: () => void, href?: string }) {
-  const className = "group flex flex-col items-center gap-2.5 text-gray-800";
+  const className = "group flex flex-col items-center gap-2 sm:gap-2.5 text-gray-800";
   const content = (
     <>
-      <span className="tile flex h-[76px] w-[76px] items-center justify-center rounded-2xl text-primary-light transition-transform group-hover:-translate-y-0.5">
+      <span className="tile flex h-14 w-14 sm:h-[76px] sm:w-[76px] items-center justify-center rounded-2xl text-primary-light transition-transform group-hover:-translate-y-0.5 [&_svg]:!h-5 [&_svg]:!w-5 sm:[&_svg]:!h-[30px] sm:[&_svg]:!w-[30px]">
         {icon}
       </span>
-      <span className="text-sm font-medium text-center leading-tight">{label}</span>
+      <span className="text-xs sm:text-sm font-medium text-center leading-tight">{label}</span>
     </>
   );
   if (href) {
